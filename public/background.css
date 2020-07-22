@@ -1,0 +1,6 @@
+#background {
+  background-image: url(/assets/fuji.jpg);
+  background-size: cover;
+  width: 100vw;
+  height: calc(100vh - 80px);
+}

@@ -1,0 +1,40 @@
+<link rel="stylesheet" href="style.css" />
+<link href="https://fonts.googleapis.com/css2?family=Dosis&family=Kosugi+Maru&display=swap" rel="stylesheet" />
+<script src="p5.min.js"></script>
+<script src="main.js" defer></script>
+<div id="nav-bar">
+  <div id="nav-buttons">
+    <a href="/login" class="nav-button">Log in</a>
+    <a href="/signup" class="nav-button">Sign up</a>
+    <a href="/settings" class="nav-button">Settings</a>
+    <a href="/about" class="nav-button">About</a>
+  </div>
+  <div id="big-mac">
+    <div class="slice"></div>
+    <div class="slice"></div>
+    <div class="slice"></div>
+  </div>
+</div>
+
+<div id="background">
+  <div id="main">
+    <div id="tools">
+      <input id="keshi" type="image" src="./assets/keshi.png" alt="ERASE" />
+      <img src="./assets/fude.png" alt="Brush size: " />
+      <input id="brush-size" type="range" name="brush-size" min="1" max="16" step="1" />
+      <select id="set-menu">
+        <option value="0">Select study set</option>
+        <option value="jlpt4">JLPT4</option>
+        <option value="jlpt3">JLPT3</option>
+        <option value="jlpt2">JLPT2</option>
+        <option value="jlpt1">JLPT1</option>
+        <option value="random">Random kanji</option>
+      </select>
+    </div>
+    <button id="mondai" class="main-button">もんだい</button>
+    <button id="maru" class="maru-batsu">⭕️</button>
+    <button id="batsu" class="maru-batsu">❌</button>
+
+    <div id="canvas"></div>
+  </div>
+</div>

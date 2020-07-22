@@ -1,0 +1,11 @@
+.main-button {
+  border-radius: 10%;
+  border-style: none;
+  background-color: snow;
+  color: #112;
+  font-size: larger;
+}
+
+.main-button:hover {
+  background-color: powderblue;
+}

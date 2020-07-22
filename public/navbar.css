@@ -1,0 +1,56 @@
+#nav-bar {
+  width: 100vw;
+  height: 60px;
+  background-color: #112;
+  color: snow;
+  display: inline-flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+#nav-buttons {
+  margin-bottom: 6px;
+}
+.nav-button {
+  border-radius: 10%;
+  text-decoration: none;
+  border-style: none;
+  background-color: snow;
+  color: #112;
+  font-size: larger;
+  padding: 2px;
+  margin: 2px;
+  transition: background-color 0.2s ease-in;
+}
+#logo {
+  font-size: 38;
+}
+.nav-button:hover {
+  background-color: powderblue;
+  transition: background-color 0.2s ease-in;
+}
+
+#big-mac {
+  margin-right: 4px;
+  display: none;
+}
+
+#big-mac:hover .slice {
+  background-color: powderblue;
+  transition: background-color 0.2s ease-in;
+}
+
+.slice {
+  height: 3px;
+  width: 22px;
+  margin: 6px 0px 6px 0px;
+  background-color: snow;
+  border-radius: 20%;
+}
+
+@media only screen and (max-width: 900px) {
+  #nav-bar {
+  }
+  #big-mac {
+    display: block;
+  }
+}
