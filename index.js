@@ -12,7 +12,7 @@ const signup = require('./signup');
 app.set('view engine', 'ejs');
 
 app.use(express.static('public'));
-app.use(session({ secret: process.env.SECRET, saveUninitialized: false, resave: false, failureFlash: true }));
+app.use(session({ secret: process.env.SESSION_SECRET, saveUninitialized: false, resave: false, failureFlash: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(passport.initialize());
