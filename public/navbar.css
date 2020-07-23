@@ -1,32 +1,37 @@
 #nav-bar {
   width: 100vw;
   height: 60px;
-  background-color: #112;
+  background-color: var(--nav-color);
   color: snow;
   display: inline-flex;
   align-items: flex-end;
   justify-content: space-between;
 }
-#nav-buttons {
-  margin-bottom: 6px;
+
+#bar-stuff {
+  margin-left: 10px;
+  display: flex;
+  align-items: flex-end;
+  width: 60%;
 }
-.nav-button {
-  border-radius: 10%;
-  text-decoration: none;
-  border-style: none;
-  background-color: snow;
-  color: #112;
-  font-size: larger;
-  padding: 2px;
-  margin: 2px;
-  transition: background-color 0.2s ease-in;
+
+.bar-stuff-item {
+  margin-right: 10%;
 }
+
 #logo {
   font-size: 38;
 }
-.nav-button:hover {
-  background-color: powderblue;
-  transition: background-color 0.2s ease-in;
+#brush-div {
+  display: flex;
+  flex-direction: column;
+}
+#brush-label {
+  text-align: center;
+}
+#brush-image {
+  width: 20px;
+  height: 20px;
 }
 
 #big-mac {

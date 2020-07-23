@@ -1,4 +1,19 @@
 #canvas {
-  width: 100%;
-  height: 100%;
+  width: calc(100vw - 40px);
+  height: calc(100vh - 150px);
+  position: relative;
+  top: 20px;
+  left: 20px;
+  background-color: rgba(12, 13, 14, 0.5);
+  border-radius: 16px;
+  cursor: url('./assets/fude-cursor.png'), auto;
+}
+#stats {
+  background-color: rgba(12, 13, 14, 0);
+  position: absolute;
+  color: powderblue;
+  text-align: right;
+  top: 40px;
+  right: 20px;
+  z-index: 3;
 }

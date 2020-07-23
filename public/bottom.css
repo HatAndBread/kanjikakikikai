@@ -1,0 +1,26 @@
+#bottom {
+  position: relative;
+  top: 40px;
+  margin-left: 20px;
+  background-color: rgba(12, 13, 14, 0.5);
+  display: grid;
+  grid-template: 1fr / repeat(12, 1fr);
+}
+
+#mondai-button {
+  grid-column: 1 / span 2;
+  font-size: unset;
+}
+#mondai {
+  grid-column: 3 / span 8;
+}
+
+.maru-batsu {
+  background-color: snow;
+  border-radius: 16%;
+  font-size: 26px;
+}
+
+.maru-batsu:hover {
+  background-color: powderblue;
+}

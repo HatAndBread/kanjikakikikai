@@ -1,8 +1,12 @@
 const domEls = {
-  mondaiButt: document.getElementById('mondai'),
+  mondaiButt: document.getElementById('mondai-button'),
   brushSizeRange: document.getElementById('brush-size'),
   canvas: document.getElementById('canvas'),
-  keshi: document.getElementById('keshi')
+  keshi: document.getElementById('keshi'),
+  bigMag: document.getElementById('big-mac'),
+  toolsCloser: document.getElementById('tools-closer'),
+  tools: document.getElementById('tools'),
+  toolsOut: false
 };
 
 const canvasSettings = {
@@ -30,6 +34,21 @@ domEls.mondaiButt.addEventListener('click', (e) => {
 
 domEls.brushSizeRange.addEventListener('change', (e) => {
   userSettings.brushSize = e.target.value;
+});
+
+domEls.bigMag.addEventListener('click', () => {
+  if (!domEls.toolsOut) {
+    domEls.tools.style.right = '0px';
+    domEls.toolsOut = true;
+  } else {
+    domEls.tools.style.right = '-100%';
+    domEls.toolsOut = false;
+  }
+});
+
+domEls.toolsCloser.addEventListener('click', () => {
+  domEls.tools.style.right = '-100%';
+  domEls.toolsOut = false;
 });
 
 let clearCanvas = false;
@@ -66,7 +85,7 @@ let sketch = function (p) {
       p.clear();
       clearCanvas = false;
     }
-    p.stroke(10, 11, 12);
+    p.stroke(255, 110, 109);
     p.strokeWeight(userSettings.brushSize);
     if (p.mouseIsPressed) {
       if (lastPoints.x && lastPoints) {
@@ -77,10 +96,6 @@ let sketch = function (p) {
       lastPoints.x = p.mouseX;
       lastPoints.y = p.mouseY;
     }
-    p.strokeWeight(1);
-    p.fill(`rgba(131,132,249,0.3)`);
-    p.stroke(`rgba(160,200,249,0.3)`);
-    p.text(`Stats: 100% correct`, p.width - 200, 100);
   };
   p.mouseReleased = function () {
     lastPoints.x = null;

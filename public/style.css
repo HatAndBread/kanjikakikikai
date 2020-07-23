@@ -4,12 +4,27 @@
 @import url(range.css);
 @import url(maru_batsu.css);
 @import url(canvas.css);
+@import url(tools.css);
+@import url(closer.css);
+@import url(bottom.css);
+
+:root {
+  --nav-color: #112; /* define global variable in root */
+}
 
 * {
   margin: 0px;
   touch-action: none;
   user-select: none;
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer */
+  -khtml-user-select: none; /* KHTML browsers (e.g. Konqueror) */
+  -webkit-user-select: none; /* Chrome, Safari, and Opera */
+  -webkit-touch-callout: none; /* Disable Android and iOS callouts*/
   font-family: 'Dosis', sans-serif;
+}
+#main {
+  position: absolute;
 }
 
 ul {

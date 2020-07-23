@@ -1,0 +1,72 @@
+#tools {
+  background-color: var(--nav-color);
+  display: flex;
+}
+
+#tools-closer {
+  display: none;
+}
+#tools-closer:hover {
+  color: powderblue;
+  font-size: 18px;
+  transition: color 0.2s ease-in 0.1s, font-size 0.2s ease-in 0.1s;
+}
+
+.nav-button {
+  display: block;
+  border-radius: 10%;
+  text-decoration: none;
+  border-style: none;
+  background-color: snow;
+  color: #112;
+  font-size: larger;
+  transition: background-color 0.2s ease-in;
+  text-align: center;
+  margin: 8px;
+  padding: 4px;
+}
+
+.nav-button:hover {
+  background-color: powderblue;
+  transition: background-color 0.2s ease-in;
+}
+
+@media only screen and (max-width: 900px) {
+  #tools {
+    background-color: var(--nav-color);
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    top: 60px;
+    right: -100%;
+    width: 150px;
+    padding: 10px;
+    border-radius: 0% 0% 0% 10%;
+    transition: right 0.4s linear;
+    z-index: 5;
+  }
+  #tools-closer {
+    color: snow;
+    border: none;
+    display: inline;
+    position: relative;
+    font-size: 16px;
+    background-color: var(--nav-color);
+  }
+
+  .nav-button {
+    display: block;
+    border-radius: 10%;
+    text-decoration: none;
+    border-style: none;
+    background-color: snow;
+    color: #112;
+    font-size: larger;
+    transition: background-color 0.2s ease-in;
+    text-align: center;
+    margin: 8px;
+    padding: 4px;
+    width: 90%;
+  }
+}
