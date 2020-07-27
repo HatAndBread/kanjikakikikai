@@ -26,27 +26,15 @@ app.use('/login', login);
 app.use('/signup', signup);
 app.use('/add_words', addWords);
 
-/*
-const checkAuthenticated = (req, res, next) => {
-  if (req.isAuthenticated()) {
-    return next();
-  }
-  res.render('index', { userInfo: null });
-};
-
-function checkNotAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) {
-    return res.redirect('/');
-  }
-  next();
-}
-
-*/
-
 app.get('/', checkAuthenticated, (req, res) => {
   console.log(req.user);
   console.log(req.session.passport);
   res.render('index', { userInfo: req.user });
+});
+
+app.get('/logout', (req, res) => {
+  req.logout();
+  res.redirect('/');
 });
 
 app.listen(PORT);
