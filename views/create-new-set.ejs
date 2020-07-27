@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('header')%>
+    <script src="create-new.js" defer></script>
+  </head>
+  <body>
+    <button id="create-new-butt" class="main-button">Create new study set</button>
+    <button id="edit-study-butt" class="main-button">Edit my study sets</button>
+
+    <div id="create-new-set">
+      <form action="/add_words" method="POST">
+        <table id="new-word-table">
+          <tr>
+            <label for="dictionary-title">Name of study set: </label>
+            <input type="text" name="dictionary-title" id="dictionary-title" />
+          </tr>
+          <tr>
+            <th>かんじ</th>
+            <th>よみかた</th>
+          </tr>
+          <tr>
+            <td><input type="text" name="kanji-input" id="kanji-input" required /></td>
+            <td><input type="text" name="yomikata-input" id="yomikata-input" required /></td>
+          </tr>
+        </table>
+        <button id="add-another-word-butt" class="main-button" type="button">Add another word</button>
+        <button id="save-new-study-set-butt" class="main-button" type="submit">Save new study set</button>
+      </form>
+    </div>
+    <label for="select-set-for-edit"></label>
+    <select name="select-set-for-edit" id="select-set-for-edit"></select>
+  </body>
+</html>

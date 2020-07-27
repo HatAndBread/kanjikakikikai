@@ -1,7 +1,7 @@
 #bottom {
   position: relative;
   top: 40px;
-  margin-left: 20px;
+  margin-left: 60px;
   background-color: rgba(12, 13, 14, 0.5);
   display: grid;
   grid-template: 1fr / repeat(12, 1fr);
@@ -23,4 +23,16 @@
 
 .maru-batsu:hover {
   background-color: powderblue;
+}
+
+@media only screen and (max-width: 900px) {
+  #bottom {
+    margin-left: 40px;
+  }
+}
+
+@media only screen and (max-width: 700px) {
+  #bottom {
+    margin-left: 0px;
+  }
 }

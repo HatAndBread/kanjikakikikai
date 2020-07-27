@@ -22,7 +22,7 @@ signup.post('/', async (req, res) => {
     if (docs.length > 0) {
       res.send('Sorry, that user name is already taken.');
     } else {
-      users.insert({ username: req.body.username, password: password }, (err, newDoc) => {
+      users.insert({ username: req.body.username, password: password, myDictionaries: [] }, (err, newDoc) => {
         console.log(newDoc);
       });
       res.send(`Thank you for signing up, ${req.body.username}`);

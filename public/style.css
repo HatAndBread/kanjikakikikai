@@ -7,6 +7,7 @@
 @import url(tools.css);
 @import url(closer.css);
 @import url(bottom.css);
+@import url(select.css);
 
 :root {
   --nav-color: #112; /* define global variable in root */
