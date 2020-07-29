@@ -33,4 +33,10 @@ editWords.get('/:set_name', (req, res) => {
   }
 });
 
+editWords.put('/', (req, res) => {
+  console.log('hey everybody! yo');
+  console.log(req.body);
+  res.send({ message: 'received' });
+});
+
 module.exports = editWords;
