@@ -2,14 +2,11 @@
 <html lang="en">
   <head>
     <%- include('header')%>
-    <script src="create-new.js" defer></script>
   </head>
   <body>
     <button id="create-new-butt" class="main-button">Create new study set</button>
-    <button id="edit-study-butt" class="main-button">Edit my study sets</button>
-
     <div id="create-new-set">
-      <form action="/add_words" method="POST">
+      <form action="/add-words" method="POST">
         <table id="new-word-table">
           <tr>
             <label for="dictionary-title">Name of study set: </label>
@@ -28,7 +25,31 @@
         <button id="save-new-study-set-butt" class="main-button" type="submit">Save new study set</button>
       </form>
     </div>
-    <label for="select-set-for-edit"></label>
-    <select name="select-set-for-edit" id="select-set-for-edit"></select>
   </body>
+  <script>
+    const addAnotherWordButt = document.getElementById('add-another-word-butt');
+    const table = document.getElementById('new-word-table');
+    const editButt = document.getElementById('edit-study-butt');
+
+    addAnotherWordButt.addEventListener('click', () => {
+      const newRow = document.createElement('tr');
+      const newWord = document.createElement('td');
+      const newDef = document.createElement('td');
+      const kanjiInput = document.createElement('input');
+      const yomikataInput = document.createElement('input');
+      kanjiInput.type = 'text';
+      yomikataInput.type = 'text';
+      kanjiInput.name = 'kanji-input';
+      yomikataInput.name = 'yomikata-input';
+      kanjiInput.id = 'kanji-input';
+      yomikataInput.id = 'yomikata-input';
+      kanjiInput.required = true;
+      yomikataInput.required = true;
+      newWord.appendChild(kanjiInput);
+      newDef.appendChild(yomikataInput);
+      newRow.appendChild(newWord);
+      newRow.appendChild(newDef);
+      table.appendChild(newRow);
+    });
+  </script>
 </html>

@@ -11,6 +11,7 @@ let PORT = 3000 || process.env.PORT;
 const login = require('./login');
 const signup = require('./signup');
 const addWords = require('./add-words');
+const editWords = require('./edit-words');
 
 app.set('view engine', 'ejs');
 
@@ -24,7 +25,8 @@ app.use(passport.session());
 app.use(methodOverride('_method'));
 app.use('/login', login);
 app.use('/signup', signup);
-app.use('/add_words', addWords);
+app.use('/add-words', addWords);
+app.use('/edit-sets', editWords);
 
 app.get('/', checkAuthenticated, (req, res) => {
   console.log(req.user);
