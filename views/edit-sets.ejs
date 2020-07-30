@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <%- include('header')%>
+    <script src="./edit-sets-script.js" defer></script>
   </head>
   <body>
     <h1>Select a set to edit</h1>
@@ -16,8 +17,6 @@
       </div>
       <% } %>
     </ul>
-    <label for="select-set-for-edit"></label>
-    <select name="select-set-for-edit" id="select-set-for-edit"></select>
     <div id="set-editor">
       <h1 id="set-title"></h1>
       <ul id="edit-word-list"></ul>
@@ -31,161 +30,4 @@
       <button id="save-changes-butt" class="main-button" type="submit">Save changes</button>
     </div>
   </body>
-
-  <script>
-    const setEditButts = document.getElementsByClassName('main-button set-edit-butt');
-    const setEditor = document.getElementById('set-editor');
-    const setTitle = document.getElementById('set-title');
-    const table = document.getElementById('edit-table');
-    const addWordButt = document.getElementById('add-word-butt');
-    const saveChangesButt = document.getElementById('save-changes-butt');
-    const currentSet = {};
-
-    const ids = [];
-
-    const idMaker = () => {
-      let ranNum = Math.floor(Math.random() * 999999);
-      if (ids.includes(ranNum)) {
-        while (ids.includes(ranNum)) {
-          ranNum = Math.floor(Math.random() * 999999);
-          if (!ids.includes(ranNum)) {
-            ids.push(ranNum);
-            return ranNum;
-            break;
-          }
-        }
-      } else {
-        ids.push(ranNum);
-        return ranNum;
-      }
-    };
-
-    const gomibakoFactory = (identification) => {
-      const gomibako = document.createElement('input');
-      gomibako.type = 'image';
-      gomibako.class = 'gomibako';
-      gomibako.src = './assets/trash.png';
-      gomibako.alt = 'DELETE';
-      gomibako.style = 'width: 7%; height: 7%;';
-      gomibako.identification = identification;
-      gomibako.addEventListener('click', () => {
-        for (let i = 0; i < currentSet.wordList.length; i++) {
-          if (currentSet.wordList[i].id === gomibako.identification) {
-            console.log(currentSet.wordList[i]);
-            currentSet.wordList.splice(i, 1);
-            console.log(currentSet.wordList);
-          }
-        }
-      });
-      return gomibako;
-    };
-
-    const itemCreater = () => {
-      const id = idMaker();
-      const gomibako = gomibakoFactory(id);
-      const newRow = document.createElement('tr');
-      const newWord = document.createElement('td');
-      const newDef = document.createElement('td');
-      const gomibakoDataTable = document.createElement('TD');
-      const kanjiInput = document.createElement('input');
-      const yomikataInput = document.createElement('input');
-
-      kanjiInput.type = 'text';
-      yomikataInput.type = 'text';
-      kanjiInput.name = 'kanji-input';
-      yomikataInput.name = 'yomikata-input';
-      kanjiInput.id = 'kanji-input';
-      yomikataInput.id = 'yomikata-input';
-      currentSet.wordList.push({ kanji: null, yomikata: null, id: id });
-      kanjiInput.required = true;
-      yomikataInput.required = true;
-      newWord.appendChild(kanjiInput);
-      newDef.appendChild(yomikataInput);
-      gomibakoDataTable.appendChild(gomibako);
-      newRow.appendChild(newWord);
-      newRow.appendChild(newDef);
-      newRow.appendChild(gomibakoDataTable);
-      table.appendChild(newRow);
-      kanjiInput.addEventListener('change', () => {
-        currentSet.wordList.forEach((element) => {
-          if (element.id === id) {
-            element.kanji = kanjiInput.value;
-          }
-        });
-        console.log(currentSet);
-      });
-      yomikataInput.addEventListener('change', () => {
-        currentSet.wordList.forEach((element) => {
-          if (element.id === id) {
-            element.yomikata = yomikataInput.value;
-          }
-        });
-        console.log(currentSet);
-      });
-    };
-
-    addWordButt.addEventListener('click', itemCreater);
-
-    saveChangesButt.addEventListener('click', async () => {
-      const req = await fetch('/edit-sets', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(currentSet)
-      });
-      const data = await req.json();
-      console.log(data);
-    });
-
-    const getWords = async (setName) => {
-      const res = await fetch(`/edit-sets/${setName}`);
-      const data = await res.json();
-      const title = data.requestedSet.title;
-      const wordList = data.requestedSet.words;
-      currentSet.title = title;
-      currentSet.wordList = wordList;
-      console.log(currentSet);
-
-      setTitle.appendChild(document.createTextNode(title));
-      for (let i = 0; i < wordList.length; i++) {
-        const id = idMaker();
-        const gomibako = gomibakoFactory(id);
-        currentSet.wordList[i].id = id;
-        let newRow = document.createElement('TR');
-        let kanjiDataTable = document.createElement('TD');
-        let yomikataDataTable = document.createElement('TD');
-        let gomibakoDataTable = document.createElement('TD');
-        let kanjiInput = document.createElement('input');
-        let yomikataInput = document.createElement('input');
-
-        kanjiInput.type = 'text';
-        yomikataInput.type = 'text';
-        kanjiInput.name = 'kanji-input';
-        yomikataInput.name = 'yomikata-input';
-        kanjiInput.value = wordList[i].kanji;
-        yomikataInput.value = wordList[i].yomikata;
-
-        kanjiDataTable.appendChild(kanjiInput);
-        yomikataDataTable.appendChild(yomikataInput);
-        gomibakoDataTable.appendChild(gomibako);
-        newRow.appendChild(kanjiDataTable);
-        newRow.appendChild(yomikataDataTable);
-        newRow.appendChild(gomibakoDataTable);
-        table.appendChild(newRow);
-
-        kanjiInput.addEventListener('change', () => {
-          currentSet.wordList[i].kanji = kanjiInput.value;
-          console.log(currentSet);
-        });
-        yomikataInput.addEventListener('change', () => {
-          currentSet.wordList[i].yomikata = yomikataInput.value;
-          console.log(currentSet);
-        });
-      }
-    };
-    for (let i = 0; i < setEditButts.length; i++) {
-      setEditButts[i].addEventListener('click', (e) => {
-        getWords(e.target.value);
-      });
-    }
-  </script>
 </html>
