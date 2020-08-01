@@ -4,6 +4,7 @@
   background-color: snow;
   color: #112;
   font-size: larger;
+  cursor: pointer;
 }
 
 .main-button:hover {

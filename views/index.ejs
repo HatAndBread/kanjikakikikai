@@ -8,23 +8,36 @@
 
   <body>
     <div id="nav-bar">
-      <div id="bar-stuff">
-        <input id="keshi" type="image" src="./assets/keshi.png" alt="ERASE" class="bar-stuff-item" />
+      <input id="keshi" type="image" src="./assets/keshi.png" alt="ERASE" />
 
-        <div id="brush-div" class="bar-stuff-item">
-          <label for="brush-size" id="brush-label">
-            <img src="./assets/fude.png" alt="Brush size: " id="brush-image" />Brush-size</label
-          >
-          <input id="brush-size" type="range" name="brush-size" min="1" max="30" step="1" value="5" />
-        </div>
-        <select id="set-menu" class="bar-stuff-item">
-          <option value="0">Select study set</option>
-          <option value="jlpt4">JLPT4</option>
-          <option value="jlpt3">JLPT3</option>
-          <option value="jlpt2">JLPT2</option>
-          <option value="jlpt1">JLPT1</option>
-          <option value="random">Random kanji</option>
-        </select>
+      <div id="brush-div">
+        <label for="brush-size" id="brush-label">
+          <img src="./assets/fude.png" alt="Brush size: " id="brush-image" />Brush-size</label
+        >
+        <input id="brush-size" type="range" name="brush-size" min="1" max="30" step="1" value="5" />
+      </div>
+      <div>
+        <button id="select-study-set-butt" class="main-button" style="position: relative;">Select study set</button>
+      </div>
+      <div id="study-set-selector">
+        <button id="set-selector-closer">✕</button>
+        <ul>
+          <% if (userInfo){ for (let i = 0; i < userInfo.myDictionaries.length; i++){%>
+          <li>
+            <button value="<%= userInfo.myDictionaries[i].title%>" class="main-button set-selector">
+              <%= userInfo.myDictionaries[i].title%>
+            </button>
+          </li>
+          <% }} %>
+          <li>
+            <button userDefined="false" value="random-kanji" class="main-button set-selector">Random Kanji</button>
+          </li>
+          <li><button userDefined="false" value="jlpt1" class="main-button set-selector">JLPT1</button></li>
+          <li><button userDefined="false" value="jlpt2" class="main-button set-selector">JLPT2</button></li>
+          <li><button userDefined="false" value="jlpt3" class="main-button set-selector">JLPT3</button></li>
+          <li><button userDefined="false" value="jlpt4" class="main-button set-selector">JLPT4</button></li>
+          <li><button userDefined="false" value="jlpt5" class="main-button set-selector">JLPT5</button></li>
+        </ul>
       </div>
       <div id="big-mac">
         <div class="slice"></div>
@@ -58,14 +71,8 @@
           <button id="maru" class="maru-batsu">⭕️</button>
           <button id="batsu" class="maru-batsu">❌</button>
         </div>
+        <div id="check-answer"></div>
       </div>
     </div>
   </body>
 </html>
-
-<% /* PUT IN FOOTER
-<div>
-  Icons made by <a href="https://www.flaticon.com/authors/ddara" title="dDara">dDara</a> from
-  <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
-</div>
-*/ %>

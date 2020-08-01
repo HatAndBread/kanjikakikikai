@@ -8,17 +8,6 @@
   justify-content: space-between;
 }
 
-#bar-stuff {
-  margin-left: 10px;
-  display: flex;
-  align-items: flex-end;
-  width: 60%;
-}
-
-.bar-stuff-item {
-  margin-right: 10%;
-}
-
 #logo {
   font-size: 38;
 }

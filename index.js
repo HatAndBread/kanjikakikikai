@@ -7,16 +7,19 @@ const methodOverride = require('method-override'); //Lets you use HTTP verbs suc
 const app = express();
 const checkAuthenticated = require('./checkAuthenticated');
 
+const fs = require('fs'); // delete me!
+
 let PORT = 3000 || process.env.PORT;
 const login = require('./login');
 const signup = require('./signup');
 const addWords = require('./add-words');
 const editWords = require('./edit-words');
+const getWords = require('./get-words');
 
 app.set('view engine', 'ejs');
 
 app.use(express.static('public'));
-app.use(express.json());
+app.use(express.json({ limit: '50mb' })); // FIX LIMIT!
 app.use(express.urlencoded({ extended: false }));
 app.use(flash());
 app.use(session({ secret: process.env.SESSION_SECRET, saveUninitialized: false, resave: false, failureFlash: true }));
@@ -27,6 +30,7 @@ app.use('/login', login);
 app.use('/signup', signup);
 app.use('/add-words', addWords);
 app.use('/edit-sets', editWords);
+app.use('/get-words', getWords);
 
 app.get('/', checkAuthenticated, (req, res) => {
   console.log(req.user);
@@ -39,4 +43,15 @@ app.get('/logout', (req, res) => {
   res.redirect('/');
 });
 
+app.post('/send-jason', (req, res) => {
+  const data = req.body;
+  const jason = JSON.stringify(data);
+  console.log(req.body);
+  fs.writeFile('jason.txt', jason, function (err) {
+    if (err) {
+      console.log(err);
+    }
+  });
+  res.send({ message: 'received' });
+});
 app.listen(PORT);
