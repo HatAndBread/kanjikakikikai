@@ -8,6 +8,7 @@
 @import url(closer.css);
 @import url(bottom.css);
 @import url(select.css);
+@import url(check-answer.css);
 
 :root {
   --nav-color: #112; /* define global variable in root */

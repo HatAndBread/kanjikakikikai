@@ -12,20 +12,10 @@
   font-size: unset;
 }
 #mondai {
-  grid-column: 3 / span 8;
+  grid-column: 3 / span 10;
   font-size: 26px;
   color: snow;
   padding-left: 10px;
-}
-
-.maru-batsu {
-  background-color: snow;
-  border-radius: 16%;
-  font-size: 26px;
-}
-
-.maru-batsu:hover {
-  background-color: powderblue;
 }
 
 @media only screen and (max-width: 900px) {

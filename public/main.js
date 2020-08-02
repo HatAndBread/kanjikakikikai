@@ -7,6 +7,14 @@ let currentMondai = {
   yomikata: null,
   definition: null
 };
+let takingPhoto = false;
+let clearCanvas = false;
+let clearMirror = false;
+let preventDrawing = false;
+
+const userSettings = {
+  brushSize: 5
+};
 
 const domEls = {
   mondaiButt: document.getElementById('mondai-button'),
@@ -21,15 +29,69 @@ const domEls = {
   setCloserButt: document.getElementById('set-selector-closer'),
   selectorButts: document.getElementsByClassName('set-selector'),
   mondaiText: document.getElementById('mondai'),
+  kanjiAnswer: document.getElementById('kanji_answer'),
+  checkAnswerBox: document.getElementById('check-answer'),
+  maru: document.getElementById('maru'),
+  batsu: document.getElementById('batsu'),
+  yourDrawing: document.getElementById('your-drawing'),
+  statsDisplay: document.getElementById('stats'),
   toolsOut: false
 };
-console.log(domEls.selectorButts.length);
+
+const userStats = {
+  studySetUsingNow: 'random kanji',
+  percentCorrect: 100,
+  numberCorrect: 0,
+  questionOutOf: {
+    currentQuestion: 1,
+    totalQuestions: 20
+  },
+  updateStats: function (correct) {
+    if (correct) {
+      this.numberCorrect += 1;
+    }
+    this.percentCorrect = Math.round((this.numberCorrect / this.questionOutOf.currentQuestion) * 100);
+    this.questionOutOf.currentQuestion += 1;
+  }
+};
+
+function createStatsTable() {
+  for (let i = 0; i < domEls.statsDisplay.childNodes.length; i++) {
+    domEls.statsDisplay.removeChild(domEls.statsDisplay.childNodes[i]);
+  }
+  const statsTable = document.createElement('table');
+  const studySetRow = document.createElement('tr');
+  const questionOutOfRow = document.createElement('tr');
+  const percentCorrectRow = document.createElement('tr');
+  const studySetText = document.createTextNode(`Study set:  ${userStats.studySetUsingNow}`);
+  const questionsOutOfText = document.createTextNode(
+    `Question ${userStats.questionOutOf.currentQuestion}/${userStats.questionOutOf.totalQuestions}`
+  );
+  const percentCorrectText = document.createTextNode(`${userStats.percentCorrect}% correct`);
+  studySetRow.appendChild(studySetText);
+  questionOutOfRow.appendChild(questionsOutOfText);
+  percentCorrectRow.appendChild(percentCorrectText);
+  statsTable.appendChild(studySetRow);
+  statsTable.appendChild(questionOutOfRow);
+  statsTable.appendChild(percentCorrectRow);
+  domEls.statsDisplay.appendChild(statsTable);
+}
+createStatsTable();
+
+const canvasSettings = {
+  width: domEls.canvas.clientWidth,
+  height: domEls.canvas.clientHeight
+};
 
 const getWordSet = async (whichOne) => {
   const res = await fetch(`/get-words/${whichOne}`);
   const data = await res.json();
   currentSet = data.set;
   console.log(currentSet);
+  userStats.studySetUsingNow = currentSet.title;
+  userStats.questionOutOf.currentQuestion = 1;
+  clearCanvas();
+  createStatsTable();
 };
 
 const getPreDefinedWordSet = async (src, title) => {
@@ -39,6 +101,10 @@ const getPreDefinedWordSet = async (src, title) => {
   currentSet.title = title;
   currentSet.words = words;
   console.log(currentSet);
+  userStats.studySetUsingNow = currentSet.title;
+  userStats.questionOutOf.currentQuestion = 1;
+  clearCanvas = true;
+  createStatsTable();
 };
 
 getPreDefinedWordSet('jlpt-five.jscsrc', 'Random kanji'); // set up initially
@@ -46,6 +112,7 @@ getPreDefinedWordSet('jlpt-five.jscsrc', 'Random kanji'); // set up initially
 for (let i = 0; i < domEls.selectorButts.length; i++) {
   domEls.selectorButts[i].addEventListener('click', (e) => {
     domEls.studySetSelector.style.display = 'none';
+    preventDrawing = false;
     if (
       e.target.value === 'jlpt1' ||
       e.target.value === 'jlpt2' ||
@@ -89,15 +156,6 @@ for (let i = 0; i < domEls.selectorButts.length; i++) {
   });
 }
 
-const canvasSettings = {
-  width: domEls.canvas.clientWidth,
-  height: domEls.canvas.clientHeight
-};
-
-const userSettings = {
-  brushSize: 5
-};
-
 const getMondai = () => {
   domEls.mondaiButt.innerText = 'チェック';
   let ranNum = Math.floor(Math.random() * currentSet.words.length);
@@ -106,23 +164,51 @@ const getMondai = () => {
   currentMondai.definition = currentSet.words[ranNum].definition;
   domEls.mondaiText.innerText = `${currentMondai.yomikata} (${currentMondai.definition})`;
   console.log(currentMondai);
+  clearMirror = true;
 };
 
 const checkAnswer = () => {
-  domEls.mondaiButt.innerText = 'もんだい';
+  //domEls.mondaiButt.innerText = 'もんだい';
+  takingPhoto = true;
+  domEls.kanjiAnswer.innerText = currentMondai.kanji;
+  domEls.checkAnswerBox.style.display = 'block';
+  domEls.mondaiButt.disabled = true;
+  domEls.mondaiButt.style.display = 'none';
+  preventDrawing = true;
 };
+
+domEls.maru.addEventListener('click', () => {
+  domEls.checkAnswerBox.style.display = 'none';
+  preventDrawing = false;
+  domEls.mondaiButt.disabled = false;
+  domEls.mondaiButt.style.display = 'block';
+  getMondai();
+  userStats.updateStats(true);
+  createStatsTable();
+});
+domEls.batsu.addEventListener('click', () => {
+  domEls.checkAnswerBox.style.display = 'none';
+  preventDrawing = false;
+  domEls.mondaiButt.disabled = false;
+  domEls.mondaiButt.style.display = 'block';
+  getMondai();
+  userStats.updateStats(false);
+  createStatsTable();
+});
 
 domEls.setSelectorButt.addEventListener('click', () => {
   domEls.studySetSelector.style.display = 'block';
+  preventDrawing = true;
 });
 
 domEls.setCloserButt.addEventListener('click', () => {
   domEls.studySetSelector.style.display = 'none';
+  preventDrawing = false;
 });
 
 domEls.mondaiButt.addEventListener('click', (e) => {
   let text = e.target.innerHTML;
-  text === 'もんだい' ? getMondai() : checkAnswer();
+  text === 'スタート' ? getMondai() : checkAnswer();
 });
 
 domEls.brushSizeRange.addEventListener('change', (e) => {
@@ -144,7 +230,6 @@ domEls.toolsCloser.addEventListener('click', () => {
   domEls.toolsOut = false;
 });
 
-let clearCanvas = false;
 keshi.addEventListener('click', () => {
   clearCanvas = true;
 });
@@ -160,34 +245,37 @@ const lastPoints = {
   y: null
 };
 
+let mirror;
+
 let sketch = function (p) {
   let pg;
   let cnv;
-  let myFont;
-  p.preload = function () {
-    myFont = p.loadFont('./assets/Dosis-VariableFont_wght.ttf');
-  };
+
   p.setup = function () {
     cnv = p.createCanvas(canvasSettings.width, canvasSettings.height);
-    p.textFont(myFont);
-    p.textSize(28);
-    p.textStyle('NORMAL');
   };
   p.draw = function () {
     if (clearCanvas) {
       p.clear();
       clearCanvas = false;
     }
-    p.stroke(255, 110, 109);
-    p.strokeWeight(userSettings.brushSize);
-    if (p.mouseIsPressed) {
-      if (lastPoints.x && lastPoints) {
-        p.line(lastPoints.x, lastPoints.y, p.mouseX, p.mouseY);
-      } else {
-        p.line(p.mouseX, p.mouseY, p.mouseX, p.mouseY);
+    if (!preventDrawing) {
+      p.stroke(255, 110, 109);
+      p.strokeWeight(userSettings.brushSize);
+      if (p.mouseIsPressed) {
+        if (lastPoints.x && lastPoints) {
+          p.line(lastPoints.x, lastPoints.y, p.mouseX, p.mouseY);
+        } else {
+          p.line(p.mouseX, p.mouseY, p.mouseX, p.mouseY);
+        }
+        lastPoints.x = p.mouseX;
+        lastPoints.y = p.mouseY;
       }
-      lastPoints.x = p.mouseX;
-      lastPoints.y = p.mouseY;
+    }
+    if (takingPhoto) {
+      mirror = p.createGraphics(p.width, p.height);
+      mirror.image(cnv, 0, 0, 100, 100);
+      mirror.loadPixels();
     }
   };
   p.mouseReleased = function () {
@@ -202,7 +290,30 @@ let sketch = function (p) {
     p.image(pg, 0, 0);
   };
 };
-new p5(sketch, window.document.getElementById('canvas'));
+
+function yourDrawing(p) {
+  let cnv;
+  p.setup = function () {
+    cnv = p.createCanvas(100, 100);
+  };
+  p.draw = function () {
+    if (clearMirror) {
+      p.clear();
+      clearMirror = false;
+    }
+    if (takingPhoto) {
+      domEls.yourDrawing.clientWidth = domEls.kanjiAnswer.clientWidth;
+      domEls.yourDrawing.clientHeight = domEls.kanjiAnswer.clientHeight;
+      p.resizeCanvas(domEls.kanjiAnswer.clientWidth, domEls.kanjiAnswer.clientHeight);
+      p.image(mirror, 0, 0);
+      takingPhoto = false;
+      clearCanvas = true;
+    }
+  };
+}
+
+new p5(sketch, domEls.canvas);
+new p5(yourDrawing, domEls.yourDrawing);
 
 /*
 //text file parser
