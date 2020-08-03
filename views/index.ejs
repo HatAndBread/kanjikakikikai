@@ -1,23 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <%- include('header')%>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>漢字マシーン</title>
+    <link rel="stylesheet" href="style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Dosis&family=Kosugi+Maru&display=swap" rel="stylesheet" />
     <script src="p5.min.js"></script>
     <script src="main.js" defer></script>
   </head>
 
   <body>
     <div id="nav-bar">
-      <input id="keshi" type="image" src="./assets/keshi.png" alt="ERASE" />
+      <div id="left-stuff">
+        <div>
+          <button id="select-study-set-butt" class="main-button" style="position: relative;">Kanji set</button>
+        </div>
 
-      <div id="brush-div">
-        <label for="brush-size" id="brush-label">
-          <img src="./assets/fude.png" alt="Brush size: " id="brush-image" />Brush-size</label
-        >
-        <input id="brush-size" type="range" name="brush-size" min="1" max="60" step="1" value="5" />
-      </div>
-      <div>
-        <button id="select-study-set-butt" class="main-button" style="position: relative;">Select study set</button>
+        <div id="brush-div" style="display: flex; flex-direction: row;">
+          <img src="./assets/fude.png" alt="Brush size: " id="brush-image" />
+          <input id="brush-size" type="range" name="brush-size" min="1" max="60" step="1" value="10" />
+        </div>
+        <input id="keshi" type="image" src="./assets/keshi.png" alt="ERASE" />
       </div>
       <div id="study-set-selector">
         <button id="set-selector-closer">✕</button>
@@ -28,6 +32,8 @@
               <%= userInfo.myDictionaries[i].title%>
             </button>
           </li>
+          <% }} %> <% if (userInfo){if (userInfo.myDictionaries.length > 0){%>
+          <div class="list-seperate"></div>
           <% }} %>
           <li>
             <button userDefined="false" value="random-kanji" class="main-button set-selector">Random Kanji</button>
@@ -58,27 +64,29 @@
         <a href="/about" class="nav-button">About</a>
       </div>
     </div>
-    <div style="position: fixed; left: 10px; top: 60px;">
-      <p>Welcome, <%if (userInfo){%> <%=userInfo.username%>! <% }else{ %>stranger<%}%></p>
-    </div>
+
     <div id="background">
       <div id="main">
         <div id="canvas"></div>
         <div id="stats"></div>
-        <div id="bottom">
-          <button id="mondai-button" class="main-button">スタート</button>
-          <p id="mondai"></p>
-        </div>
-        <div id="check-answer">
-          <p>Answer</p>
-          <div id="kanji_answer"></div>
-          <div id="your-drawing"></div>
-          <div id="right-or-wrong">
-            <button id="maru" class="maru-batsu">⭕️</button>
-            <button id="batsu" class="maru-batsu">❌</button>
-          </div>
-        </div>
       </div>
+    </div>
+
+    <div id="check-answer">
+      <div id="answers">
+        <div id="kanji_answer"></div>
+        <div id="your-drawing"></div>
+      </div>
+
+      <div id="right-or-wrong">
+        <button id="maru" class="maru-batsu">⭕️👍😆</button>
+        <button id="batsu" class="maru-batsu">❌🤦‍♀️😞</button>
+      </div>
+    </div>
+    <button id="start-button" class="main-button" type="button">START</button>
+    <div id="bottom">
+      <p id="mondai"></p>
+      <button id="mondai-button" class="main-button">Check answer</button>
     </div>
   </body>
 </html>

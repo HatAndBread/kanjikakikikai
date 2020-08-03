@@ -10,11 +10,26 @@ let currentMondai = {
 let takingPhoto = false;
 let clearCanvas = false;
 let clearMirror = false;
-let preventDrawing = false;
+let preventDrawing = true;
 
 const userSettings = {
-  brushSize: 5
+  brushSize: 10
 };
+
+let screenWidth;
+let screenHeight;
+const checkMobileOrientation = () => {
+  screenWidth = window.innerWidth;
+  screenHeight = window.innerHeight;
+
+  if (screenHeight - 110 >= screenWidth) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
+let orientationPortrait = checkMobileOrientation();
 
 const domEls = {
   mondaiButt: document.getElementById('mondai-button'),
@@ -35,6 +50,8 @@ const domEls = {
   batsu: document.getElementById('batsu'),
   yourDrawing: document.getElementById('your-drawing'),
   statsDisplay: document.getElementById('stats'),
+  rightOrWrongDiv: document.getElementById('right-or-wrong'),
+  startButton: document.getElementById('start-button'),
   toolsOut: false
 };
 
@@ -53,6 +70,14 @@ const userStats = {
     this.percentCorrect = Math.round((this.numberCorrect / this.questionOutOf.currentQuestion) * 100);
     this.questionOutOf.currentQuestion += 1;
   }
+};
+
+const resetUserStats = (studySet) => {
+  userStats.studySetUsingNow = studySet;
+  userStats.percentCorrect = 100;
+  userStats.numberCorrect = 0;
+  userStats.questionOutOf.currentQuestion = 1;
+  userStats.questionOutOf.totalQuestions = 20;
 };
 
 function createStatsTable() {
@@ -83,15 +108,20 @@ const canvasSettings = {
   height: domEls.canvas.clientHeight
 };
 
+const resetGame = () => {
+  domEls.startButton.style.display = 'block';
+  domEls.mondaiText.innerText = '';
+};
+
 const getWordSet = async (whichOne) => {
   const res = await fetch(`/get-words/${whichOne}`);
   const data = await res.json();
   currentSet = data.set;
   console.log(currentSet);
-  userStats.studySetUsingNow = currentSet.title;
-  userStats.questionOutOf.currentQuestion = 1;
-  clearCanvas();
+  resetUserStats(currentSet.title);
+  clearCanvas = true;
   createStatsTable();
+  resetGame();
 };
 
 const getPreDefinedWordSet = async (src, title) => {
@@ -101,10 +131,10 @@ const getPreDefinedWordSet = async (src, title) => {
   currentSet.title = title;
   currentSet.words = words;
   console.log(currentSet);
-  userStats.studySetUsingNow = currentSet.title;
-  userStats.questionOutOf.currentQuestion = 1;
+  resetUserStats(currentSet.title);
   clearCanvas = true;
   createStatsTable();
+  resetGame();
 };
 
 getPreDefinedWordSet('jlpt-five.jscsrc', 'Random kanji'); // set up initially
@@ -157,21 +187,37 @@ for (let i = 0; i < domEls.selectorButts.length; i++) {
 }
 
 const getMondai = () => {
-  domEls.mondaiButt.innerText = 'チェック';
   let ranNum = Math.floor(Math.random() * currentSet.words.length);
   currentMondai.yomikata = currentSet.words[ranNum].yomikata;
   currentMondai.kanji = currentSet.words[ranNum].kanji;
   currentMondai.definition = currentSet.words[ranNum].definition;
-  domEls.mondaiText.innerText = `${currentMondai.yomikata} (${currentMondai.definition})`;
+  if (currentMondai.definition) {
+    domEls.mondaiText.innerText = `${currentMondai.yomikata} (${currentMondai.definition})`;
+  } else {
+    domEls.mondaiText.innerText = `${currentMondai.yomikata}`;
+  }
   console.log(currentMondai);
   clearMirror = true;
 };
 
 const checkAnswer = () => {
-  //domEls.mondaiButt.innerText = 'もんだい';
   takingPhoto = true;
+  domEls.statsDisplay.style.display = 'none';
   domEls.kanjiAnswer.innerText = currentMondai.kanji;
   domEls.checkAnswerBox.style.display = 'block';
+  domEls.kanjiAnswer.style.fontSize = '58px';
+  if (currentMondai.kanji.length === 3) {
+    domEls.kanjiAnswer.style.fontSize = '42px';
+  }
+  if (currentMondai.kanji.length === 4) {
+    domEls.kanjiAnswer.style.fontSize = '32px';
+  }
+  if (currentMondai.kanji.length === 5) {
+    domEls.kanjiAnswer.style.fontSize = '26px';
+  }
+  if (currentMondai.kanji.length > 5) {
+    domEls.kanjiAnswer.style.fontSize = '18px';
+  }
   domEls.mondaiButt.disabled = true;
   domEls.mondaiButt.style.display = 'none';
   preventDrawing = true;
@@ -184,6 +230,7 @@ domEls.maru.addEventListener('click', () => {
   domEls.mondaiButt.style.display = 'block';
   getMondai();
   userStats.updateStats(true);
+  domEls.statsDisplay.style.display = 'block';
   createStatsTable();
 });
 domEls.batsu.addEventListener('click', () => {
@@ -193,6 +240,7 @@ domEls.batsu.addEventListener('click', () => {
   domEls.mondaiButt.style.display = 'block';
   getMondai();
   userStats.updateStats(false);
+  domEls.statsDisplay.style.display = 'block';
   createStatsTable();
 });
 
@@ -207,12 +255,18 @@ domEls.setCloserButt.addEventListener('click', () => {
 });
 
 domEls.mondaiButt.addEventListener('click', (e) => {
-  let text = e.target.innerHTML;
-  text === 'スタート' ? getMondai() : checkAnswer();
+  checkAnswer();
 });
 
 domEls.brushSizeRange.addEventListener('change', (e) => {
   userSettings.brushSize = e.target.value;
+});
+
+domEls.startButton.addEventListener('click', () => {
+  domEls.startButton.style.display = 'none';
+  preventDrawing = false;
+  domEls.mondaiButt.style.display = 'block';
+  getMondai();
 });
 
 domEls.bigMag.addEventListener('click', () => {
@@ -237,7 +291,8 @@ keshi.addEventListener('click', () => {
 window.addEventListener('resize', (e) => {
   canvasSettings.width = domEls.canvas.clientWidth;
   canvasSettings.height = domEls.canvas.clientHeight;
-  console.log(canvasSettings);
+  orientationPortrait = checkMobileOrientation();
+  console.log(`orientation portrait: ${orientationPortrait}`);
 });
 
 const lastPoints = {
@@ -246,6 +301,12 @@ const lastPoints = {
 };
 
 let mirror;
+let drawingLimits = {
+  lowX: 1000000,
+  lowY: 1000000,
+  highX: 0,
+  highY: 0
+};
 
 let sketch = function (p) {
   let pg;
@@ -260,7 +321,7 @@ let sketch = function (p) {
       clearCanvas = false;
     }
     if (!preventDrawing) {
-      p.stroke(255, 110, 109);
+      p.stroke(230, 57, 70);
       p.strokeWeight(userSettings.brushSize);
       if (p.mouseIsPressed) {
         if (lastPoints.x && lastPoints) {
@@ -270,11 +331,28 @@ let sketch = function (p) {
         }
         lastPoints.x = p.mouseX;
         lastPoints.y = p.mouseY;
+        if (p.mouseX > drawingLimits.highX && p.mouseX < p.width) {
+          drawingLimits.highX = p.mouseX;
+        }
+        if (p.mouseX < drawingLimits.lowX && p.mouseX > 0) {
+          drawingLimits.lowX = p.mouseX;
+        }
+        if (p.mouseY > drawingLimits.highY && p.mouseY < p.height) {
+          drawingLimits.highY = p.mouseY;
+        }
+        if (p.mouseY < drawingLimits.lowY && p.mouseY > 0) {
+          drawingLimits.lowY = p.mouseY;
+        }
+        console.log(drawingLimits);
       }
     }
     if (takingPhoto) {
       mirror = p.createGraphics(p.width, p.height);
-      mirror.image(cnv, 0, 0, 100, 100);
+      if (!orientationPortrait) {
+        mirror.image(cnv, 0, 0, 150, 100);
+      } else {
+        mirror.image(cnv, 0, 0, 100, 150);
+      }
       mirror.loadPixels();
     }
   };
@@ -294,7 +372,11 @@ let sketch = function (p) {
 function yourDrawing(p) {
   let cnv;
   p.setup = function () {
-    cnv = p.createCanvas(100, 100);
+    if (!orientationPortrait) {
+      cnv = p.createCanvas(150, 100);
+    } else {
+      cnv = p.createCanvas(100, 150);
+    }
   };
   p.draw = function () {
     if (clearMirror) {
@@ -302,12 +384,32 @@ function yourDrawing(p) {
       clearMirror = false;
     }
     if (takingPhoto) {
-      domEls.yourDrawing.clientWidth = domEls.kanjiAnswer.clientWidth;
-      domEls.yourDrawing.clientHeight = domEls.kanjiAnswer.clientHeight;
-      p.resizeCanvas(domEls.kanjiAnswer.clientWidth, domEls.kanjiAnswer.clientHeight);
+      //  domEls.yourDrawing.style.width = `${p.width}px`;
+      //  domEls.yourDrawing.style.height = `${p.height}px`;
       p.image(mirror, 0, 0);
       takingPhoto = false;
       clearCanvas = true;
+      drawingLimits.lowX = 1000000;
+      drawingLimits.lowY = 1000000;
+      drawingLimits.highX = 0;
+      drawingLimits.highY = 0;
+    }
+  };
+  p.windowResized = function () {
+    if (!orientationPortrait) {
+      cnv = p.resizeCanvas(150, 100);
+      if (mirror) {
+        p.image(mirror, 0, -40);
+      }
+      //domEls.yourDrawing.style.width = `${p.width}px`;
+      //domEls.yourDrawing.style.height = `${p.height}px`;
+    } else {
+      cnv = p.resizeCanvas(100, 150);
+      if (mirror) {
+        p.image(mirror, -30, 0);
+      }
+      //domEls.yourDrawing.style.width = `${p.width}px`;
+      // domEls.yourDrawing.style.height = `${p.height}px`;
     }
   };
 }

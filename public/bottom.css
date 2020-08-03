@@ -1,31 +1,37 @@
 #bottom {
-  position: relative;
-  top: 40px;
-  margin-left: 60px;
-  background-color: rgba(12, 13, 14, 0.5);
-  display: grid;
-  grid-template: 1fr / repeat(12, 1fr);
+  position: fixed;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+  bottom: 0;
+  width: 100vw;
+  height: 50px;
+  background-color: #e63946;
 }
 
 #mondai-button {
-  grid-column: 1 / span 2;
-  font-size: unset;
+  display: none;
+  margin-right: 10px;
 }
 #mondai {
-  grid-column: 3 / span 10;
   font-size: 26px;
-  color: snow;
+  color: #f1faee;
   padding-left: 10px;
 }
 
-@media only screen and (max-width: 900px) {
+@media (orientation: landscape) {
+  #mondai {
+    font-size: 26px;
+  }
   #bottom {
-    margin-left: 40px;
   }
 }
 
-@media only screen and (max-width: 700px) {
+@media (orientation: portrait) {
+  #mondai {
+    font-size: 16px;
+  }
   #bottom {
-    margin-left: 0px;
   }
 }

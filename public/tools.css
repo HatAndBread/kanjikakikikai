@@ -1,67 +1,71 @@
 #tools {
-  background-color: var(--nav-color);
+  background-color: #e63946;
   display: flex;
+  align-items: flex-end;
 }
 
 #tools-closer {
   display: none;
 }
 #tools-closer:hover {
-  color: powderblue;
+  color: #a8dadc;
   font-size: 18px;
   transition: color 0.2s ease-in 0.1s, font-size 0.2s ease-in 0.1s;
 }
 
 .nav-button {
   display: block;
-  border-radius: 10%;
+  height: 30px;
+  border-radius: 10px;
   text-decoration: none;
   border-style: none;
-  background-color: snow;
-  color: #112;
+  background-color: #f1faee;
+  color: #1d3557;
   font-size: larger;
-  transition: background-color 0.2s ease-in;
+  transition: background-color 0.1s linear;
   text-align: center;
   margin: 8px;
   padding: 4px;
 }
 
 .nav-button:hover {
-  background-color: powderblue;
-  transition: background-color 0.2s ease-in;
+  background-color: #a8dadc;
+  transition: background-color 0.1s linear;
 }
 
-@media only screen and (max-width: 900px) {
+@media only screen and (max-width: 1200px) {
   #tools {
     background-color: var(--nav-color);
     position: fixed;
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
+    align-items: center;
     top: 60px;
-    right: -100%;
-    width: 150px;
-    padding: 10px;
-    border-radius: 0% 0% 0% 10%;
+    right: -100vw;
+    width: 100vw;
+    height: 100vh;
+
+    border-radius: 0% 0% 0% 10px;
     transition: right 0.4s linear;
-    z-index: 5;
+    z-index: 5000;
   }
   #tools-closer {
-    color: snow;
+    color: #f1faee;
     border: none;
-    display: inline;
     position: relative;
+    display: block;
+    left: 45%;
     font-size: 16px;
-    background-color: var(--nav-color);
+    background-color: transparent;
   }
 
   .nav-button {
     display: block;
-    border-radius: 10%;
+    border-radius: 10px;
     text-decoration: none;
     border-style: none;
-    background-color: snow;
-    color: #112;
+    background-color: #f1faee;
+    color: #1d3557;
     font-size: larger;
     transition: background-color 0.2s ease-in;
     text-align: center;

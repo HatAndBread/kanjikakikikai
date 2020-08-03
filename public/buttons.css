@@ -1,12 +1,52 @@
 .main-button {
-  border-radius: 10%;
+  border-radius: 10px;
+  height: 40px;
   border-style: none;
-  background-color: snow;
-  color: #112;
+  background-color: #f1faee;
+  color: #1d3557;
   font-size: larger;
   cursor: pointer;
+  padding: 4px;
 }
 
 .main-button:hover {
-  background-color: powderblue;
+  background-color: #a8dadc;
+}
+
+#start-button {
+  position: fixed;
+  font-size: 64px;
+  width: 200px;
+  height: 100px;
+  z-index: 100;
+  top: 160px;
+  left: 50%;
+  margin-left: -100px;
+  background-color: #e63946;
+  color: rgb(31, 53, 86);
+  border-style: ridge;
+  border-color: rgb(70, 123, 157);
+  transition: background-color 0.1s ease-in;
+}
+
+#start-button:hover {
+  background-color: rgb(31, 53, 86);
+  color: #e63946;
+  transition: background-color 0.1s ease-in;
+}
+
+#mondai-button {
+  width: 130px;
+}
+
+@media (orientation: landscape) {
+  #start-button {
+    top: 130px;
+  }
+}
+
+@media (orientation: portrait) {
+  #start-buton {
+    top: 160px;
+  }
 }

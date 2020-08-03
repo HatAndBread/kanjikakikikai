@@ -11,7 +11,7 @@
 @import url(check-answer.css);
 
 :root {
-  --nav-color: #112; /* define global variable in root */
+  --nav-color: #e63946; /* define global variable in root */
 }
 
 * {

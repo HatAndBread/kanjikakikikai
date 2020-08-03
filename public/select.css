@@ -1,14 +1,18 @@
 #study-set-selector {
-  z-index: 10;
+  z-index: 150;
   position: fixed;
   display: none;
-  width: 300px;
-  height: 200px;
-  top: 30%;
+  width: 340px;
+  height: 198px;
+  top: 24%;
   left: 50%;
-  margin-left: -150px;
-  background-color: rgba(30, 30, 30, 0.7);
-  overflow: scroll;
+  margin-left: -170px;
+  background-color: #e63946;
+  border-style: ridge;
+  border-color: rgb(70, 123, 157);
+  overflow-x: hidden;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
   border-radius: 10px;
   border-style: ridge;
 }
@@ -19,14 +23,31 @@
 
 #set-selector-closer {
   background-color: transparent;
-  color: snow;
+  position: sticky;
+  color: #f1faee;
+
+  top: 8px;
+  left: 85%;
   cursor: pointer;
   border-style: none;
   font-size: 24px;
 }
 
 #set-selector-closer:hover {
-  color: powderblue;
+  color: #a8dadc;
   font-size: 28px;
   transition: color 0.3s, font-size 0.3s;
+}
+
+.list-seperate {
+  width: 90%;
+  height: 2px;
+  background-color: #f1faee;
+  border-radius: 50%;
+}
+
+@media (orientation: portrait) {
+  #study-set-selector {
+    height: 350px;
+  }
 }

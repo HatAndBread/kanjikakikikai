@@ -1,11 +1,24 @@
 #nav-bar {
   width: 100vw;
   height: 60px;
-  background-color: var(--nav-color);
-  color: snow;
+  background-color: #e63946;
+  color: #f1faee;
   display: inline-flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: space-between;
+}
+
+#left-stuff {
+  display: flex;
+  align-items: center;
+  width: 50%;
+  justify-content: space-around;
+}
+
+@media only screen and (max-width: 600px) {
+  #left-stuff {
+    width: 85%;
+  }
 }
 
 #logo {
@@ -15,12 +28,10 @@
   display: flex;
   flex-direction: column;
 }
-#brush-label {
-  text-align: center;
-}
+
 #brush-image {
-  width: 20px;
-  height: 20px;
+  width: 36px;
+  height: 36px;
 }
 
 #big-mac {
@@ -30,18 +41,18 @@
 
 #big-mac:hover .slice {
   background-color: powderblue;
-  transition: background-color 0.2s ease-in;
+  transition: background-color 0.1s ease-in;
 }
 
 .slice {
   height: 3px;
   width: 22px;
   margin: 6px 0px 6px 0px;
-  background-color: snow;
+  background-color: #f1faee;
   border-radius: 20%;
 }
 
-@media only screen and (max-width: 900px) {
+@media only screen and (max-width: 1200px) {
   #nav-bar {
   }
   #big-mac {
