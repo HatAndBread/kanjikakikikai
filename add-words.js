@@ -22,7 +22,11 @@ addWords.post('/', (req, res) => {
         words: []
       };
       for (let i = 0; i < req.body['kanji-input'].length; i++) {
-        newDict.words.push({ kanji: req.body['kanji-input'][i], yomikata: req.body['yomikata-input'][i] });
+        newDict.words.push({
+          kanji: req.body['kanji-input'][i],
+          yomikata: req.body['yomikata-input'][i],
+          definition: req.body['definition-input'][i]
+        });
       }
       console.log(newDict);
       db.update({ _id: req.user._id }, { $push: { myDictionaries: newDict } }, {}, function () {});

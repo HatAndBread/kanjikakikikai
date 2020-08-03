@@ -1,3 +1,12 @@
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 #study-set-selector {
   z-index: 150;
   position: fixed;
@@ -15,6 +24,7 @@
   -webkit-overflow-scrolling: touch;
   border-radius: 10px;
   border-style: ridge;
+  animation: fadeIn 0.3s;
 }
 
 .set-selector {

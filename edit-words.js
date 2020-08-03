@@ -41,6 +41,7 @@ editWords.put('/', checkAuthenticated, (req, res) => {
   let myDictionaries;
   let title = req.body.title;
   let newDictionary = req.body.wordList;
+  console.log(req.body.wordList);
 
   db.findOne({ _id: req.user._id }, (err, doc) => {
     console.log(doc);

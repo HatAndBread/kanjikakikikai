@@ -15,10 +15,25 @@
           <tr>
             <th>かんじ</th>
             <th>よみかた</th>
+            <th>definition</th>
           </tr>
           <tr>
-            <td><input type="text" name="kanji-input" id="kanji-input" required /></td>
-            <td><input type="text" name="yomikata-input" id="yomikata-input" required /></td>
+            <td>
+              <input maxlength="10" type="text" name="kanji-input" id="kanji-input" placeholder="漢字" required />
+            </td>
+            <td>
+              <input
+                maxlength="10"
+                type="text"
+                name="yomikata-input"
+                id="yomikata-input"
+                placeholder="かんじ"
+                required
+              />
+            </td>
+            <td>
+              <input maxlength="20" type="text" name="definition-input" id="definition-input" placeholder="optional" />
+            </td>
           </tr>
         </table>
         <button id="add-another-word-butt" class="main-button" type="button">Add another word</button>
@@ -35,20 +50,31 @@
       const newRow = document.createElement('tr');
       const newWord = document.createElement('td');
       const newDef = document.createElement('td');
+      const newDefinition = document.createElement('td');
       const kanjiInput = document.createElement('input');
       const yomikataInput = document.createElement('input');
+      const definitionInput = document.createElement('input');
       kanjiInput.type = 'text';
       yomikataInput.type = 'text';
+      definitionInput.type = 'text';
       kanjiInput.name = 'kanji-input';
       yomikataInput.name = 'yomikata-input';
+      definitionInput.name = 'definition-input';
       kanjiInput.id = 'kanji-input';
       yomikataInput.id = 'yomikata-input';
+      definitionInput.id = 'definition-input';
+      kanjiInput.maxLength = 10;
+      yomikataInput.maxLength = 10;
+      definitionInput.maxLength = 20;
       kanjiInput.required = true;
       yomikataInput.required = true;
+      definitionInput.required = false;
       newWord.appendChild(kanjiInput);
       newDef.appendChild(yomikataInput);
+      newDefinition.appendChild(definitionInput);
       newRow.appendChild(newWord);
       newRow.appendChild(newDef);
+      newRow.appendChild(newDefinition);
       table.appendChild(newRow);
     });
   </script>

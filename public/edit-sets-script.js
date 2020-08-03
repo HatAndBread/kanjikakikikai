@@ -35,7 +35,7 @@ const gomibakoFactory = (identification) => {
   gomibako.class = 'gomibako';
   gomibako.src = './assets/trash.png';
   gomibako.alt = 'DELETE';
-  gomibako.style = 'width: 7%; height: 7%;';
+  gomibako.style = 'width: 30px; height: 30px;';
   gomibako.identification = identification;
   gomibako.addEventListener('click', () => {
     for (let i = 0; i < currentSet.wordList.length; i++) {
@@ -62,28 +62,43 @@ const itemCreater = (i) => {
   const newRow = document.createElement('tr');
   const newWord = document.createElement('td');
   const newDef = document.createElement('td');
-  const gomibakoDataTable = document.createElement('TD');
+  const newDefinition = document.createElement('td');
+  const gomibakoDataTable = document.createElement('td');
   const kanjiInput = document.createElement('input');
   const yomikataInput = document.createElement('input');
+  const definitionInput = document.createElement('input');
 
   kanjiInput.type = 'text';
   yomikataInput.type = 'text';
+  definitionInput.type = 'text';
   kanjiInput.name = 'kanji-input';
   yomikataInput.name = 'yomikata-input';
+  definitionInput.name = 'definition-input';
+  kanjiInput.maxLength = 10;
+  yomikataInput.maxLength = 10;
+  definitionInput.maxLength = 20;
   if (i || i === 0) {
     kanjiInput.value = currentSet.wordList[i].kanji;
     yomikataInput.value = currentSet.wordList[i].yomikata;
+    if (currentSet.wordList[i].definition) {
+      definitionInput.value = currentSet.wordList[i].definition;
+    } else {
+      definitionInput.value = '';
+    }
     currentSet.wordList[i].id = id;
   } else {
-    currentSet.wordList.push({ kanji: null, yomikata: null, id: id });
+    currentSet.wordList.push({ kanji: null, yomikata: null, definition: null, id: id });
   }
   kanjiInput.required = true;
   yomikataInput.required = true;
+  definitionInput.required = false;
   newWord.appendChild(kanjiInput);
   newDef.appendChild(yomikataInput);
+  newDefinition.appendChild(definitionInput);
   gomibakoDataTable.appendChild(gomibako);
   newRow.appendChild(newWord);
   newRow.appendChild(newDef);
+  newRow.appendChild(newDefinition);
   newRow.appendChild(gomibakoDataTable);
   table.appendChild(newRow);
   tableRowGarbage.push(newRow); // store new elements in garbage so you can delete later.
@@ -99,6 +114,14 @@ const itemCreater = (i) => {
     currentSet.wordList.forEach((element) => {
       if (element.id === id) {
         element.yomikata = yomikataInput.value;
+      }
+    });
+    console.log(currentSet);
+  });
+  definitionInput.addEventListener('change', () => {
+    currentSet.wordList.forEach((element) => {
+      if (element.id === id) {
+        element.definition = definitionInput.value;
       }
     });
     console.log(currentSet);
