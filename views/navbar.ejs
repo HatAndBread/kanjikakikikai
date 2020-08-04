@@ -1,0 +1,42 @@
+<div id="nav-bar">
+  <div id="logo" style="font-size: 32px; margin-left: 10px;"><a href="/">🏯</a></div>
+
+  <div id="big-mac">
+    <div class="slice"></div>
+    <div class="slice"></div>
+    <div class="slice"></div>
+  </div>
+  <div id="tools">
+    <button id="tools-closer">✕</button>
+
+    <a href="/login" class="nav-button">Log in</a>
+    <a href="/signup" class="nav-button">Sign up</a>
+
+    <a href="/logout" class="nav-button">Log out</a>
+    <a href="/add-words" class="nav-button">Make new study sets</a>
+    <a href="/edit-sets" class="nav-button">Edit my study sets</a>
+
+    <a href="/settings" class="nav-button">Settings</a>
+    <a href="/about" class="nav-button">About</a>
+  </div>
+</div>
+
+<script>
+  let toolsOut = false;
+  const tools = document.getElementById('tools');
+  const burger = document.getElementById('big-mac');
+  const toolsCloser = document.getElementById('tools-closer');
+  burger.addEventListener('click', () => {
+    if (!toolsOut) {
+      tools.style.right = '0px';
+      toolsOut = true;
+    } else {
+      tools.style.right = '-100%';
+      toolsOut = false;
+    }
+  });
+  toolsCloser.addEventListener('click', () => {
+    tools.style.right = '-100%';
+    toolsOut = false;
+  });
+</script>

@@ -37,11 +37,10 @@ editWords.get('/:set_name', checkAuthenticated, (req, res) => {
 editWords.put('/', checkAuthenticated, (req, res) => {
   console.log('hey everybody! yo');
   console.log(req.body);
-  res.send({ message: 'received' });
+
   let myDictionaries;
   let title = req.body.title;
   let newDictionary = req.body.wordList;
-  console.log(req.body.wordList);
 
   db.findOne({ _id: req.user._id }, (err, doc) => {
     console.log(doc);
@@ -58,6 +57,9 @@ editWords.put('/', checkAuthenticated, (req, res) => {
       console.log('yo i found it thjis is the stuff ');
       if (err) {
         console.log(err);
+        res.send(err);
+      } else {
+        res.send({ message: 'success' });
       }
       console.log(numReplaced);
     });

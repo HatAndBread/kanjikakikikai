@@ -9,6 +9,7 @@
 @import url(bottom.css);
 @import url(select.css);
 @import url(check-answer.css);
+@import url(editor-styles.css);
 
 :root {
   --nav-color: #e63946; /* define global variable in root */
@@ -16,7 +17,6 @@
 
 * {
   margin: 0px;
-  touch-action: none;
   user-select: none;
   -moz-user-select: none; /* Firefox */
   -ms-user-select: none; /* Internet Explorer */

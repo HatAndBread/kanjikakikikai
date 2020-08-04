@@ -4,6 +4,8 @@ const setTitle = document.getElementById('set-title');
 const table = document.getElementById('edit-table');
 const addWordButt = document.getElementById('add-word-butt');
 const saveChangesButt = document.getElementById('save-changes-butt');
+const setSelectorWindow = document.getElementById('set-selector-window');
+
 /*=============
     ==============*/
 const currentSet = {};
@@ -130,6 +132,7 @@ const itemCreater = (i) => {
 
 addWordButt.addEventListener('click', () => {
   itemCreater(false);
+  setEditor.scrollTop = setEditor.scrollHeight;
 });
 
 saveChangesButt.addEventListener('click', async () => {
@@ -159,6 +162,8 @@ const getWords = async (setName) => {
 };
 for (let i = 0; i < setEditButts.length; i++) {
   setEditButts[i].addEventListener('click', (e) => {
+    setSelectorWindow.style.display = 'none';
+    setEditor.style.display = 'flex';
     getWords(e.target.value);
   });
 }

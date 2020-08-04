@@ -1,0 +1,120 @@
+.edit-main {
+  background-color: #f1faee;
+  height: calc(100vh - 60px);
+  width: 100vw;
+  position: absolute;
+}
+#set-selector-window {
+  border-color: rgb(70, 123, 157);
+  border-style: solid;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: relative;
+  color: #f1faee;
+  background-color: #e63946;
+  height: 400px;
+  width: 300px;
+  padding: 16px;
+  overflow: auto;
+  top: 10%;
+  left: 50%;
+  margin-left: -168px;
+}
+
+#set-selector-window ul {
+  padding: 0px;
+}
+
+#set-selector-window li {
+  margin: 10px;
+}
+
+#set-title {
+  text-align: center;
+}
+
+.window-title {
+  position: sticky;
+  top: -20px;
+  width: 100%;
+  background-color: #e63946;
+}
+
+.divider {
+  background-color: #f1faee;
+  width: 100%;
+  height: 3px;
+  border-radius: 50%;
+  transition: width 0.5s ease-in;
+}
+
+#set-editor {
+  position: relative;
+  display: none;
+  border-style: solid;
+  flex-direction: column;
+  border-color: rgb(70, 123, 157);
+  background-color: #e63946;
+  color: #f1faee;
+  border-radius: 10px;
+  width: 90vw;
+  height: 80vh;
+  top: 10px;
+  margin-left: 5vw;
+  align-items: center;
+  overflow: auto;
+}
+
+.editor-buttons {
+  position: sticky;
+  display: flex;
+  justify-content: center;
+  bottom: 0;
+  background-color: #e63946;
+  width: 100%;
+}
+.editor-buttons button {
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 5px;
+  height: 50px;
+  width: 150px;
+}
+
+.editor-buttons a {
+  text-decoration: none;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 5px;
+  width: 150px;
+  height: 38px;
+  text-align: center;
+  padding: 0px;
+  padding-top: 12px;
+}
+
+#set-editor input {
+  background-color: #f1faee;
+  color: #1d3557;
+  border-radius: 10px;
+}
+
+@media only screen and (max-width: 600px) {
+  #set-editor input {
+    width: 75px;
+  }
+}
+
+@media (orientation: portrait) {
+  #set-selector-window {
+    height: 400px;
+  }
+}
+
+@media only screen and (max-height: 600px) {
+  #set-selector-window {
+    height: 200px;
+  }
+}

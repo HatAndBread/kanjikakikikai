@@ -1,11 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
+
     <%- include('header')%>
-    <script src="./edit-sets-script.js" defer></script>
-  </head>
   <body>
+    <%- include('navbar')-%>
+    <div class="edit-main">
+      <div id="set-selector-window">
+        <div class="window-title">
     <h1>Select a set to edit</h1>
+    <div class="divider"></div>
+    </div>
     <ul>
       <% for (let i = 0; i < sets.length; i++){ %>
       <div class="set-card">
@@ -17,8 +19,12 @@
       </div>
       <% } %>
     </ul>
+    </div>
     <div id="set-editor">
+      <div id="window-title">
       <h1 id="set-title"></h1>
+      <div class="divider"></div>
+      </div>
       <ul id="edit-word-list"></ul>
       <table id="edit-table">
         <tr>
@@ -27,8 +33,15 @@
           <th>Definition</th>
         </tr>
       </table>
-      <button id="add-word-butt" class="main-button" type="button">Add another word</button>
+      <div class="editor-buttons">
+        <a href="/" class="main-button">Cancel</a>
+      <button id="add-word-butt" class="main-button" type="button">Add new word</button>
       <button id="save-changes-butt" class="main-button" type="submit">Save changes</button>
+      </div>
+    </div>
+    
+
     </div>
   </body>
 </html>
+ <script src="./edit-sets-script.js"></script>

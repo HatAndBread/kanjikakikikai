@@ -1,9 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
     <%- include('header')%>
-  </head>
   <body>
+    <%- include('navbar') -%>
     <button id="create-new-butt" class="main-button">Create new study set</button>
     <div id="create-new-set">
       <form action="/add-words" method="POST">
@@ -36,8 +33,10 @@
             </td>
           </tr>
         </table>
+        
         <button id="add-another-word-butt" class="main-button" type="button">Add another word</button>
         <button id="save-new-study-set-butt" class="main-button" type="submit">Save new study set</button>
+      
       </form>
     </div>
   </body>
