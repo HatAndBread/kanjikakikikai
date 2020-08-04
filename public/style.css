@@ -32,6 +32,13 @@
   position: absolute;
 }
 
+/*  Bad idea? Did this to keep page from scrolling unexpectedly when drawing. */
+body {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+}
+
 ul {
   list-style: none;
 }
