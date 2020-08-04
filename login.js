@@ -41,7 +41,7 @@ passport.deserializeUser(function (id, done) {
 });
 
 login.get('/', (req, res) => {
-  res.render('login');
+  res.render('login', { userInfo: req.user, page: 'login' });
 });
 
 login.post(

@@ -145,7 +145,9 @@ saveChangesButt.addEventListener('click', async () => {
     body: JSON.stringify(currentSet)
   });
   const data = await req.json();
-  console.log(data);
+  if (data.message === 'success') {
+    window.location.replace('/');
+  }
 });
 
 const getWords = async (setName) => {

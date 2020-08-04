@@ -9,7 +9,7 @@ module.exports = addWords;
 let sets = null;
 
 addWords.get('/', checkAuthenticated, (req, res) => {
-  res.render('create-new-set', { sets: sets });
+  res.render('create-new-set', { userInfo: req.user, sets: sets, page: 'add-words' });
 });
 
 addWords.post('/', (req, res) => {
@@ -32,5 +32,5 @@ addWords.post('/', (req, res) => {
       db.update({ _id: req.user._id }, { $push: { myDictionaries: newDict } }, {}, function () {});
     }
   });
-  res.send('dekita');
+  res.redirect('/');
 });

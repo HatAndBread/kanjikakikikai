@@ -24,14 +24,10 @@
   #mondai {
     font-size: 26px;
   }
-  #bottom {
-  }
 }
 
 @media (orientation: portrait) {
   #mondai {
     font-size: 16px;
-  }
-  #bottom {
   }
 }

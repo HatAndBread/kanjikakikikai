@@ -1,4 +1,5 @@
 #canvas {
+  touch-action: none;
   width: calc(100vw - 120px);
   height: calc(100vh - 150px);
   position: relative;
@@ -7,8 +8,9 @@
   background-color: #a8dadc;
   border-radius: 16px;
   cursor: url('./assets/fude-cursor.png'), auto;
-  border-style: ridge;
+  border-style: solid;
   border-color: rgb(70, 123, 157);
+  box-shadow: 3px 6px rgba(100, 100, 100, 0.3);
 }
 #stats {
   background-color: transparent;
@@ -20,12 +22,20 @@
   z-index: 3;
 }
 
-@media only screen and (max-width: 900px) {
+@media only screen and (max-width: 1000px) {
   #canvas {
     left: 30px;
     width: calc(100vw - 60px);
   }
   #stats {
-    right: 40px;
+    right: -10px;
+    top: 20px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  #stats {
+    right: -10px;
+    top: 20px;
   }
 }

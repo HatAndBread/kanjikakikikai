@@ -1,0 +1,26 @@
+#about {
+  position: fixed;
+  border-radius: 10px;
+  border-style: solid;
+  border-color: rgb(70, 123, 157);
+  color: #f1faee;
+  background-color: var(--nav-color);
+  height: 60%;
+  width: 66%;
+  left: 50%;
+  margin-left: -38%;
+  padding: 16px;
+}
+
+@media (orientation: portrait) {
+  #about {
+    top: 15%;
+  }
+}
+
+@media (orientation: landscape) {
+  #about {
+    top: 20%;
+    height: 66%;
+  }
+}

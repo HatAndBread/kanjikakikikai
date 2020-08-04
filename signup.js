@@ -5,7 +5,7 @@ const users = require('./db');
 const signup = express.Router();
 
 signup.get('/', (req, res) => {
-  res.render('signup');
+  res.render('signup', { userInfo: req.user, page: 'signup' });
 });
 
 signup.post('/', async (req, res) => {

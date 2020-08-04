@@ -15,7 +15,7 @@ editWords.get('/', checkAuthenticated, (req, res) => {
       console.log(doc);
       console.log(doc.myDictionaries);
       userSets = doc.myDictionaries;
-      res.render('edit-sets', { sets: doc.myDictionaries });
+      res.render('edit-sets', { userInfo: req.user, sets: doc.myDictionaries, page: 'edit-words' });
     }
   });
 });

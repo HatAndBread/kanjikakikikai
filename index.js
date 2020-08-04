@@ -15,6 +15,8 @@ const signup = require('./signup');
 const addWords = require('./add-words');
 const editWords = require('./edit-words');
 const getWords = require('./get-words');
+const about = require('./about');
+const settings = require('./settings');
 
 app.set('view engine', 'ejs');
 
@@ -31,6 +33,8 @@ app.use('/signup', signup);
 app.use('/add-words', addWords);
 app.use('/edit-sets', editWords);
 app.use('/get-words', getWords);
+app.use('/about', about);
+app.use('/settings', settings);
 
 app.get('/', checkAuthenticated, (req, res) => {
   console.log(req.user);

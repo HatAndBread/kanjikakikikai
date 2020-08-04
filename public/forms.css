@@ -1,0 +1,42 @@
+.loggy-formy {
+  position: fixed;
+  border-style: solid;
+  border-color: rgb(70, 123, 157);
+  background-color: #e63946;
+  color: #f1faee;
+  border-radius: 10px;
+  width: 400px;
+  padding: 10px;
+  top: 25%;
+  left: 50%;
+  margin-left: -214px;
+}
+
+.loggy-formy input {
+  background-color: #f1faee;
+  color: #1d3557;
+  border-radius: 10px;
+  width: 200px;
+  margin: 10px;
+}
+
+.loggy-formy button {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.loggy-form label {
+  width: 200px;
+}
+
+.redirector {
+  text-decoration: none;
+  color: #1d3557;
+}
+
+@media (orientation: portrait) {
+  .loggy-formy {
+    width: 300px;
+    margin-left: -162px;
+  }
+}

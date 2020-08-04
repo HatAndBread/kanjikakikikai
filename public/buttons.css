@@ -27,6 +27,22 @@
   border-style: ridge;
   border-color: rgb(70, 123, 157);
   transition: background-color 0.1s ease-in;
+  animation-name: warble;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+@keyframes warble {
+  0% {
+    font-size: 64px;
+  }
+  50% {
+    font-size: 76px;
+  }
+  100% {
+    font-size: 64px;
+  }
 }
 
 #start-button:hover {
@@ -46,7 +62,7 @@
 }
 
 @media (orientation: portrait) {
-  #start-buton {
-    top: 160px;
+  #start-button {
+    top: 40%;
   }
 }

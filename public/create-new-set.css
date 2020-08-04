@@ -1,0 +1,62 @@
+#create-new-set {
+  position: absolute;
+  border-color: rgb(70, 123, 157);
+  border-style: solid;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  color: #f1faee;
+  background-color: #e63946;
+  height: 400px;
+  width: 370px;
+  padding: 16px;
+  overflow: auto;
+  top: 20%;
+  left: 50%;
+  margin-left: -204px;
+}
+
+#create-new-set input {
+  background-color: #f1faee;
+  color: #1d3557;
+  border-radius: 10px;
+}
+
+#create-new-buttons {
+  position: sticky;
+  display: flex;
+  justify-content: space-around;
+  bottom: -20px;
+  margin-top: 10px;
+  width: 100%;
+  padding: 5px;
+  background-color: #e63946;
+}
+
+#create-new-buttons button {
+  width: 120px;
+}
+
+#create-new-buttons .nav-button {
+  width: 120px;
+  margin: 0px;
+  margin-left: -10px;
+  padding: 5px;
+}
+@media (orientation: portrait) {
+  #create-new-set {
+    height: 400px;
+    width: 300px;
+    margin-left: -170px;
+  }
+  #create-new-set input {
+    width: 90px;
+  }
+}
+
+@media only screen and (max-height: 600px) {
+  #create-new-set {
+    height: 200px;
+  }
+}

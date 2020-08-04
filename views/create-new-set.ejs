@@ -1,13 +1,13 @@
     <%- include('header')%>
-  <body>
+  <body style="background-color: #f1faee;">
     <%- include('navbar') -%>
-    <button id="create-new-butt" class="main-button">Create new study set</button>
     <div id="create-new-set">
       <form action="/add-words" method="POST">
         <table id="new-word-table">
           <tr>
             <label for="dictionary-title">Name of study set: </label>
-            <input type="text" name="dictionary-title" id="dictionary-title" />
+            <input type="text" name="dictionary-title" id="dictionary-title" required />
+            <div class="divider"></div>
           </tr>
           <tr>
             <th>かんじ</th>
@@ -33,17 +33,20 @@
             </td>
           </tr>
         </table>
-        
-        <button id="add-another-word-butt" class="main-button" type="button">Add another word</button>
-        <button id="save-new-study-set-butt" class="main-button" type="submit">Save new study set</button>
-      
+              <div id="create-new-buttons">
+                <a href="/" class="nav-button">Cancel</a>
+        <button id="add-another-word-butt" class="main-button" type="button">Add new word</button>
+        <button id="save-new-study-set-butt" class="main-button" type="submit">Save</button>
+        </div>
       </form>
+
     </div>
   </body>
   <script>
     const addAnotherWordButt = document.getElementById('add-another-word-butt');
     const table = document.getElementById('new-word-table');
     const editButt = document.getElementById('edit-study-butt');
+    const createNewSet = document.getElementById('create-new-set');
 
     addAnotherWordButt.addEventListener('click', () => {
       const newRow = document.createElement('tr');
@@ -75,6 +78,7 @@
       newRow.appendChild(newDef);
       newRow.appendChild(newDefinition);
       table.appendChild(newRow);
+      createNewSet.scrollTop = createNewSet.scrollHeight;
     });
   </script>
 </html>
