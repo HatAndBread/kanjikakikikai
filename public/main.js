@@ -52,6 +52,10 @@ const domEls = {
   statsDisplay: document.getElementById('stats'),
   rightOrWrongDiv: document.getElementById('right-or-wrong'),
   startButton: document.getElementById('start-button'),
+  hints: document.getElementById('hints'),
+  gameFinished: document.getElementById('game-finished'),
+  finalScore: document.getElementById('final-score'),
+  compliment: document.getElementById('compliment'),
   toolsOut: false
 };
 
@@ -70,6 +74,27 @@ const userStats = {
     this.percentCorrect = Math.round((this.numberCorrect / this.questionOutOf.currentQuestion) * 100);
     this.questionOutOf.currentQuestion += 1;
   }
+};
+
+const complimentFactory = {
+  goodCompliments: ['すばらしい！！🎉', '上手！🥳', '天才！🎊', 'すごいね！❣️'],
+  mediumCompliments: ['悪くないね！', 'その調子！', 'さすが！', 'いいぞ！'],
+  badCompliments: ['ヤバっ！😵', 'なんとも言えません😖', 'もっと勉強しないと😭'],
+  getCompliments: function () {
+    if (userStats.percentCorrect >= 80) {
+      return this.goodCompliments[Math.floor(Math.random() * this.goodCompliments.length)];
+    } else if (userStats.percentCorrect < 80 && userStats.percentCorrect > 60) {
+      return this.mediumCompliments[Math.floor(Math.random() * this.mediumCompliments.length)];
+    } else {
+      return this.badCompliments[Math.floor(Math.random() * this.badCompliments.length)];
+    }
+  }
+};
+
+const finishGame = () => {
+  domEls.gameFinished.style.display = 'flex';
+  domEls.finalScore.innerText = `${userStats.percentCorrect}%`;
+  domEls.compliment.innerText = complimentFactory.getCompliments();
 };
 
 const resetUserStats = (studySet) => {
@@ -228,9 +253,15 @@ domEls.maru.addEventListener('click', () => {
   preventDrawing = false;
   domEls.mondaiButt.disabled = false;
   domEls.mondaiButt.style.display = 'block';
-  getMondai();
-  userStats.updateStats(true);
-  domEls.statsDisplay.style.display = 'block';
+  if (userStats.questionOutOf.currentQuestion < 20) {
+    getMondai();
+    userStats.updateStats(true);
+    domEls.statsDisplay.style.display = 'block';
+  } else {
+    userStats.updateStats(true);
+    finishGame();
+  }
+
   createStatsTable();
 });
 domEls.batsu.addEventListener('click', () => {
@@ -238,9 +269,15 @@ domEls.batsu.addEventListener('click', () => {
   preventDrawing = false;
   domEls.mondaiButt.disabled = false;
   domEls.mondaiButt.style.display = 'block';
-  getMondai();
-  userStats.updateStats(false);
-  domEls.statsDisplay.style.display = 'block';
+  if (userStats.questionOutOf.currentQuestion < 20) {
+    getMondai();
+    userStats.updateStats(false);
+    domEls.statsDisplay.style.display = 'block';
+  } else {
+    userStats.updateStats(false);
+    finishGame();
+  }
+
   createStatsTable();
 });
 
@@ -267,6 +304,7 @@ domEls.startButton.addEventListener('click', () => {
   preventDrawing = false;
   domEls.mondaiButt.style.display = 'block';
   getMondai();
+  domEls.hints.style.animationName = 'grow';
 });
 
 domEls.bigMag.addEventListener('click', () => {

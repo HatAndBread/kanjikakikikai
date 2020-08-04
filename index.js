@@ -2,6 +2,8 @@ const express = require('express');
 const session = require('express-session');
 const passport = require('passport');
 const flash = require('express-flash');
+const favicon = require('serve-favicon');
+const path = require('path');
 require('dotenv').config();
 const methodOverride = require('method-override'); //Lets you use HTTP verbs such as PUT or DELETE in places where the client doesn’t support it.
 const app = express();
@@ -19,9 +21,9 @@ const about = require('./about');
 const settings = require('./settings');
 
 app.set('view engine', 'ejs');
-
 app.use(express.static('public'));
-app.use(express.json({ limit: '50mb' })); // FIX LIMIT!
+app.use(favicon(path.join(__dirname, 'public', 'assets', 'favicon.ico')));
+app.use(express.json({ limit: '1mb' })); // FIX LIMIT!
 app.use(express.urlencoded({ extended: false }));
 app.use(flash());
 app.use(session({ secret: process.env.SESSION_SECRET, saveUninitialized: false, resave: false, failureFlash: true }));
@@ -59,3 +61,7 @@ app.post('/send-jason', (req, res) => {
   res.send({ message: 'received' });
 });
 app.listen(PORT);
+
+app.get('/manifest', (req, res) => {
+  res.sendFile('./site.webmanifest');
+});

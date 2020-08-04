@@ -1,0 +1,24 @@
+#game-finished {
+  display: none;
+  justify-content: center;
+  border-color: rgb(70, 123, 157);
+  border-radius: 10px;
+  border-style: solid;
+  background-color: #e63946;
+  position: fixed;
+  color: #f1faee;
+  width: 250px;
+  padding: 10px;
+  top: 20%;
+  left: 50%;
+  margin-left: -136px;
+}
+
+#game-finished table {
+  text-align: center;
+}
+
+#game-finished .nav-button {
+  margin: 0px;
+  width: 100px;
+}

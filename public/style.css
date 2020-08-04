@@ -11,6 +11,8 @@
 @import url(forms.css);
 @import url(create-new-set.css);
 @import url(about.css);
+@import url(hints.css);
+@import url(game-finished.css);
 
 :root {
   --nav-color: #e63946; /* define global variable in root */
