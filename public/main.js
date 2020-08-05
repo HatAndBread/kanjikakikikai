@@ -16,6 +16,11 @@ const userSettings = {
   brushSize: 10
 };
 
+window.onresize = function () {
+  document.body.height = window.innerHeight;
+};
+window.onresize(); // called to initially set the height.
+
 const domEls = {
   mondaiButt: document.getElementById('mondai-button'),
   brushSizeRange: document.getElementById('brush-size'),
