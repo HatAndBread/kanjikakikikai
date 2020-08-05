@@ -11,12 +11,11 @@
   z-index: 150;
   position: fixed;
   display: none;
-  width: 340px;
-  height: 198px;
-  top: 24%;
-  left: 50%;
-  margin-left: -170px;
-  background-color: #e63946;
+  top: 75px;
+  left: 20px;
+  right: 20px;
+  height: calc(100vh - 140px);
+  background-color: #a8dadc;
   border-style: ridge;
   border-color: rgb(70, 123, 157);
   overflow-x: hidden;
@@ -24,7 +23,7 @@
   -webkit-overflow-scrolling: touch;
   border-radius: 10px;
   border-style: ridge;
-  animation: fadeIn 0.3s;
+  animation: fadeIn 0.5s;
 }
 
 .set-selector {
@@ -54,10 +53,4 @@
   height: 2px;
   background-color: #f1faee;
   border-radius: 50%;
-}
-
-@media (orientation: portrait) {
-  #study-set-selector {
-    height: 350px;
-  }
 }

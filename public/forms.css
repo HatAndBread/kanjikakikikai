@@ -2,13 +2,12 @@
   position: fixed;
   border-style: solid;
   border-color: rgb(70, 123, 157);
-  background-color: #e63946;
-  color: #f1faee;
+  background-color: #a8dadc;
+  color: #1d3557;
   border-radius: 10px;
   width: 220px;
   padding: 10px;
   top: 60px;
-  bottom: 0;
   left: 50%;
   margin-left: -122px;
   overflow: auto;
@@ -21,7 +20,9 @@
   width: 200px;
   margin: 10px;
 }
-
+.loggy-formy a {
+  color: var(--nav-color);
+}
 .loggy-formy button {
   margin-top: 10px;
   margin-bottom: 10px;
@@ -36,17 +37,27 @@
   color: #1d3557;
 }
 
-@media (orientation: portrait) {
+@media only screen and (max-height: 399px) {
   .loggy-formy {
     width: 220px;
-    top: 20%;
-    bottom: auto;
+
+    bottom: 0;
   }
 }
 @media only screen and (min-height: 400px) {
   .loggy-formy {
-    width: 220px;
     top: 20%;
-    bottom: auto;
+  }
+}
+
+@media only screen and (max-width: 270px) {
+  .loggy-formy {
+    right: 0px;
+    left: 0;
+    width: unset;
+    margin-left: 0px;
+  }
+  .loggy-formy input {
+    width: 100px;
   }
 }

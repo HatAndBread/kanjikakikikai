@@ -3,8 +3,8 @@
   border-radius: 10px;
   border-style: solid;
   border-color: rgb(70, 123, 157);
-  color: #f1faee;
-  background-color: var(--nav-color);
+  color: #1d3557;
+  background-color: #a8dadc;
   margin-right: 10vw;
   margin-left: 10vw;
   margin-top: 10vh;
@@ -13,6 +13,11 @@
   overflow: auto;
 }
 
+#about a {
+  color: var(--nav-color);
+  text-decoration: none;
+  font-weight: bolder;
+}
 /*
 @media (orientation: portrait) {
   #about {

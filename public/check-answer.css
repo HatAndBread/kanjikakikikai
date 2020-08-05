@@ -15,7 +15,7 @@
   right: 10px;
   bottom: 60px;
   padding: 16px;
-  background-color: #e63946;
+  background-color: #a8dadc;
   color: #f1faee;
   border-radius: 10px;
   border-style: ridge;
@@ -31,7 +31,7 @@
   border-radius: 10px;
   font-size: 32px;
   margin: 10px;
-  width: 100px;
+  width: 120px;
 }
 
 .maru-batsu:hover {
@@ -71,6 +71,12 @@
   border-color: rgb(70, 123, 157);
   margin-left: 20px;
 }
+@media only screen and (max-width: 280px) {
+  .maru-batsu {
+    font-size: 16px;
+    width: 80px;
+  }
+}
 
 @media only screen and (max-width: 1200px) and (orientation: portrait) {
   #kanji_answer {
@@ -99,6 +105,17 @@
 }
 
 @media only screen and (max-height: 390px) {
+  #right-or-wrong {
+    margin-top: -5px;
+  }
+}
+@media only screen and (max-height: 304px) {
+  #check-answer {
+    bottom: 0;
+    top: 60px;
+    left: 0;
+    right: 0;
+  }
   #right-or-wrong {
     margin-top: -5px;
   }
