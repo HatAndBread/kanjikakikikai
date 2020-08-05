@@ -1,5 +1,5 @@
 #hints {
-  position: relative;
+  position: fixed;
   border-radius: 50%;
   background-color: rgba(40, 40, 40, 0.3);
   color: #f1faee;
@@ -7,7 +7,7 @@
   height: 100px;
   text-align: center;
   z-index: 100;
-  bottom: 120px;
+  top: calc(var(--vh, 1vh) * 60);
   left: 30px;
   font-size: 18px;
   opacity: 0;

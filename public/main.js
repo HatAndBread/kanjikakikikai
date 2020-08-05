@@ -44,6 +44,11 @@ const domEls = {
   toolsOut: false
 };
 
+// Will give you the actual viewheight of mobile browsers with navigation bars
+let vh = window.innerHeight * 0.01;
+document.documentElement.style.setProperty('--vh', `${vh}px`);
+//******************** */
+
 const userStats = {
   studySetUsingNow: 'random kanji',
   percentCorrect: 100,
@@ -332,6 +337,8 @@ window.addEventListener('resize', (e) => {
   smallCanvasSettings.height = domEls.yourDrawing.clientHeight;
   console.log(smallCanvasSettings.width);
   console.log(smallCanvasSettings.height);
+  vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty('--vh', `${vh}px`);
 });
 
 const lastPoints = {
