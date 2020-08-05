@@ -28,6 +28,20 @@
   -webkit-touch-callout: none; /* Disable Android and iOS callouts*/
   font-family: 'Dosis', sans-serif;
 }
+/*
+blocking text selection like above creates problems for input forms so need to do like below. 
+*/
+input,
+input:before,
+input:after {
+  user-select: initial;
+  -webkit-user-select: initial;
+  -khtml-user-select: initial;
+  -moz-user-select: initial;
+  -ms-user-select: initial;
+  user-select: initial;
+}
+
 #main {
   position: absolute;
 }
