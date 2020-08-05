@@ -16,21 +16,6 @@ const userSettings = {
   brushSize: 10
 };
 
-let screenWidth;
-let screenHeight;
-const checkMobileOrientation = () => {
-  screenWidth = window.innerWidth;
-  screenHeight = window.innerHeight;
-
-  if (screenHeight - 110 >= screenWidth) {
-    return true;
-  } else {
-    return false;
-  }
-};
-
-let orientationPortrait = checkMobileOrientation();
-
 const domEls = {
   mondaiButt: document.getElementById('mondai-button'),
   brushSizeRange: document.getElementById('brush-size'),
@@ -347,8 +332,6 @@ window.addEventListener('resize', (e) => {
   smallCanvasSettings.height = domEls.yourDrawing.clientHeight;
   console.log(smallCanvasSettings.width);
   console.log(smallCanvasSettings.height);
-  orientationPortrait = checkMobileOrientation();
-  console.log(`orientation portrait: ${orientationPortrait}`);
 });
 
 const lastPoints = {

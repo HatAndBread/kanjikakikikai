@@ -62,7 +62,7 @@
   color: #f1faee;
   border-radius: 10px;
   width: 90vw;
-  height: 80vh;
+  height: 70vh;
   top: 10px;
   margin-left: 5vw;
   align-items: center;
@@ -83,6 +83,7 @@
   margin-top: 5px;
   height: 50px;
   width: 150px;
+  overflow: hide;
 }
 
 .editor-buttons a {
@@ -104,8 +105,43 @@
 }
 
 @media only screen and (max-width: 600px) {
+  .edit-main h1 {
+    font-size: 16px;
+  }
   #set-editor input {
     width: 75px;
+  }
+  #set-selector-window {
+    width: 200px;
+    margin-left: -120px;
+  }
+}
+@media only screen and (max-width: 350px) {
+  #set-editor input {
+    width: 45px;
+  }
+}
+@media only screen and (max-width: 250px) {
+  #set-selector-window {
+    width: 150px;
+    margin-left: -95px;
+  }
+  #set-editor input {
+    width: 30px;
+  }
+  #set-editor {
+    font-size: 12px;
+  }
+  .editor-buttons {
+    font-size: 8px;
+  }
+}
+@media only screen and (max-width: 205px) {
+  #set-editor input {
+    width: 25px;
+  }
+  #set-editor {
+    font-size: 8px;
   }
 }
 
@@ -115,8 +151,41 @@
   }
 }
 
-@media only screen and (max-height: 600px) {
+@media only screen and (max-height: 284px) {
+  #set-editor {
+    top: 0px;
+  }
+  #set-selector-window {
+    height: 90px;
+  }
+  .editor-buttons {
+    font-size: 8px;
+    bottom: -10px;
+  }
+}
+@media only screen and (max-height: 349px) and (min-height: 285px) {
+  #set-selector-window {
+    height: 150px;
+  }
+  .editor-buttons {
+    font-size: 10px;
+  }
+}
+
+@media only screen and (max-height: 499px) and (min-height: 350px) {
   #set-selector-window {
     height: 200px;
+  }
+}
+
+@media only screen and (max-height: 700px) and (min-height: 500px) {
+  #set-selector-window {
+    height: 60%;
+  }
+}
+
+@media only screen and (min-height: 701px) {
+  #set-selector-window {
+    height: 80%;
   }
 }

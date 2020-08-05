@@ -5,18 +5,15 @@
   border-radius: 10px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   color: #f1faee;
   background-color: #e63946;
-  height: 400px;
-  width: 370px;
   padding: 16px;
   overflow: auto;
-  top: 20%;
-  left: 50%;
-  margin-left: -204px;
+  top: 70px;
+  left: 10px;
+  right: 10px;
 }
-
 #create-new-set input {
   background-color: #f1faee;
   color: #1d3557;
@@ -44,6 +41,104 @@
   margin-left: -10px;
   padding: 5px;
 }
+@media only screen and (max-width: 220px) {
+  #create-new-set {
+    font-size: 8px;
+  }
+  #create-new-set input {
+    width: 30px;
+  }
+  #create-new-buttons button {
+    width: 30px;
+    font-size: 8px;
+  }
+
+  #create-new-buttons .nav-button {
+    width: 30px;
+    font-size: 8px;
+  }
+}
+
+@media only screen and (max-width: 319px) and (min-width: 221px) {
+  #create-new-set {
+    font-size: 12px;
+  }
+  #create-new-set input {
+    width: 50px;
+  }
+  #create-new-buttons button {
+    width: 50px;
+    font-size: 12px;
+  }
+
+  #create-new-buttons .nav-button {
+    width: 50px;
+    font-size: 12px;
+  }
+}
+
+@media only screen and (max-width: 419px) and (min-width: 320px) {
+  #create-new-set input {
+    width: 80px;
+  }
+  #create-new-buttons button {
+    width: 80px;
+    font-size: 18px;
+  }
+
+  #create-new-buttons .nav-button {
+    width: 80px;
+    font-size: 18px;
+  }
+}
+@media only screen and (max-width: 520px) and (min-width: 420px) {
+  #create-new-set input {
+    width: 100px;
+  }
+  #create-new-buttons button {
+    width: 80px;
+  }
+
+  #create-new-buttons .nav-button {
+    width: 80px;
+  }
+}
+@media only screen and (max-width: 669px) and (min-width: 520px) {
+  #create-new-set input {
+    width: 150px;
+  }
+}
+@media only screen and (min-width: 670px) {
+  #create-new-set input {
+    width: 200px;
+  }
+}
+
+@media only screen and (max-height: 249px) {
+  #create-new-set {
+    height: 50vh;
+    font-size: 8px;
+  }
+}
+@media only screen and (max-height: 299px) and (min-height: 250px) {
+  #create-new-set {
+    height: 55vh;
+    font-size: 12px;
+  }
+}
+@media only screen and (max-height: 449px) and (min-height: 300px) {
+  #create-new-set {
+    height: 60vh;
+  }
+}
+
+@media only screen and (max-height: 600px) and (min-height: 450px) {
+  #create-new-set {
+    height: 70vh;
+  }
+}
+
+/*
 @media (orientation: portrait) {
   #create-new-set {
     height: 400px;
@@ -55,8 +150,10 @@
   }
 }
 
-@media only screen and (max-height: 600px) {
+@media only screen and (max-height: 600px) and (min-height: 450px) {
   #create-new-set {
-    height: 200px;
+    height: 300px;
   }
 }
+
+*/
