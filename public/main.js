@@ -17,11 +17,11 @@ const userSettings = {
 };
 
 window.onresize = function () {
-  document.body.height = window.innerHeight;
+  document.body.height = document.documentElement.clientHeight;
 };
 window.onresize(); // called to initially set the height.
 window.addEventListener('orientationchange', function (event) {
-  document.body.height = window.innerHeight;
+  document.body.height = document.documentElement.clientHeight;
   console.log('orientation change');
 });
 
