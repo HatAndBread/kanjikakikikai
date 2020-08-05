@@ -114,16 +114,15 @@
   }
 }
 
-@media only screen and (max-height: 249px) {
+@media only screen and (max-height: 299px) {
   #create-new-set {
-    height: 50vh;
-    font-size: 8px;
-  }
-}
-@media only screen and (max-height: 299px) and (min-height: 250px) {
-  #create-new-set {
-    height: 55vh;
+    height: unset;
+    position: fixed;
     font-size: 12px;
+    top: 60px;
+    left: 0;
+    right: 0;
+    bottom: 0;
   }
 }
 @media only screen and (max-height: 449px) and (min-height: 300px) {

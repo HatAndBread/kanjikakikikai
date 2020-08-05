@@ -43,7 +43,7 @@
 }
 
 #set-selector-closer:hover {
-  color: #a8dadc;
+  color: rgb(70, 123, 157);
   font-size: 28px;
   transition: color 0.3s, font-size 0.3s;
 }

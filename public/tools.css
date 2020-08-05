@@ -8,7 +8,7 @@
   display: none;
 }
 #tools-closer:hover {
-  color: #a8dadc;
+  color: rgb(70, 123, 157);
   font-size: 18px;
   transition: color 0.2s ease-in 0.1s, font-size 0.2s ease-in 0.1s;
 }
@@ -29,7 +29,7 @@
 }
 
 .nav-button:hover {
-  background-color: #a8dadc;
+  background-color: rgb(70, 123, 157);
   transition: background-color 0.1s linear;
 }
 

@@ -48,7 +48,7 @@
 }
 
 #big-mac:hover .slice {
-  background-color: powderblue;
+  background-color: rgb(70, 123, 157);
   transition: background-color 0.1s ease-in;
 }
 

@@ -345,19 +345,9 @@ window.addEventListener('resize', (e) => {
   //domEls.bottom.style.marginTop = '-50px';
 });
 
-const lastPoints = {
-  x: null,
-  y: null
-};
-
 let mirror;
-let drawingLimits = {
-  lowX: 1000000,
-  lowY: 1000000,
-  highX: 0,
-  highY: 0
-};
-let touching = false;
+
+let quickTouch = false;
 let sketch = function (p) {
   let pg;
   let cnv;
@@ -373,26 +363,9 @@ let sketch = function (p) {
     if (!preventDrawing) {
       p.stroke(230, 57, 70);
       p.strokeWeight(userSettings.brushSize);
-      if (p.mouseIsPressed && !touching) {
-        if (lastPoints.x && lastPoints) {
-          p.line(lastPoints.x, lastPoints.y, p.mouseX, p.mouseY);
-        } else {
-          p.line(p.mouseX, p.mouseY, p.mouseX, p.mouseY);
-        }
-        lastPoints.x = p.mouseX;
-        lastPoints.y = p.mouseY;
-        if (p.mouseX > drawingLimits.highX && p.mouseX < p.width) {
-          drawingLimits.highX = p.mouseX;
-        }
-        if (p.mouseX < drawingLimits.lowX && p.mouseX > 0) {
-          drawingLimits.lowX = p.mouseX;
-        }
-        if (p.mouseY > drawingLimits.highY && p.mouseY < p.height) {
-          drawingLimits.highY = p.mouseY;
-        }
-        if (p.mouseY < drawingLimits.lowY && p.mouseY > 0) {
-          drawingLimits.lowY = p.mouseY;
-        }
+
+      if (p.mouseIsPressed) {
+        p.line(p.pmouseX, p.pmouseY, p.mouseX, p.mouseY);
       }
     }
     if (takingPhoto) {
@@ -403,42 +376,34 @@ let sketch = function (p) {
       mirror.loadPixels();
     }
   };
-  p.touchStarted = function () {
-    if (p.touches.length > 0 && !preventDrawing) {
-      touching = true;
+  p.mouseClicked = function () {
+    console.log(preventDrawing);
+    if (!preventDrawing && p.mouseX > 0 && p.mouseY > 0 && p.mouseX < p.width && p.mouseY < p.height) {
+      console.log('hi!');
       p.stroke(230, 57, 70);
       p.strokeWeight(userSettings.brushSize);
-      p.line(p.touches[0].x, p.touches[0].y, p.touches[0].x, p.touches[0].y);
-      lastPoints.x = p.touches[0].x;
-      lastPoints.y = p.touches[0].y;
-    } else {
-      touching = false;
-      console.log('not a touch');
+      p.line(p.pmouseX, p.pmouseY, p.mouseX, p.mouseY);
+      quickTouch = true;
+      setTimeout(() => {
+        quickTouch = false;
+      }, 100);
     }
   };
+  p.mouseMoved = function () {
+    if (!preventDrawing && quickTouch) {
+      p.strokeWeight(userSettings.brushSize);
+      p.line(p.pmouseX, p.pmouseY, p.mouseX, p.mouseY);
+    }
+  };
+
   p.touchMoved = function () {
-    if (touching) {
-      p.stroke(230, 57, 70);
+    if (!preventDrawing && quickTouch) {
+      console.log('touch moving');
       p.strokeWeight(userSettings.brushSize);
-      p.line(lastPoints.x, lastPoints.y, p.touches[0].x, p.touches[0].y);
-      lastPoints.x = p.touches[0].x;
-      lastPoints.y = p.touches[0].y;
+      p.line(p.pmouseX, p.pmouseY, p.mouseX, p.mouseY);
     }
   };
-  p.touchEnded = function () {
-    if (touching) {
-      p.stroke(230, 57, 70);
-      p.strokeWeight(userSettings.brushSize);
-      p.line(lastPoints.x, lastPoints.y, lastPoints.x + p.random(-3, 3), lastPoints.y + p.random(-3, 3));
-      lastPoints.x = null;
-      lastPoints.y = null;
-      touching = false;
-    }
-  };
-  p.mouseReleased = function () {
-    lastPoints.x = null;
-    lastPoints.y = null;
-  };
+  p.mouseReleased = function () {};
   p.windowResized = function () {
     //stretches image to fit when user resizes
     pg = p.createGraphics(p.width, p.height);
@@ -465,10 +430,6 @@ function yourDrawing(p) {
       p.image(mirror, 0, 0);
       takingPhoto = false;
       clearCanvas = true;
-      drawingLimits.lowX = 1000000;
-      drawingLimits.lowY = 1000000;
-      drawingLimits.highX = 0;
-      drawingLimits.highY = 0;
     }
   };
   p.windowResized = function () {};
