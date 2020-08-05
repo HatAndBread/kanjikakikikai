@@ -93,7 +93,9 @@ const complimentFactory = {
 
 const finishGame = () => {
   domEls.gameFinished.style.display = 'flex';
-  domEls.finalScore.innerText = `${userStats.percentCorrect}%`;
+  domEls.mondaiButt.style.display = 'none';
+  domEls.mondaiText.style.display = 'none';
+  domEls.finalScore.innerText = `Your final score: ${userStats.percentCorrect}%`;
   domEls.compliment.innerText = complimentFactory.getCompliments();
 };
 
@@ -133,8 +135,14 @@ const canvasSettings = {
   height: domEls.canvas.clientHeight
 };
 
+const smallCanvasSettings = {
+  width: domEls.yourDrawing.clientWidth,
+  height: domEls.yourDrawing.clientHeight
+};
+
 const resetGame = () => {
   domEls.startButton.style.display = 'block';
+  domEls.statsDisplay.style.display = 'none';
   domEls.mondaiText.innerText = '';
 };
 
@@ -230,6 +238,8 @@ const checkAnswer = () => {
   domEls.statsDisplay.style.display = 'none';
   domEls.kanjiAnswer.innerText = currentMondai.kanji;
   domEls.checkAnswerBox.style.display = 'block';
+  smallCanvasSettings.width = domEls.yourDrawing.clientWidth;
+  smallCanvasSettings.height = domEls.yourDrawing.clientHeight;
   domEls.kanjiAnswer.style.fontSize = '58px';
   if (currentMondai.kanji.length === 3) {
     domEls.kanjiAnswer.style.fontSize = '42px';
@@ -303,6 +313,9 @@ domEls.startButton.addEventListener('click', () => {
   domEls.startButton.style.display = 'none';
   preventDrawing = false;
   domEls.mondaiButt.style.display = 'block';
+  domEls.statsDisplay.style.display = 'block';
+  domEls.gameFinished.style.display = 'none';
+  domEls.mondaiText.style.display = 'block';
   getMondai();
   domEls.hints.style.animationName = 'grow';
 });
@@ -329,6 +342,10 @@ keshi.addEventListener('click', () => {
 window.addEventListener('resize', (e) => {
   canvasSettings.width = domEls.canvas.clientWidth;
   canvasSettings.height = domEls.canvas.clientHeight;
+  smallCanvasSettings.width = domEls.yourDrawing.clientWidth;
+  smallCanvasSettings.height = domEls.yourDrawing.clientHeight;
+  console.log(smallCanvasSettings.width);
+  console.log(smallCanvasSettings.height);
   orientationPortrait = checkMobileOrientation();
   console.log(`orientation portrait: ${orientationPortrait}`);
 });
@@ -381,16 +398,13 @@ let sketch = function (p) {
         if (p.mouseY < drawingLimits.lowY && p.mouseY > 0) {
           drawingLimits.lowY = p.mouseY;
         }
-        console.log(drawingLimits);
       }
     }
     if (takingPhoto) {
       mirror = p.createGraphics(p.width, p.height);
-      if (!orientationPortrait) {
-        mirror.image(cnv, 0, 0, 150, 100);
-      } else {
-        mirror.image(cnv, 0, 0, 100, 150);
-      }
+
+      mirror.image(cnv, 0, 0, smallCanvasSettings.width, smallCanvasSettings.height);
+
       mirror.loadPixels();
     }
   };
@@ -399,6 +413,7 @@ let sketch = function (p) {
     lastPoints.y = null;
   };
   p.windowResized = function () {
+    //stretches image to fit when user resizes
     pg = p.createGraphics(p.width, p.height);
     pg.image(cnv, 0, 0, canvasSettings.width, canvasSettings.height);
     pg.loadPixels();
@@ -410,11 +425,8 @@ let sketch = function (p) {
 function yourDrawing(p) {
   let cnv;
   p.setup = function () {
-    if (!orientationPortrait) {
-      cnv = p.createCanvas(150, 100);
-    } else {
-      cnv = p.createCanvas(100, 150);
-    }
+    console.log(smallCanvasSettings);
+    cnv = p.createCanvas(smallCanvasSettings.width, smallCanvasSettings.height);
   };
   p.draw = function () {
     if (clearMirror) {
@@ -422,8 +434,7 @@ function yourDrawing(p) {
       clearMirror = false;
     }
     if (takingPhoto) {
-      //  domEls.yourDrawing.style.width = `${p.width}px`;
-      //  domEls.yourDrawing.style.height = `${p.height}px`;
+      p.resizeCanvas(smallCanvasSettings.width, smallCanvasSettings.height);
       p.image(mirror, 0, 0);
       takingPhoto = false;
       clearCanvas = true;
@@ -433,23 +444,7 @@ function yourDrawing(p) {
       drawingLimits.highY = 0;
     }
   };
-  p.windowResized = function () {
-    if (!orientationPortrait) {
-      cnv = p.resizeCanvas(150, 100);
-      if (mirror) {
-        p.image(mirror, 0, -40);
-      }
-      //domEls.yourDrawing.style.width = `${p.width}px`;
-      //domEls.yourDrawing.style.height = `${p.height}px`;
-    } else {
-      cnv = p.resizeCanvas(100, 150);
-      if (mirror) {
-        p.image(mirror, -30, 0);
-      }
-      //domEls.yourDrawing.style.width = `${p.width}px`;
-      // domEls.yourDrawing.style.height = `${p.height}px`;
-    }
-  };
+  p.windowResized = function () {};
 }
 
 new p5(sketch, domEls.canvas);

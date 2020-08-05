@@ -14,11 +14,10 @@
   margin-left: -136px;
 }
 
-#game-finished table {
-  text-align: center;
+#game-finished li {
+  padding: 10px;
 }
 
 #game-finished .nav-button {
-  margin: 0px;
   width: 100px;
 }

@@ -10,18 +10,19 @@
 #check-answer {
   position: fixed;
   display: none;
-  top: 25%;
-  left: 50%;
-  width: 330px;
-  height: 160px;
+  top: 70px;
+  left: 10px;
+  right: 10px;
+  bottom: 60px;
   padding: 16px;
-  margin-left: -182px;
   background-color: #e63946;
   color: #f1faee;
   border-radius: 10px;
   border-style: ridge;
   border-color: rgb(70, 123, 157);
   animation: fadeIn 0.3s;
+  z-index: 100;
+  overflow: auto;
 }
 
 .maru-batsu {
@@ -30,6 +31,7 @@
   border-radius: 10px;
   font-size: 32px;
   margin: 10px;
+  width: 100px;
 }
 
 .maru-batsu:hover {
@@ -37,10 +39,9 @@
 }
 
 #right-or-wrong {
-  position: relative;
   display: flex;
   justify-content: center;
-  top: -100px;
+  margin-top: 8%;
 }
 
 #answers {
@@ -58,6 +59,7 @@
   border-radius: 10px;
   border-style: ridge;
   border-color: rgb(70, 123, 157);
+  overflow: auto;
 }
 
 #your-drawing {
@@ -70,37 +72,34 @@
   margin-left: 20px;
 }
 
-@media (orientation: portrait) {
-  #check-answer {
-    height: 260px;
-  }
+@media only screen and (max-width: 1200px) and (orientation: portrait) {
   #kanji_answer {
     writing-mode: vertical-rl;
     text-orientation: upright;
-    width: 100px;
-    height: 170px;
+    width: 40%;
+    height: 40%;
   }
   #your-drawing {
-    width: 100px;
-    height: 170px;
-  }
-  .maru-batsu {
-    top: 110px;
+    width: 40%;
+    height: 40vh;
   }
 }
 
-@media (orientation: landscape) {
+@media only screen and (max-width: 1200px) and (orientation: landscape) {
   #kanji_answer {
     writing-mode: sideways-lr;
     text-orientation: upright;
-    width: 170px;
-    height: 100px;
+    width: 45%;
+    height: 30vh;
   }
   #your-drawing {
-    width: 170px;
-    height: 100px;
+    width: 45%;
+    height: 30vh;
   }
-  .maru-batsu {
-    top: 100px;
+}
+
+@media only screen and (max-height: 390px) {
+  #right-or-wrong {
+    margin-top: -5px;
   }
 }

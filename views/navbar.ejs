@@ -8,47 +8,64 @@
   </div>
   <div id="tools">
     <button id="tools-closer">✕</button>
+
     <% if (page === 'login'){ %>
+
     <a href="/signup" class="nav-button">Sign up</a>
     <a href="/about" class="nav-button">About</a>
     <a href="/" class="nav-button">Home</a>
+
     <% } %> <% if (page === 'signup'){ %>
+
     <a href="/login" class="nav-button">Log in</a>
     <a href="/about" class="nav-button">About</a>
     <a href="/" class="nav-button">Home</a>
+
     <% } %> <% if (page === 'edit-words'){ %>
+
     <a href="/logout" class="nav-button">Log out</a>
     <a href="/add-words" class="nav-button">Make new study sets</a>
     <a href="/settings" class="nav-button">Settings</a>
     <a href="/about" class="nav-button">About</a>
     <a href="/" class="nav-button">Home</a>
+
     <% } %> <% if (page === 'add-words'){ %>
+
     <a href="/logout" class="nav-button">Log out</a>
     <a href="/edit-sets" class="nav-button">Edit my study sets</a>
     <a href="/settings" class="nav-button">Settings</a>
     <a href="/about" class="nav-button">About</a>
     <a href="/" class="nav-button">Home</a>
+
     <% } %> <% if (page === 'about'){ if (userInfo){%>
+
     <a href="/logout" class="nav-button">Log out</a>
     <a href="/add-words" class="nav-button">Make new study sets</a>
     <a href="/edit-sets" class="nav-button">Edit my study sets</a>
     <a href="/settings" class="nav-button">Settings</a>
     <a href="/" class="nav-button">Home</a>
+
     <% }else{ %>
+
     <a href="/signup" class="nav-button">Sign up</a>
     <a href="/login" class="nav-button">Log in</a>
     <a href="/" class="nav-button">Home</a>
+
     <% }} %> <% if (page === 'settings'){ if (userInfo){%>
+
     <a href="/logout" class="nav-button">Log out</a>
     <a href="/add-words" class="nav-button">Make new study sets</a>
     <a href="/edit-sets" class="nav-button">Edit my study sets</a>
     <a href="/about" class="nav-button">About</a>
     <a href="/" class="nav-button">Home</a>
+
     <% }else{ %>
+
     <a href="/signup" class="nav-button">Sign up</a>
     <a href="/login" class="nav-button">Log in</a>
     <a href="/about" class="nav-button">About</a>
     <a href="/" class="nav-button">Home</a>
+
     <% }} %>
   </div>
 </div>

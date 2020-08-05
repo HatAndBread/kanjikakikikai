@@ -17,6 +17,7 @@
   position: absolute;
   color: #1d3557;
   text-align: right;
+  display: none;
   top: 40px;
   right: 80px;
   z-index: 3;
