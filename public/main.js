@@ -341,8 +341,8 @@ window.addEventListener('resize', (e) => {
   vh = window.innerHeight * 0.01;
   document.documentElement.style.setProperty('--vh', `${vh}px`);
   //Stop stupid mobile browsers from moving bottom div around
-  domEls.bottom.style.top = 'calc(var(--vh, 1vh) * 100)';
-  domEls.bottom.style.marginTop = '-50px';
+  //domEls.bottom.style.top = 'calc(var(--vh, 1vh) * 100)';
+  //domEls.bottom.style.marginTop = '-50px';
 });
 
 const lastPoints = {

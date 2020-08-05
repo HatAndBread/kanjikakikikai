@@ -4,8 +4,10 @@
   justify-content: space-between;
   flex-direction: row;
   align-items: center;
-  /*bottom: 0; */
+  /*bottom: 0; 
   top: calc(var(--vh, 1vh) * 100);
+  */
+  top: 100vh;
   margin-top: -50px;
   width: 100vw;
   height: 50px;
