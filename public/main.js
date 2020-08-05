@@ -429,7 +429,7 @@ let sketch = function (p) {
     if (touching) {
       p.stroke(230, 57, 70);
       p.strokeWeight(userSettings.brushSize);
-      p.line(lastPoints.x, lastPoints.y, p.touches[0].x + p.random(-2, 2), p.touches[0].y + p.random(-2, 2));
+      p.line(lastPoints.x, lastPoints.y, lastPoints.x + p.random(-3, 3), lastPoints.y + p.random(-3, 3));
       lastPoints.x = null;
       lastPoints.y = null;
       touching = false;
