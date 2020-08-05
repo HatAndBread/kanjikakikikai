@@ -293,6 +293,7 @@ domEls.batsu.addEventListener('click', () => {
 
 domEls.setSelectorButt.addEventListener('click', () => {
   domEls.studySetSelector.style.display = 'block';
+  domEls.gameFinished.style.display = 'none';
   preventDrawing = true;
 });
 

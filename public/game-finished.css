@@ -1,23 +1,18 @@
 #game-finished {
   display: none;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
   border-color: rgb(70, 123, 157);
   border-radius: 10px;
+  font-size: 18px;
   border-style: solid;
   background-color: #e63946;
   position: fixed;
-  color: #f1faee;
+  color: hsl(105, 55%, 96%);
   width: 250px;
   padding: 10px;
-  top: 20%;
+  top: 90px;
   left: 50%;
   margin-left: -136px;
-}
-
-#game-finished li {
-  padding: 10px;
-}
-
-#game-finished .nav-button {
-  width: 100px;
 }
