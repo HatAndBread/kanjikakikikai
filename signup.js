@@ -10,6 +10,7 @@ signup.get('/', (req, res) => {
 
 signup.post('/', async (req, res) => {
   let password;
+  console.log(req.body);
   try {
     password = await bcrypt.hash(req.body.password, 11);
   } catch (err) {
@@ -20,12 +21,20 @@ signup.post('/', async (req, res) => {
       console.log(err);
     }
     if (docs.length > 0) {
-      res.send('Sorry, that user name is already taken.');
+      res.send('Sorry, that user name is already taken.　🙍‍♀️　🙍‍');
     } else {
       users.insert({ username: req.body.username, password: password, myDictionaries: [] }, (err, newDoc) => {
         console.log(newDoc);
+        req.login(newDoc, function (err) {
+          if (!err) {
+            console.log('success');
+            res.redirect('/');
+          } else {
+            res.send('Server error. Please try again later.　🙍‍♀️');
+            console.log(err);
+          }
+        });
       });
-      res.send(`Thank you for signing up, ${req.body.username}`);
     }
   });
 });

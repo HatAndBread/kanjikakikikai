@@ -10,7 +10,7 @@ editWords.get('/', checkAuthenticated, (req, res) => {
   console.log(req.body);
   db.findOne({ _id: req.user._id }, (err, doc) => {
     if (!doc.myDictionaries || doc.myDictionaries.length === 0) {
-      res.send("You haven't uploaded any study sets yet.");
+      res.redirect('/add-words');
     } else {
       console.log(doc);
       console.log(doc.myDictionaries);

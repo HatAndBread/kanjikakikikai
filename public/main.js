@@ -16,15 +16,6 @@ const userSettings = {
   brushSize: 10
 };
 
-window.onresize = function () {
-  document.body.height = document.documentElement.clientHeight;
-};
-window.onresize(); // called to initially set the height.
-window.addEventListener('orientationchange', function (event) {
-  document.body.height = document.documentElement.clientHeight;
-  console.log('orientation change');
-});
-
 const domEls = {
   mondaiButt: document.getElementById('mondai-button'),
   brushSizeRange: document.getElementById('brush-size'),
