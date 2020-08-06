@@ -49,9 +49,11 @@ input:after {
 /*  Bad idea? Did this to keep page from scrolling unexpectedly when drawing. */
 body {
   position: fixed;
-  top: 0px;
+  background-color: #f1faee;
+  top: 0;
   left: 0px;
 }
+
 
 ul {
   list-style: none;
