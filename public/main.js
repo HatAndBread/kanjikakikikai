@@ -148,7 +148,7 @@ const getWordSet = async (whichOne) => {
 };
 
 const getPreDefinedWordSet = async (src, title) => {
-  const res = await fetch(`./${src}`);
+  const res = await fetch(`./word-sets/${src}`);
   const words = await res.json();
   currentSet = {};
   currentSet.title = title;
@@ -283,7 +283,6 @@ domEls.batsu.addEventListener('click', (e) => {
   createStatsTable();
 });
 
-
 domEls.setSelectorButt.addEventListener('click', () => {
   domEls.studySetSelector.style.display = 'block';
   domEls.gameFinished.style.display = 'none';
@@ -298,7 +297,6 @@ domEls.setCloserButt.addEventListener('click', () => {
 domEls.mondaiButt.addEventListener('click', (e) => {
   checkAnswer();
 });
-
 
 domEls.startButton.addEventListener('click', (e) => {
   e.preventDefault();
@@ -345,7 +343,6 @@ window.addEventListener('resize', (e) => {
   //domEls.bottom.style.marginTop = '-50px';
 });
 
-
 let mirror;
 
 let quickTouch = false;
@@ -359,76 +356,74 @@ const touchCors = {
 };
 
 const getTouches = (e) => {
-  console.log(touchCors)
+  console.log(touchCors);
   let x = Math.floor(e.touches[0].clientX - domEls.canvas.getBoundingClientRect().x);
   let y = Math.floor(e.touches[0].clientY - domEls.canvas.getBoundingClientRect().y);
   touchCors.x = x;
   touchCors.y = y;
-  touchCors.force = e.touches[0].force
+  touchCors.force = e.touches[0].force;
 };
 
-
 //prevent zooming on mobile//////////////////////////////
-domEls.canvas.addEventListener('click', (e)=>{
+domEls.canvas.addEventListener('click', (e) => {
   e.preventDefault();
-})
-document.addEventListener('touchmove', function (event) {
-  if (event.scale !== 1) { event.preventDefault(); }
-}, false);
-let lastTouchEnd = 0;
-document.addEventListener('touchend', function (event) {
-  let now = (new Date()).getTime();
-  if (now - lastTouchEnd <= 100) {
-    event.preventDefault();
-  }
-  lastTouchEnd = now;
-}, false);
-
-
-const allowTouching = (element)=>{
-  element.addEventListener('click', (e)=>{
-    e.preventDefault()
-  })
-  element.addEventListener('touchstart', (e)=>{
-  e.preventDefault();
-  getTouches(e)
-})
-element.addEventListener('touchmove', (e)=>{
-  e.preventDefault();
-  getTouches(e);
-})
-element.addEventListener('touchend', (e) => {
-  e.preventDefault();
-  touchCors.x = null;
-  touchCors.y = null;
-  touchCors.lastX = null;
-  touchCors.lastY = null;
-  touchCors.force = null;
 });
-}
+document.addEventListener(
+  'touchmove',
+  function (event) {
+    if (event.scale !== 1) {
+      event.preventDefault();
+    }
+  },
+  false
+);
+let lastTouchEnd = 0;
+document.addEventListener(
+  'touchend',
+  function (event) {
+    let now = new Date().getTime();
+    if (now - lastTouchEnd <= 100) {
+      event.preventDefault();
+    }
+    lastTouchEnd = now;
+  },
+  false
+);
+
+const allowTouching = (element) => {
+  element.addEventListener('click', (e) => {
+    e.preventDefault();
+  });
+  element.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    getTouches(e);
+  });
+  element.addEventListener('touchmove', (e) => {
+    e.preventDefault();
+    getTouches(e);
+  });
+  element.addEventListener('touchend', (e) => {
+    e.preventDefault();
+    touchCors.x = null;
+    touchCors.y = null;
+    touchCors.lastX = null;
+    touchCors.lastY = null;
+    touchCors.force = null;
+  });
+};
 
 allowTouching(domEls.statsDisplay);
 allowTouching(domEls.hints);
-allowTouching(domEls.canvas)
+allowTouching(domEls.canvas);
 
-
-
-domEls.statsDisplay.addEventListener('click',(e)=>{
+domEls.statsDisplay.addEventListener('click', (e) => {
   e.preventDefault();
-})
-domEls.hints.addEventListener('click', (e)=>{
+});
+domEls.hints.addEventListener('click', (e) => {
   e.preventDefault();
-})
-
-
-
-
-
-
-
+});
 
 ////////////////////////////////////////////////////////
-
 
 let sketch = function (p) {
   let pg;
@@ -452,10 +447,10 @@ let sketch = function (p) {
           let ranTwo = p.random(-1, 1);
           p.line(touchCors.x + p.random(-3, 3), touchCors.y + p.random(-3, 3), touchCors.x + ran, touchCors.y + ranTwo);
           p.line(touchCors.x, touchCors.y, touchCors.x, touchCors.y);
-          if (touchCors.force){
-          p.strokeWeight(touchCors.force*33+p.random(-2,2));
-          p.line(touchCors.x , touchCors.y, touchCors.x, touchCors.y);
-          p.strokeWeight(userSettings.brushSize);
+          if (touchCors.force) {
+            p.strokeWeight(touchCors.force * 33 + p.random(-2, 2));
+            p.line(touchCors.x, touchCors.y, touchCors.x, touchCors.y);
+            p.strokeWeight(userSettings.brushSize);
           }
           touchCors.lastX = touchCors.x + ran;
           touchCors.lastY = touchCors.y + ranTwo;
@@ -463,10 +458,10 @@ let sketch = function (p) {
           let ran = p.random(-1, 1);
           let ranTwo = p.random(-1, 1);
           p.line(touchCors.lastX, touchCors.lastY, touchCors.x + ran, touchCors.y);
-          if (touchCors.force){
-          p.strokeWeight(touchCors.force*30+p.random(-2,2));
-          p.line(touchCors.lastX, touchCors.lastY, touchCors.x, touchCors.y);
-          p.strokeWeight(userSettings.brushSize);
+          if (touchCors.force) {
+            p.strokeWeight(touchCors.force * 30 + p.random(-2, 2));
+            p.line(touchCors.lastX, touchCors.lastY, touchCors.x, touchCors.y);
+            p.strokeWeight(userSettings.brushSize);
           }
           touchCors.lastX = touchCors.x + ran;
           touchCors.lastY = touchCors.y + ranTwo;
@@ -486,7 +481,6 @@ let sketch = function (p) {
 
       mirror.loadPixels();
     }
-    
   };
 
   p.windowResized = function () {

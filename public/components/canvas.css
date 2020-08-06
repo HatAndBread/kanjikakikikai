@@ -7,7 +7,7 @@
   bottom: 60px;
   background-color: #a8dadc;
   border-radius: 16px;
-  cursor: url('./assets/fude-cursor.png'), auto;
+  cursor: url('../assets/fude-cursor.png'), auto;
   border-style: solid;
   border-color: rgb(70, 123, 157);
   box-shadow: 3px 6px rgba(100, 100, 100, 0.3);
@@ -24,11 +24,9 @@
   z-index: 3;
 }
 
-@media only screen and (max-width: 400px){
-  #stats{
-    font-size:12px;
+@media only screen and (max-width: 400px) {
+  #stats {
+    font-size: 12px;
     width: stretch;
   }
 }
-
-
