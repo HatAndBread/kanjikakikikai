@@ -12,35 +12,28 @@
 #left-stuff {
   display: flex;
   align-items: center;
-  width: 50%;
+  width: 30%;
   justify-content: space-around;
   margin-left: 10px;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 600px) and (min-width:400px){
   #left-stuff {
-    width: 85%;
+    width: 40%;
+  }
+}
+@media only screen and (max-width: 399px){
+  #left-stuff {
+    width: 70%;
   }
 }
 
 #logo {
   font-size: 38;
 }
-#brush-div {
-  display: flex;
-  flex-direction: column;
-}
 
-@media only screen and (max-width: 285px) {
-  #brush-div {
-    display: none;
-  }
-}
 
-#brush-image {
-  width: 36px;
-  height: 36px;
-}
+
 
 #big-mac {
   margin-right: 10px;

@@ -13,12 +13,11 @@ let clearMirror = false;
 let preventDrawing = true;
 
 const userSettings = {
-  brushSize: 4
+  brushSize: 2
 };
 
 const domEls = {
   mondaiButt: document.getElementById('mondai-button'),
-  brushSizeRange: document.getElementById('brush-size'),
   canvas: document.getElementById('canvas'),
   keshi: document.getElementById('keshi'),
   bigMag: document.getElementById('big-mac'),
@@ -300,9 +299,6 @@ domEls.mondaiButt.addEventListener('click', (e) => {
   checkAnswer();
 });
 
-domEls.brushSizeRange.addEventListener('change', (e) => {
-  userSettings.brushSize = e.target.value;
-});
 
 domEls.startButton.addEventListener('click', (e) => {
   e.preventDefault();
