@@ -357,23 +357,27 @@ const touchCors = {
 };
 
 const getTouches = (e) => {
-  let x = Math.floor(e.touches[0].clientX - canvas.getBoundingClientRect().x);
-  let y = Math.floor(e.touches[0].clientY - canvas.getBoundingClientRect().y);
+  let x = Math.floor(e.touches[0].clientX - domEls.canvas.getBoundingClientRect().x);
+  let y = Math.floor(e.touches[0].clientY - domEls.canvas.getBoundingClientRect().y);
   touchCors.x = x;
   touchCors.y = y;
 };
-canvas.addEventListener('touchstart', (e) => {
+domEls.canvas.addEventListener('touchstart', (e) => {
+  e.preventDefault()
   getTouches(e);
 });
-canvas.addEventListener('touchmove', (e) => {
+domEls.canvas.addEventListener('touchmove', (e) => {
+  e.preventDefault()
   getTouches(e);
 });
-canvas.addEventListener('touchend', (e) => {
+domEls.canvas.addEventListener('touchend', (e) => {
+  e.preventDefault()
   touchCors.x = null;
   touchCors.y = null;
   touchCors.lastX = null;
   touchCors.lastY = null;
 });
+
 
 let sketch = function (p) {
   let pg;
@@ -408,7 +412,7 @@ let sketch = function (p) {
         }
       }
 
-      if (p.mouseIsPressed && !touchCors.x) {
+      if (p.mouseIsPressed) {
         console.log('mousing!');
         p.line(p.pmouseX, p.pmouseY, p.mouseX, p.mouseY);
       }
