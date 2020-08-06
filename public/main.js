@@ -348,6 +348,33 @@ window.addEventListener('resize', (e) => {
 let mirror;
 
 let quickTouch = false;
+
+const touchCors = {
+  x: null,
+  y: null,
+  lastX: null,
+  lastY: null
+};
+
+const getTouches = (e) => {
+  let x = Math.floor(e.touches[0].clientX - canvas.getBoundingClientRect().x);
+  let y = Math.floor(e.touches[0].clientY - canvas.getBoundingClientRect().y);
+  touchCors.x = x;
+  touchCors.y = y;
+};
+canvas.addEventListener('touchstart', (e) => {
+  getTouches(e);
+});
+canvas.addEventListener('touchmove', (e) => {
+  getTouches(e);
+});
+canvas.addEventListener('touchend', (e) => {
+  touchCors.x = null;
+  touchCors.y = null;
+  touchCors.lastX = null;
+  touchCors.lastY = null;
+});
+
 let sketch = function (p) {
   let pg;
   let cnv;
@@ -363,8 +390,26 @@ let sketch = function (p) {
     if (!preventDrawing) {
       p.stroke(230, 57, 70);
       p.strokeWeight(userSettings.brushSize);
+      if (touchCors.x) {
+        console.log('touching!');
+        if (!touchCors.lastX) {
+          p.line(
+            touchCors.x + p.random(-2, 2),
+            touchCors.y + p.random(-2, 2),
+            touchCors.x + p.random(-2, 2),
+            touchCors.y + p.random(-2, 2)
+          );
+          touchCors.lastX = touchCors.x;
+          touchCors.lastY = touchCors.y;
+        } else {
+          p.line(touchCors.lastX, touchCors.lastY, touchCors.x, touchCors.y);
+          touchCors.lastX = touchCors.x;
+          touchCors.lastY = touchCors.y;
+        }
+      }
 
-      if (p.mouseIsPressed) {
+      if (p.mouseIsPressed && !touchCors.x) {
+        console.log('mousing!');
         p.line(p.pmouseX, p.pmouseY, p.mouseX, p.mouseY);
       }
     }
@@ -376,34 +421,7 @@ let sketch = function (p) {
       mirror.loadPixels();
     }
   };
-  p.mouseClicked = function () {
-    console.log(preventDrawing);
-    if (!preventDrawing && p.mouseX > 0 && p.mouseY > 0 && p.mouseX < p.width && p.mouseY < p.height) {
-      console.log('hi!');
-      p.stroke(230, 57, 70);
-      p.strokeWeight(userSettings.brushSize);
-      p.line(p.pmouseX, p.pmouseY, p.mouseX, p.mouseY);
-      quickTouch = true;
-      setTimeout(() => {
-        quickTouch = false;
-      }, 100);
-    }
-  };
-  p.mouseMoved = function () {
-    if (!preventDrawing && quickTouch) {
-      p.strokeWeight(userSettings.brushSize);
-      p.line(p.pmouseX, p.pmouseY, p.mouseX, p.mouseY);
-    }
-  };
 
-  p.touchMoved = function () {
-    if (!preventDrawing && quickTouch) {
-      console.log('touch moving');
-      p.strokeWeight(userSettings.brushSize);
-      p.line(p.pmouseX, p.pmouseY, p.mouseX, p.mouseY);
-    }
-  };
-  p.mouseReleased = function () {};
   p.windowResized = function () {
     //stretches image to fit when user resizes
     pg = p.createGraphics(p.width, p.height);
