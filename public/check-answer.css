@@ -52,6 +52,14 @@
   background-color: #f1faee;
 }
 
+#maru:focus{
+  outline: none;
+}
+#batsu:focus{
+  outline: none;
+}
+
+
 
 
 #answers {

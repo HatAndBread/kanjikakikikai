@@ -13,12 +13,11 @@ let clearMirror = false;
 let preventDrawing = true;
 
 const userSettings = {
-  brushSize: 4
+  brushSize: 2
 };
 
 const domEls = {
   mondaiButt: document.getElementById('mondai-button'),
-  brushSizeRange: document.getElementById('brush-size'),
   canvas: document.getElementById('canvas'),
   keshi: document.getElementById('keshi'),
   bigMag: document.getElementById('big-mac'),
@@ -242,7 +241,7 @@ const checkAnswer = () => {
     domEls.kanjiAnswer.style.fontSize = '26px';
   }
   if (currentMondai.kanji.length > 5) {
-    domEls.kanjiAnswer.style.fontSize = '18px';
+    domEls.kanjiAnswer.style.fontSize = '14px';
   }
   domEls.mondaiButt.disabled = true;
   domEls.mondaiButt.style.display = 'none';
@@ -300,9 +299,6 @@ domEls.mondaiButt.addEventListener('click', (e) => {
   checkAnswer();
 });
 
-domEls.brushSizeRange.addEventListener('change', (e) => {
-  userSettings.brushSize = e.target.value;
-});
 
 domEls.startButton.addEventListener('click', (e) => {
   e.preventDefault();
