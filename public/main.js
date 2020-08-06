@@ -241,7 +241,7 @@ const checkAnswer = () => {
     domEls.kanjiAnswer.style.fontSize = '26px';
   }
   if (currentMondai.kanji.length > 5) {
-    domEls.kanjiAnswer.style.fontSize = '18px';
+    domEls.kanjiAnswer.style.fontSize = '14px';
   }
   domEls.mondaiButt.disabled = true;
   domEls.mondaiButt.style.display = 'none';
