@@ -13,7 +13,7 @@ let clearMirror = false;
 let preventDrawing = true;
 
 const userSettings = {
-  brushSize: 10
+  brushSize: 4
 };
 
 const domEls = {
@@ -363,21 +363,20 @@ const getTouches = (e) => {
   touchCors.y = y;
 };
 domEls.canvas.addEventListener('touchstart', (e) => {
-  e.preventDefault()
+  e.preventDefault();
   getTouches(e);
 });
 domEls.canvas.addEventListener('touchmove', (e) => {
-  e.preventDefault()
+  e.preventDefault();
   getTouches(e);
 });
 domEls.canvas.addEventListener('touchend', (e) => {
-  e.preventDefault()
+  e.preventDefault();
   touchCors.x = null;
   touchCors.y = null;
   touchCors.lastX = null;
   touchCors.lastY = null;
 });
-
 
 let sketch = function (p) {
   let pg;
@@ -397,24 +396,26 @@ let sketch = function (p) {
       if (touchCors.x) {
         console.log('touching!');
         if (!touchCors.lastX) {
-          p.line(
-            touchCors.x + p.random(-2, 2),
-            touchCors.y + p.random(-2, 2),
-            touchCors.x + p.random(-2, 2),
-            touchCors.y + p.random(-2, 2)
-          );
-          touchCors.lastX = touchCors.x;
-          touchCors.lastY = touchCors.y;
+          let ran = p.random(-1, 1);
+          let ranTwo = p.random(-1, 1);
+          p.line(touchCors.x + p.random(-3, 3), touchCors.y + p.random(-3, 3), touchCors.x + ran, touchCors.y + ranTwo);
+          p.line(touchCors.x, touchCors.y, touchCors.x, touchCors.y);
+          touchCors.lastX = touchCors.x + ran;
+          touchCors.lastY = touchCors.y + ranTwo;
         } else {
-          p.line(touchCors.lastX, touchCors.lastY, touchCors.x, touchCors.y);
-          touchCors.lastX = touchCors.x;
-          touchCors.lastY = touchCors.y;
+          let ran = p.random(-1, 1);
+          let ranTwo = p.random(-1, 1);
+          p.line(touchCors.lastX, touchCors.lastY, touchCors.x + ran, touchCors.y) + ranTwo;
+          p.line(touchCors.x, touchCors.y, touchCors.x, touchCors.y);
+          touchCors.lastX = touchCors.x + ran;
+          touchCors.lastY = touchCors.y + ranTwo;
         }
       }
 
       if (p.mouseIsPressed) {
         console.log('mousing!');
         p.line(p.pmouseX, p.pmouseY, p.mouseX, p.mouseY);
+        p.line(p.pmouseX, p.pmouseY, p.mouseX + p.random(-1, 1), p.mouseY + p.random(-1, 1));
       }
     }
     if (takingPhoto) {

@@ -9,8 +9,8 @@
   
   top: 100vh;
   */
+  height: 50px;
   padding: 0px;
-  margin-top: -50px;
   width: 100vw;
   background-color: #e63946;
   overflow: auto;
