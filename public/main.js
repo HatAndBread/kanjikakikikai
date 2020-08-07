@@ -41,56 +41,32 @@ const domEls = {
   practiceCloser: document.getElementById('practice-closer'),
   toolsOut: false
 };
-const setup = () => {
-  let userInfo = document.getElementById('user-info');
-  if (userInfo) {
-    let settings = JSON.parse(userInfo.innerText);
-    return settings;
+
+const getGreeting = (userName) => {
+  let date = new Date();
+  let time = date.getHours();
+  console.log(time);
+  if (time >= 4 && time < 7) {
+    return `朝早いですね、${userName}さん!☀️`;
+  } else if (time >= 7 && time <= 10) {
+    return `おはようございます、${userName}さん!☀️`;
+  } else if (time > 10 && time <= 17) {
+    return `こんにちは、${userName}さん!💪`;
+  } else if (time > 17) {
+    return `こんばんは、${userName}さん!🌙✨`;
   } else {
-    return {
-      brushSize: 30,
-      inkColor: '#e63946',
-      questionsPerRound: 10,
-      practiceAfterFailure: true
-    };
+    return `もう寝なさい、${userName}さん!🌙✨💤`;
   }
 };
 
-const userSettings = setup();
-console.log(userSettings);
-let currentSet;
-let currentMondai = {
-  kanji: null,
-  yomikata: null,
-  definition: null
-};
-
-const getGreeting = (userName) => {
-    let date = new Date();
-    let time = date.getHours();
-    console.log(time);
-    if (time >= 4 && time < 7) {
-      return `朝早いですね、${userName}さん!☀️`;
-    } else if (time >= 7 && time <= 10) {
-      return `おはようございます、${userName}さん!☀️`;
-    } else if (time > 10 && time <= 17) {
-      return `こんにちは、${userName}さん!💪`;
-    } else if (time > 17) {
-      return `こんばんは、${userName}さん!🌙✨`;
-    } else {
-      return `もう寝なさい、${userName}さん!🌙✨💤`;
-    }
-  };
-
 const setup = () => {
-  
   let userInfo = document.getElementById('user-info');
   if (userInfo) {
     let data = JSON.parse(userInfo.innerText);
-    let settings = data.userSettings
-    console.log(settings)
-    console.log(data)
-    let greeting = getGreeting(data.username)
+    let settings = data.userSettings;
+    console.log(settings);
+    console.log(data);
+    let greeting = getGreeting(data.username);
     domEls.greeting.innerText = greeting;
     return settings;
   } else {
@@ -567,7 +543,6 @@ let sketch = function (p) {
 
       p.strokeWeight(3);
 
-
       if (touchCors.x) {
         if (!touchCors.lastX) {
           let ran = p.random(-1, 1);
@@ -579,7 +554,6 @@ let sketch = function (p) {
             p.line(touchCors.x, touchCors.y, touchCors.x, touchCors.y);
 
             p.strokeWeight(3);
-
           }
           touchCors.lastX = touchCors.x + ran;
           touchCors.lastY = touchCors.y + ranTwo;
@@ -592,7 +566,6 @@ let sketch = function (p) {
             p.line(touchCors.lastX, touchCors.lastY, touchCors.x, touchCors.y);
 
             p.strokeWeight(3);
-
           }
           touchCors.lastX = touchCors.x + ran;
           touchCors.lastY = touchCors.y + ranTwo;
@@ -600,11 +573,7 @@ let sketch = function (p) {
       }
 
       if (p.mouseIsPressed) {
-
-        
-        p.line(p.pmouseX+p.random(0,1), p.pmouseY, p.mouseX+p.random(0,1), p.mouseY);
-        
-
+        p.line(p.pmouseX + p.random(0, 1), p.pmouseY, p.mouseX + p.random(0, 1), p.mouseY);
       }
     }
     if (takingPhoto) {
@@ -690,9 +659,7 @@ function practiceDrawing(p) {
       }
     }
 
-
     if (p.mouseIsPressed && !touchCors.lastX) {
-
       p.line(p.pmouseX, p.pmouseY, p.mouseX, p.mouseY);
       p.line(p.pmouseX, p.pmouseY, p.mouseX + p.random(-1, 1), p.mouseY + p.random(-1, 1));
     }
