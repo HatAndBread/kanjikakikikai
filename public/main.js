@@ -137,6 +137,18 @@ const resetGame = () => {
 };
 
 const getWordSet = async (whichOne) => {
+  let butt;
+  for (let i = 0; i < domEls.selectorButts.length; i++) {
+    console.log(domEls.selectorButts[i].innerText);
+    domEls.selectorButts[i].style.fontWeight = 'unset';
+    domEls.selectorButts[i].style.boxShadow = 'unset';
+    if (domEls.selectorButts[i].innerText === title) {
+      butt = domEls.selectorButts[i];
+      break;
+    }
+  }
+  butt.style.fontWeight = '900';
+  butt.style.boxShadow = '10px 5px 5px #e63946';
   const res = await fetch(`/get-words/${whichOne}`);
   const data = await res.json();
   currentSet = data.set;
@@ -148,6 +160,17 @@ const getWordSet = async (whichOne) => {
 };
 
 const getPreDefinedWordSet = async (src, title) => {
+  let butt;
+  for (let i = 0; i < domEls.selectorButts.length; i++) {
+    console.log(domEls.selectorButts[i].innerText);
+    domEls.selectorButts[i].style.fontWeight = 'unset';
+    domEls.selectorButts[i].style.boxShadow = 'unset';
+    if (domEls.selectorButts[i].innerText === title) {
+      butt = domEls.selectorButts[i];
+    }
+  }
+  butt.style.fontWeight = '900';
+  butt.style.boxShadow = '10px 5px 5px #e63946';
   const res = await fetch(`./word-sets/${src}`);
   const words = await res.json();
   currentSet = {};
@@ -160,7 +183,7 @@ const getPreDefinedWordSet = async (src, title) => {
   resetGame();
 };
 
-getPreDefinedWordSet('jlpt-five.jscsrc', 'Random kanji'); // set up initially
+getPreDefinedWordSet('jlpt-five.jscsrc', 'Random Kanji'); // set up initially
 
 for (let i = 0; i < domEls.selectorButts.length; i++) {
   domEls.selectorButts[i].addEventListener('click', (e) => {
@@ -199,7 +222,7 @@ for (let i = 0; i < domEls.selectorButts.length; i++) {
           break;
         default:
           fileName = 'jlpt-two.jscsrc';
-          title = 'Random kanji';
+          title = 'Random Kanji';
           break;
       }
       getPreDefinedWordSet(fileName, title);
