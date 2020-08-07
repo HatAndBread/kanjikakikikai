@@ -28,7 +28,12 @@ signup.post('/', async (req, res) => {
           username: req.body.username,
           password: password,
           myDictionaries: [],
-          userSettings: { brushSize: 30, inkColor: '#e63946', questionsPerRound: 10, practiceAfterFailure: true }
+          userSettings: {
+            brushSize: 30,
+            inkColor: { r: 230, g: 57, b: 70 },
+            questionsPerRound: 10,
+            practiceAfterFailure: true
+          }
         },
         (err, newDoc) => {
           console.log(newDoc);

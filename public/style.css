@@ -15,6 +15,7 @@
 @import url(components/game-finished.css);
 @import url(components/greeting.css);
 @import url(components/practice.css);
+@import url(components/settings.css);
 
 :root {
   --nav-color: #e63946; /* define global variable in root */
