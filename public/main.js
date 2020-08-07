@@ -72,7 +72,7 @@ const setup = () => {
   } else {
     return {
       brushSize: 30,
-      inkColor: '#e63946',
+      inkColor: { r: 230, g: 57, b: 70 },
       questionsPerRound: 10,
       practiceAfterFailure: true
     };
@@ -541,7 +541,7 @@ let sketch = function (p) {
       clearCanvas = false;
     }
     if (!preventDrawing) {
-      p.stroke(230, 57, 70);
+      p.stroke(userSettings.inkColor.r, userSettings.inkColor.g, userSettings.inkColor.b);
 
       p.strokeWeight(3);
 
@@ -637,7 +637,7 @@ function practiceDrawing(p) {
       p.clear();
       clearCanvasTwo = false;
     }
-    p.stroke(230, 57, 70);
+    p.stroke(userSettings.inkColor.r, userSettings.inkColor.g, userSettings.inkColor.b);
     p.strokeWeight(2);
     if (touchCors.x) {
       if (!touchCors.lastX) {
