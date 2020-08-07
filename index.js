@@ -43,24 +43,9 @@ app.get('/', checkAuthenticated, (req, res) => {
   console.log(req.session.passport);
   let userInfo = req.user;
   delete userInfo.password;
-  const getGreeting = () => {
-    let date = new Date();
-    let time = date.getHours();
-    if (time >= 4 && time < 7) {
-      return `朝早いですね、${userInfo.username}さん!☀️`;
-    } else if (time >= 7 && time <= 10) {
-      return `おはようございます、${userInfo.username}さん!☀️`;
-    } else if (time > 10 && time <= 17) {
-      return `こんにちは、${userInfo.username}さん!💪`;
-    } else if (time > 17) {
-      return `こんばんは、${userInfo.username}さん!🌙✨`;
-    } else {
-      return `もう寝なさい、${userInfo.username}さん!🌙✨💤`;
-    }
-  };
-  greeting = getGreeting();
-  console.log(greeting);
-  res.render('index', { userInfo: userInfo, greeting: greeting });
+  
+  res.render('index', { userInfo: userInfo });
+
 });
 
 app.get('/logout', (req, res) => {
