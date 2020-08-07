@@ -45,6 +45,7 @@ app.get('/', checkAuthenticated, (req, res) => {
   delete userInfo.password;
   
   res.render('index', { userInfo: userInfo });
+
 });
 
 app.get('/logout', (req, res) => {

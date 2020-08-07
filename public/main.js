@@ -41,6 +41,29 @@ const domEls = {
   practiceCloser: document.getElementById('practice-closer'),
   toolsOut: false
 };
+const setup = () => {
+  let userInfo = document.getElementById('user-info');
+  if (userInfo) {
+    let settings = JSON.parse(userInfo.innerText);
+    return settings;
+  } else {
+    return {
+      brushSize: 30,
+      inkColor: '#e63946',
+      questionsPerRound: 10,
+      practiceAfterFailure: true
+    };
+  }
+};
+
+const userSettings = setup();
+console.log(userSettings);
+let currentSet;
+let currentMondai = {
+  kanji: null,
+  yomikata: null,
+  definition: null
+};
 
 const getGreeting = (userName) => {
     let date = new Date();
@@ -541,7 +564,10 @@ let sketch = function (p) {
     }
     if (!preventDrawing) {
       p.stroke(230, 57, 70);
+
       p.strokeWeight(3);
+
+
       if (touchCors.x) {
         if (!touchCors.lastX) {
           let ran = p.random(-1, 1);
@@ -551,7 +577,9 @@ let sketch = function (p) {
           if (touchCors.force) {
             p.strokeWeight(touchCors.force * userSettings.brushSize + p.random(-2, 2));
             p.line(touchCors.x, touchCors.y, touchCors.x, touchCors.y);
+
             p.strokeWeight(3);
+
           }
           touchCors.lastX = touchCors.x + ran;
           touchCors.lastY = touchCors.y + ranTwo;
@@ -562,7 +590,9 @@ let sketch = function (p) {
           if (touchCors.force) {
             p.strokeWeight(touchCors.force * userSettings.brushSize + p.random(-2, 2));
             p.line(touchCors.lastX, touchCors.lastY, touchCors.x, touchCors.y);
+
             p.strokeWeight(3);
+
           }
           touchCors.lastX = touchCors.x + ran;
           touchCors.lastY = touchCors.y + ranTwo;
@@ -570,9 +600,11 @@ let sketch = function (p) {
       }
 
       if (p.mouseIsPressed) {
+
         
         p.line(p.pmouseX+p.random(0,1), p.pmouseY, p.mouseX+p.random(0,1), p.mouseY);
         
+
       }
     }
     if (takingPhoto) {
@@ -658,7 +690,9 @@ function practiceDrawing(p) {
       }
     }
 
+
     if (p.mouseIsPressed && !touchCors.lastX) {
+
       p.line(p.pmouseX, p.pmouseY, p.mouseX, p.mouseY);
       p.line(p.pmouseX, p.pmouseY, p.mouseX + p.random(-1, 1), p.mouseY + p.random(-1, 1));
     }
