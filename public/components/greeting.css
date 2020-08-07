@@ -1,0 +1,35 @@
+@keyframes fader {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+#greeting {
+  color: #1d3557;
+  position: fixed;
+  z-index: 2;
+  top: 70px;
+  font-size: 22px;
+  text-align: center;
+  width: 90vw;
+  left: 5vw;
+  bottom: 60px;
+  animation-name: fader;
+  animation-timing-function: linear;
+  animation-duration: 4s;
+  opacity: 0;
+  z-index: 10000;
+  background-color: rgba(241, 250, 238, 1);
+  border-radius: 10px;
+  pointer-events: none;
+}
+
+@media (orientation: portrait) {
+  #greeting {
+    font-size: 16px;
+    background-color: rgba(241, 250, 238, 0.3);
+  }
+}

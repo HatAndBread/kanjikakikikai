@@ -23,18 +23,26 @@ signup.post('/', async (req, res) => {
     if (docs.length > 0) {
       res.send('Sorry, that user name is already taken.　🙍‍♀️　🙍‍');
     } else {
-      users.insert({ username: req.body.username, password: password, myDictionaries: [] }, (err, newDoc) => {
-        console.log(newDoc);
-        req.login(newDoc, function (err) {
-          if (!err) {
-            console.log('success');
-            res.redirect('/');
-          } else {
-            res.send('Server error. Please try again later.　🙍‍♀️');
-            console.log(err);
-          }
-        });
-      });
+      users.insert(
+        {
+          username: req.body.username,
+          password: password,
+          myDictionaries: [],
+          userSettings: { brushSize: 30, inkColor: '#e63946', questionsPerRound: 10, practiceAfterFailure: true }
+        },
+        (err, newDoc) => {
+          console.log(newDoc);
+          req.login(newDoc, function (err) {
+            if (!err) {
+              console.log('success');
+              res.redirect('/');
+            } else {
+              res.send('Server error. Please try again later.　🙍‍♀️');
+              console.log(err);
+            }
+          });
+        }
+      );
     }
   });
 });

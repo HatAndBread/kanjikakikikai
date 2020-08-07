@@ -41,7 +41,10 @@ app.use('/settings', settings);
 app.get('/', checkAuthenticated, (req, res) => {
   console.log(req.user);
   console.log(req.session.passport);
-  res.render('index', { userInfo: req.user });
+  let userInfo = req.user;
+  delete userInfo.password;
+  
+  res.render('index', { userInfo: userInfo });
 });
 
 app.get('/logout', (req, res) => {
@@ -61,7 +64,3 @@ app.post('/send-jason', (req, res) => {
   res.send({ message: 'received' });
 });
 app.listen(PORT);
-
-app.get('/manifest', (req, res) => {
-  res.sendFile('./site.webmanifest');
-});

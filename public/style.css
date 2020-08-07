@@ -1,18 +1,20 @@
-@import url(navbar.css);
-@import url(background.css);
-@import url(buttons.css);
-@import url(range.css);
-@import url(canvas.css);
-@import url(tools.css);
-@import url(bottom.css);
-@import url(select.css);
-@import url(check-answer.css);
-@import url(editor-styles.css);
-@import url(forms.css);
-@import url(create-new-set.css);
-@import url(about.css);
-@import url(hints.css);
-@import url(game-finished.css);
+@import url(components/navbar.css);
+@import url(components/background.css);
+@import url(components/buttons.css);
+@import url(components/range.css);
+@import url(components/canvas.css);
+@import url(components/tools.css);
+@import url(components/bottom.css);
+@import url(components/select.css);
+@import url(components/check-answer.css);
+@import url(components/editor-styles.css);
+@import url(components/forms.css);
+@import url(components/create-new-set.css);
+@import url(components/about.css);
+@import url(components/hints.css);
+@import url(components/game-finished.css);
+@import url(components/greeting.css);
+@import url(components/practice.css);
 
 :root {
   --nav-color: #e63946; /* define global variable in root */
@@ -53,7 +55,6 @@ body {
   top: 0;
   left: 0px;
 }
-
 
 ul {
   list-style: none;
