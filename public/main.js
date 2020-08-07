@@ -180,20 +180,22 @@ const resetGame = () => {
   domEls.mondaiText.innerText = '';
 };
 
-const getWordSet = async (whichOne) => {
+const getWordSet = async (title) => {
   let butt;
+  console.log(title);
   for (let i = 0; i < domEls.selectorButts.length; i++) {
-    console.log(domEls.selectorButts[i].innerText);
+    console.log(domEls.selectorButts[i].innerHTML);
     domEls.selectorButts[i].style.fontWeight = 'unset';
     domEls.selectorButts[i].style.boxShadow = 'unset';
-    if (domEls.selectorButts[i].innerText === title) {
+    console.log(domEls.selectorButts[i].innerText);
+    if (domEls.selectorButts[i].innerText.trim() == title) {
+      // Todo find out where whitespace is coming from.
       butt = domEls.selectorButts[i];
-      break;
     }
   }
   butt.style.fontWeight = '900';
   butt.style.boxShadow = '10px 5px 5px #e63946';
-  const res = await fetch(`/get-words/${whichOne}`);
+  const res = await fetch(`/get-words/${title}`);
   const data = await res.json();
   currentSet = data.set;
   console.log(currentSet);
