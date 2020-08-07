@@ -1,5 +1,87 @@
 <%- include('header') -%>
+<script src="p5.min.js"></script>
 <body style="background-color: #f1faee;">
 <%- include('navbar') -%>
+<% const settings=userInfo.userSettings %>
+<div hidden><%= JSON.stringify(settings)%></div>
+<div id="settings-main">
+    <div id="brush-stuff">
+    <label for="brush-size">Brush size: </label>
+    <input type="range" name="brush-size" id="brush-size">
+    </div>
+    <div class="divider"></div>
+    <div id="color-selector">
+        
+        <div id = "ranges">
+            <div style="display: flex;">
+        <label for="red-range">Ink red level: </label>
+    <input type="range" name="red-range" id="red-range" min="0" max ="255" value="<%-settings.inkColor.r %>">
+    </div>
+    <div style="display: flex;">
+    <label for="green-range">Ink green level: </label>
+    <input type="range" name="green-range" id="green-range" min="0" max ="255" value="<%-settings.inkColor.g %>">
+    </div>
+    <div style="display: flex;">
+    <label for="blue-range">Ink blue level: </label>
+    <input type="range" name="blue-range" id="blue-range" min="0" max ="255" value="<%-settings.inkColor.b %>">
+    </div>
+    </div>
+    <div id="color-select-canvas"></div>
+    </div>
+    <div class="divider"></div>
+    <div id="practice-selector">
+        <label for="practice-selector">Pratice after wrong answer: </label>
+        <% if (settings.practiceAfterFailure){ %>
+        <input type="checkbox" name="practice-selector" id="practice-selector" checked>
+       <% }else{ %>
+<input type="checkbox" name="practice-selector" id="practice-selector" >
+       <% }%>
+    </div>
+    <div class="divider"></div>
+    <div id="number-of-questions">
+        <label for="question-number-selector">Number of questions for each round:  </label>
+        <input  type="range" name="question-number-selector" id="question-number-selector" min="5" max="50" value="<%- settings.questionsPerRound%>">
+        <p id="question-number-disp"><%= settings.questionsPerRound%></p>
+    </div>
+    <div class="divider"></div>
+    <div id="save-settings">
+        <button class="main-button" id="save-changes-butt">Save changes</button>
+    </div>
+    
+</div>
 </body>
 </html>
+
+<script>
+
+    const canvas = document.getElementById('color-select-canvas');
+    const red = document.getElementById('red-range')
+    const green = document.getElementById('green-range')
+    const blue = document.getElementById('blue-range')
+    const questionNumRange = document.getElementById('question-number-selector')
+    const questionNumDisp = document.getElementById('question-number-disp')
+    let r = red.value;
+    let g = green.value;
+    let b = blue.value;
+    canvas.style.backgroundColor = `rgb(${r},${g},${b}) `
+    red.addEventListener('input',(e)=>{
+        r = e.target.value;
+        canvas.style.backgroundColor = `rgb(${r},${g},${b}) `
+    })
+     green.addEventListener('input',(e)=>{
+        g = e.target.value;
+        canvas.style.backgroundColor = `rgb(${r},${g},${b}) `
+    })
+     blue.addEventListener('input',(e)=>{
+        b = e.target.value;
+        canvas.style.backgroundColor = `rgb(${r},${g},${b}) `
+    })
+    questionNumRange.addEventListener('input',(e)=>{
+        questionNumDisp.innerText = e.target.value;
+    })
+    
+      
+      
+     
+
+</script>
