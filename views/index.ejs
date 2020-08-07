@@ -2,27 +2,24 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta 
-     name='viewport' 
-     content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' 
-/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
     <title>漢字書き機械</title>
     <link rel="stylesheet" href="style.css" />
     <link href="https://fonts.googleapis.com/css2?family=Dosis&family=Kosugi+Maru&display=swap" rel="stylesheet" />
     <script src="p5.min.js"></script>
     <script src="main.js" defer></script>
   </head>
+  <% if (userInfo){let settings = userInfo.userSettings; let string = JSON.stringify(settings); %>
+  <settings hidden id="user-info" style="display: none;"><%=string %></settings>
+  <%}%>
 
   <body>
-    
-
     <div id="nav-bar">
       <div id="left-stuff">
         <div>
-          <button id="select-study-set-butt" class="main-button" style="position: relative;">Kanji set</button>
+          <button id="select-study-set-butt" class="main-button" style="position: relative;">Study sets</button>
         </div>
 
-        
         <input id="keshi" type="image" src="./assets/keshi.png" alt="ERASE" />
       </div>
       <div id="study-set-selector">
@@ -69,6 +66,9 @@
 
     <div id="background">
       <div id="main">
+        <% if (greeting){ %>
+        <div id="greeting"><%= greeting%></div>
+        <% } %>
         <div id="canvas"></div>
         <div id="stats"></div>
         <div id="hints">
@@ -106,7 +106,15 @@
       <p id="final-score"></p>
       <a class="nav-button" href="/">Play again! 😇</a>
     </div>
-    
+    <div hidden id="practice">
+      <div id="question-number">あらま！🤦‍♀️　Let's practice!</div>
+      <div id="image-container">
+        <div id="kanji-example"></div>
+        <div id="user-canvas"></div>
+      </div>
+      <div class="button-holder">
+        <button id="practice-closer" class="main-button">Go to next question↪︎</button>
+      </div>
+    </div>
   </body>
-
 </html>

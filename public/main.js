@@ -1,20 +1,13 @@
 /*====================
 GLOBALS***************
 ====================*/
-let currentSet;
-let currentMondai = {
-  kanji: null,
-  yomikata: null,
-  definition: null
-};
+
 let takingPhoto = false;
 let clearCanvas = false;
+let clearCanvasTwo = false;
 let clearMirror = false;
 let preventDrawing = true;
-
-const userSettings = {
-  brushSize: 2
-};
+let practicing = false;
 
 const domEls = {
   mondaiButt: document.getElementById('mondai-button'),
@@ -41,7 +34,35 @@ const domEls = {
   finalScore: document.getElementById('final-score'),
   compliment: document.getElementById('compliment'),
   bottom: document.getElementById('bottom'),
+  greeting: document.getElementById('greeting'),
+  practiceBox: document.getElementById('practice'),
+  practiceKanjiExample: document.getElementById('kanji-example'),
+  practiceUserCanvas: document.getElementById('user-canvas'),
+  practiceCloser: document.getElementById('practice-closer'),
   toolsOut: false
+};
+const setup = () => {
+  let userInfo = document.getElementById('user-info');
+  if (userInfo) {
+    let settings = JSON.parse(userInfo.innerText);
+    return settings;
+  } else {
+    return {
+      brushSize: 30,
+      inkColor: '#e63946',
+      questionsPerRound: 10,
+      practiceAfterFailure: true
+    };
+  }
+};
+
+const userSettings = setup();
+console.log(userSettings);
+let currentSet;
+let currentMondai = {
+  kanji: null,
+  yomikata: null,
+  definition: null
 };
 
 // Will give you the actual viewheight of mobile browsers with navigation bars
@@ -55,7 +76,7 @@ const userStats = {
   numberCorrect: 0,
   questionOutOf: {
     currentQuestion: 1,
-    totalQuestions: 20
+    totalQuestions: userSettings.questionsPerRound
   },
   updateStats: function (correct) {
     if (correct) {
@@ -94,7 +115,7 @@ const resetUserStats = (studySet) => {
   userStats.percentCorrect = 100;
   userStats.numberCorrect = 0;
   userStats.questionOutOf.currentQuestion = 1;
-  userStats.questionOutOf.totalQuestions = 20;
+  userStats.questionOutOf.totalQuestions = userSettings.questionsPerRound;
 };
 
 function createStatsTable() {
@@ -137,6 +158,18 @@ const resetGame = () => {
 };
 
 const getWordSet = async (whichOne) => {
+  let butt;
+  for (let i = 0; i < domEls.selectorButts.length; i++) {
+    console.log(domEls.selectorButts[i].innerText);
+    domEls.selectorButts[i].style.fontWeight = 'unset';
+    domEls.selectorButts[i].style.boxShadow = 'unset';
+    if (domEls.selectorButts[i].innerText === title) {
+      butt = domEls.selectorButts[i];
+      break;
+    }
+  }
+  butt.style.fontWeight = '900';
+  butt.style.boxShadow = '10px 5px 5px #e63946';
   const res = await fetch(`/get-words/${whichOne}`);
   const data = await res.json();
   currentSet = data.set;
@@ -148,6 +181,17 @@ const getWordSet = async (whichOne) => {
 };
 
 const getPreDefinedWordSet = async (src, title) => {
+  let butt;
+  for (let i = 0; i < domEls.selectorButts.length; i++) {
+    console.log(domEls.selectorButts[i].innerText);
+    domEls.selectorButts[i].style.fontWeight = 'unset';
+    domEls.selectorButts[i].style.boxShadow = 'unset';
+    if (domEls.selectorButts[i].innerText === title) {
+      butt = domEls.selectorButts[i];
+    }
+  }
+  butt.style.fontWeight = '900';
+  butt.style.boxShadow = '10px 5px 5px #e63946';
   const res = await fetch(`./word-sets/${src}`);
   const words = await res.json();
   currentSet = {};
@@ -160,7 +204,7 @@ const getPreDefinedWordSet = async (src, title) => {
   resetGame();
 };
 
-getPreDefinedWordSet('jlpt-five.jscsrc', 'Random kanji'); // set up initially
+getPreDefinedWordSet('jlpt-five.jscsrc', 'Random Kanji'); // set up initially
 
 for (let i = 0; i < domEls.selectorButts.length; i++) {
   domEls.selectorButts[i].addEventListener('click', (e) => {
@@ -199,7 +243,7 @@ for (let i = 0; i < domEls.selectorButts.length; i++) {
           break;
         default:
           fileName = 'jlpt-two.jscsrc';
-          title = 'Random kanji';
+          title = 'Random Kanji';
           break;
       }
       getPreDefinedWordSet(fileName, title);
@@ -254,7 +298,7 @@ domEls.maru.addEventListener('click', (e) => {
   preventDrawing = false;
   domEls.mondaiButt.disabled = false;
   domEls.mondaiButt.style.display = 'block';
-  if (userStats.questionOutOf.currentQuestion < 20) {
+  if (userStats.questionOutOf.currentQuestion < userSettings.questionsPerRound) {
     getMondai();
     userStats.updateStats(true);
     domEls.statsDisplay.style.display = 'block';
@@ -265,18 +309,39 @@ domEls.maru.addEventListener('click', (e) => {
 
   createStatsTable();
 });
+
+domEls.practiceCloser.addEventListener('click', (e) => {
+  domEls.practiceBox.hidden = true;
+  practicing = false;
+  preventDrawing = false;
+  console.log(userStats);
+  if (userStats.questionOutOf.currentQuestion <= userSettings.questionsPerRound) {
+    domEls.statsDisplay.style.display = 'block';
+  }
+});
+
 domEls.batsu.addEventListener('click', (e) => {
   e.preventDefault();
+
+  if (userSettings.practiceAfterFailure) {
+    preventDrawing = true;
+    practicing = true;
+    domEls.statsDisplay.style.display = 'none';
+    domEls.practiceBox.hidden = false;
+    domEls.practiceKanjiExample.innerText = currentMondai.kanji;
+  } else {
+    preventDrawing = false;
+    domEls.statsDisplay.style.display = 'block';
+  }
   domEls.checkAnswerBox.style.display = 'none';
-  preventDrawing = false;
   domEls.mondaiButt.disabled = false;
   domEls.mondaiButt.style.display = 'block';
-  if (userStats.questionOutOf.currentQuestion < 20) {
+  if (userStats.questionOutOf.currentQuestion < userSettings.questionsPerRound) {
     getMondai();
     userStats.updateStats(false);
-    domEls.statsDisplay.style.display = 'block';
   } else {
     userStats.updateStats(false);
+    domEls.statsDisplay.style.display = 'none';
     finishGame();
   }
 
@@ -327,6 +392,7 @@ domEls.toolsCloser.addEventListener('click', () => {
 
 keshi.addEventListener('click', () => {
   clearCanvas = true;
+  clearCanvasTwo = true;
 });
 
 window.addEventListener('resize', (e) => {
@@ -356,12 +422,20 @@ const touchCors = {
 };
 
 const getTouches = (e) => {
-  console.log(touchCors);
-  let x = Math.floor(e.touches[0].clientX - domEls.canvas.getBoundingClientRect().x);
-  let y = Math.floor(e.touches[0].clientY - domEls.canvas.getBoundingClientRect().y);
-  touchCors.x = x;
-  touchCors.y = y;
-  touchCors.force = e.touches[0].force;
+  if (!practicing) {
+    console.log(touchCors);
+    let x = Math.floor(e.touches[0].clientX - domEls.canvas.getBoundingClientRect().x);
+    let y = Math.floor(e.touches[0].clientY - domEls.canvas.getBoundingClientRect().y);
+    touchCors.x = x;
+    touchCors.y = y;
+    touchCors.force = e.touches[0].force;
+  } else {
+    let x = Math.floor(e.touches[0].clientX - domEls.practiceUserCanvas.getBoundingClientRect().x);
+    let y = Math.floor(e.touches[0].clientY - domEls.practiceUserCanvas.getBoundingClientRect().y);
+    touchCors.x = x;
+    touchCors.y = y;
+    touchCors.force = e.touches[0].force;
+  }
 };
 
 //prevent zooming on mobile//////////////////////////////
@@ -415,6 +489,10 @@ const allowTouching = (element) => {
 allowTouching(domEls.statsDisplay);
 allowTouching(domEls.hints);
 allowTouching(domEls.canvas);
+if (domEls.greeting) {
+  allowTouching(domEls.greeting);
+}
+allowTouching(domEls.practiceUserCanvas);
 
 domEls.statsDisplay.addEventListener('click', (e) => {
   e.preventDefault();
@@ -439,18 +517,17 @@ let sketch = function (p) {
     }
     if (!preventDrawing) {
       p.stroke(230, 57, 70);
-      p.strokeWeight(userSettings.brushSize);
+      p.strokeWeight(2);
       if (touchCors.x) {
-        console.log('touching!');
         if (!touchCors.lastX) {
           let ran = p.random(-1, 1);
           let ranTwo = p.random(-1, 1);
           p.line(touchCors.x + p.random(-3, 3), touchCors.y + p.random(-3, 3), touchCors.x + ran, touchCors.y + ranTwo);
           p.line(touchCors.x, touchCors.y, touchCors.x, touchCors.y);
           if (touchCors.force) {
-            p.strokeWeight(touchCors.force * 33 + p.random(-2, 2));
+            p.strokeWeight(touchCors.force * userSettings.brushSize + p.random(-2, 2));
             p.line(touchCors.x, touchCors.y, touchCors.x, touchCors.y);
-            p.strokeWeight(userSettings.brushSize);
+            p.strokeWeight(2);
           }
           touchCors.lastX = touchCors.x + ran;
           touchCors.lastY = touchCors.y + ranTwo;
@@ -459,9 +536,9 @@ let sketch = function (p) {
           let ranTwo = p.random(-1, 1);
           p.line(touchCors.lastX, touchCors.lastY, touchCors.x + ran, touchCors.y);
           if (touchCors.force) {
-            p.strokeWeight(touchCors.force * 30 + p.random(-2, 2));
+            p.strokeWeight(touchCors.force * userSettings.brushSize + p.random(-2, 2));
             p.line(touchCors.lastX, touchCors.lastY, touchCors.x, touchCors.y);
-            p.strokeWeight(userSettings.brushSize);
+            p.strokeWeight(2);
           }
           touchCors.lastX = touchCors.x + ran;
           touchCors.lastY = touchCors.y + ranTwo;
@@ -469,7 +546,6 @@ let sketch = function (p) {
       }
 
       if (p.mouseIsPressed) {
-        console.log('mousing!');
         p.line(p.pmouseX, p.pmouseY, p.mouseX, p.mouseY);
         p.line(p.pmouseX, p.pmouseY, p.mouseX + p.random(-1, 1), p.mouseY + p.random(-1, 1));
       }
@@ -496,7 +572,6 @@ let sketch = function (p) {
 function yourDrawing(p) {
   let cnv;
   p.setup = function () {
-    console.log(smallCanvasSettings);
     cnv = p.createCanvas(smallCanvasSettings.width, smallCanvasSettings.height);
   };
   p.draw = function () {
@@ -514,8 +589,63 @@ function yourDrawing(p) {
   p.windowResized = function () {};
 }
 
+function practiceDrawing(p) {
+  let cnv;
+  let initialWidth;
+  let initialHeight;
+  p.setup = function () {
+    console.log(domEls.practiceUserCanvas.clientWidth);
+    initialWidth = domEls.practiceUserCanvas.clientWidth;
+    initialHeight = domEls.practiceUserCanvas.clientHeight;
+    cnv = p.createCanvas(initialWidth, initialHeight);
+  };
+  p.draw = function () {
+    if (domEls.practiceUserCanvas.clientWidth !== initialWidth) {
+      p.resizeCanvas(domEls.practiceUserCanvas.clientWidth, domEls.practiceUserCanvas.clientHeight);
+      initialWidth = domEls.practiceUserCanvas.clientWidth;
+    }
+
+    if (clearCanvasTwo) {
+      p.clear();
+      clearCanvasTwo = false;
+    }
+    p.stroke(230, 57, 70);
+    p.strokeWeight(2);
+    if (touchCors.x) {
+      if (!touchCors.lastX) {
+        p.line(touchCors.x, touchCors.y, touchCors.x, touchCors.y);
+        if (touchCors.force) {
+          p.strokeWeight(touchCors.force * 15 + p.random(-2, 2));
+          p.line(touchCors.x, touchCors.y, touchCors.x, touchCors.y);
+          p.strokeWeight(2);
+        }
+        touchCors.lastX = touchCors.x;
+        touchCors.lastY = touchCors.y;
+      } else {
+        p.line(touchCors.lastX, touchCors.lastY, touchCors.x, touchCors.y);
+        if (touchCors.force) {
+          p.strokeWeight(touchCors.force * 15 + p.random(-2, 2));
+          p.line(touchCors.lastX, touchCors.lastY, touchCors.x, touchCors.y);
+          p.strokeWeight(2);
+        }
+        touchCors.lastX = touchCors.x;
+        touchCors.lastY = touchCors.y;
+      }
+    }
+
+    if (p.mouseIsPressed) {
+      p.line(p.pmouseX, p.pmouseY, p.mouseX, p.mouseY);
+      p.line(p.pmouseX, p.pmouseY, p.mouseX + p.random(-1, 1), p.mouseY + p.random(-1, 1));
+    }
+  };
+  p.windowResized = function () {
+    p.resizeCanvas(domEls.practiceUserCanvas.clientWidth, domEls.practiceUserCanvas.clientHeight);
+  };
+}
+
 new p5(sketch, domEls.canvas);
 new p5(yourDrawing, domEls.yourDrawing);
+new p5(practiceDrawing, domEls.practiceUserCanvas);
 
 /*
 //text file parser

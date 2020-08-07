@@ -11,17 +11,16 @@
   z-index: 150;
   position: fixed;
   display: none;
-  top: 75px;
-  left: 20px;
-  right: 20px;
-  height: calc(100vh - 140px);
+  top: 60px;
+  left: 0px;
+  right: 0px;
+  height: calc(100vh - 65px);
   background-color: #a8dadc;
   border-style: ridge;
   border-color: rgb(70, 123, 157);
   overflow-x: hidden;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
-  border-radius: 10px;
   border-style: ridge;
   animation: fadeIn 0.5s;
 }
