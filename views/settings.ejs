@@ -3,11 +3,11 @@
 <body style="background-color: #f1faee;">
 <%- include('navbar') -%>
 <% const settings=userInfo.userSettings %>
-<div hidden><%= JSON.stringify(settings)%></div>
+<div id="info" hidden><%= JSON.stringify(settings)%></div>
 <div id="settings-main">
     <div id="brush-stuff">
     <label for="brush-size">Brush size: </label>
-    <input type="range" name="brush-size" id="brush-size">
+    <input type="range" name="brush-size" id="brush-size" min="1" max="100" value = "<%-settings.brushSize%>">
     </div>
     <div class="divider"></div>
     <div id="color-selector">
@@ -55,31 +55,69 @@
 <script>
 
     const canvas = document.getElementById('color-select-canvas');
+    const brushSize = document.getElementById('brush-size')
     const red = document.getElementById('red-range')
     const green = document.getElementById('green-range')
     const blue = document.getElementById('blue-range')
     const questionNumRange = document.getElementById('question-number-selector')
     const questionNumDisp = document.getElementById('question-number-disp')
+    const practiceSelector = document.getElementById('practice-selector')
+    const info = JSON.parse(document.getElementById('info').innerText)
+    const saveButt = document.getElementById('save-changes-butt');
+    
+    console.log(info)
+    
     let r = red.value;
     let g = green.value;
     let b = blue.value;
     canvas.style.backgroundColor = `rgb(${r},${g},${b}) `
+
+    const newSettings ={
+    brushSize: brushSize.value,
+    inkColor: { r: r, g: g, b: b },
+    questionsPerRound: questionNumDisp.innerText,
+    practiceAfterFailure: info.practiceAfterFailure}
+    console.log(newSettings)
+
     red.addEventListener('input',(e)=>{
         r = e.target.value;
-        canvas.style.backgroundColor = `rgb(${r},${g},${b}) `
+        canvas.style.backgroundColor = `rgb(${r},${g},${b}) `;
+        newSettings.inkColor.r = r;
     })
      green.addEventListener('input',(e)=>{
         g = e.target.value;
-        canvas.style.backgroundColor = `rgb(${r},${g},${b}) `
+        canvas.style.backgroundColor = `rgb(${r},${g},${b}) `;
+        console.log(newSettings);
+        newSettings.inkColor.g = g;
     })
      blue.addEventListener('input',(e)=>{
         b = e.target.value;
         canvas.style.backgroundColor = `rgb(${r},${g},${b}) `
+        console.log(newSettings);
+        newSettings.inkColor.b = b;
     })
     questionNumRange.addEventListener('input',(e)=>{
         questionNumDisp.innerText = e.target.value;
+        console.log(newSettings);
+        newSettings.questionsPerRound= e.target.value;
     })
-    
+    brushSize.addEventListener('input',(e)=>{
+        newSettings.brushSize = e.target.value;
+        console.log(newSettings);
+    })
+    practiceSelector.addEventListener('input',(e)=>{
+        newSettings.practiceAfterFailure = e.target.checked
+        console.log(newSettings)
+    })
+    saveButt.addEventListener('click',async ()=>{
+        const res =  await fetch ('/settings',{
+            method: 'POST', 
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(newSettings)});
+        if (res.message = 'success'){
+            window.location.href = '/'
+        }
+    })
       
       
      
