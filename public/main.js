@@ -638,8 +638,8 @@ let sketch = function (p) {
         console.log(mouseData);
         let theNumber = mouseData.timeSinceMouseDown - mouseData.timeSinceMouseDown * 0.3 + p.random(-1, 1);
         console.log(theNumber);
-        let ran = p.random(-3, 3);
-        let ran2 = p.random(-3, 3);
+        let ran = p.random(-1, 1);
+        let ran2 = p.random(-1, 1);
         mouseData.x = p.mouseX + ran;
         mouseData.y = p.mouseY + ran2;
         p.strokeWeight(userSettings.brushSize * 0.08 + theNumber);
