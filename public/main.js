@@ -443,12 +443,27 @@ const touchCors = {
   y: null,
   lastX: null,
   lastY: null,
-  force: null
+  force: null,
+  distanceSinceLast: null
 };
+
+const mouseData = {
+  timeSinceMouseDown: 0,
+  lastX: null,
+  lastY: null,
+  x: null,
+  y: null
+};
+
+let touching = false;
+function touchLoop() {
+  if (touching) {
+    requestAnimationFrame(touchLoop);
+  }
+}
 
 const getTouches = (e) => {
   if (!practicing) {
-    console.log(touchCors);
     let x = Math.floor(e.touches[0].clientX - domEls.canvas.getBoundingClientRect().x);
     let y = Math.floor(e.touches[0].clientY - domEls.canvas.getBoundingClientRect().y);
     touchCors.x = x;
@@ -476,10 +491,16 @@ document.addEventListener(
   },
   false
 );
+document.addEventListener('touchstart', () => {
+  touching = true;
+  touchLoop();
+});
 let lastTouchEnd = 0;
 document.addEventListener(
   'touchend',
   function (event) {
+    mouseData.timeSinceMouseDown = 0;
+    touching = false;
     let now = new Date().getTime();
     if (now - lastTouchEnd <= 100) {
       event.preventDefault();
@@ -488,6 +509,11 @@ document.addEventListener(
   },
   false
 );
+document.addEventListener('mouseup', () => {
+  mouseData.timeSinceMouseDown = 0;
+  mouseData.lastX = null;
+  mouseData.lastY = null;
+});
 
 const allowTouching = (element) => {
   element.addEventListener('click', (e) => {
@@ -508,6 +534,9 @@ const allowTouching = (element) => {
     touchCors.lastX = null;
     touchCors.lastY = null;
     touchCors.force = null;
+    mouseData.timeSinceMouseDown = 0;
+    mouseData.lastX = null;
+    mouseData.lastY = null;
   });
 };
 
@@ -531,9 +560,25 @@ domEls.hints.addEventListener('click', (e) => {
 let sketch = function (p) {
   let pg;
   let cnv;
+  let getMouseChange;
 
   p.setup = function () {
     cnv = p.createCanvas(canvasSettings.width, canvasSettings.height);
+    getMouseChange = () => {
+      let xChange = p.pmouseX - p.mouseX;
+      let yChange = p.pmouseY - p.mouseY;
+      if (xChange < 0) {
+        xChange = xChange * -1;
+      }
+      if (yChange < 0) {
+        yChange = yChange * -1;
+      }
+      if (xChange > yChange) {
+        return xChange;
+      } else {
+        return yChange;
+      }
+    };
   };
   p.draw = function () {
     if (clearCanvas) {
@@ -542,9 +587,8 @@ let sketch = function (p) {
     }
     if (!preventDrawing) {
       p.stroke(userSettings.inkColor.r, userSettings.inkColor.g, userSettings.inkColor.b);
-
       p.strokeWeight(3);
-
+      /*
       if (touchCors.x) {
         if (!touchCors.lastX) {
           let ran = p.random(-1, 1);
@@ -573,9 +617,84 @@ let sketch = function (p) {
           touchCors.lastY = touchCors.y + ranTwo;
         }
       }
-
+*/
       if (p.mouseIsPressed) {
-        p.line(p.pmouseX + p.random(0, 1), p.pmouseY, p.mouseX + p.random(0, 1), p.mouseY);
+        let change = getMouseChange();
+        if (change > 7 && change < 10) {
+          mouseData.timeSinceMouseDown -= 2 + p.random(-1, 1);
+        }
+        if (change >= 10 && change < 14) {
+          mouseData.timeSinceMouseDown -= 3 + p.random(-1, 1);
+        }
+        if (change >= 14 && change < 20) {
+          mouseData.timeSinceMouseDown -= 4 + p.random(-1, 1);
+        }
+        if (change >= 20) {
+          mouseData.timeSinceMouseDown -= 7 + p.random(-2, 2);
+        }
+        if (mouseData.timeSinceMouseDown < 0) {
+          mouseData.timeSinceMouseDown = mouseData.timeSinceMouseDown * -1;
+        }
+        if (mouseData.timeSinceMouseDown < 50) {
+          mouseData.timeSinceMouseDown += 1;
+        }
+        console.log(mouseData);
+        let theNumber = mouseData.timeSinceMouseDown - mouseData.timeSinceMouseDown * 0.3 + p.random(-1, 1);
+        console.log(theNumber);
+        let ran = p.random(-3, 3);
+        let ran2 = p.random(-3, 3);
+        mouseData.x = p.mouseX + ran;
+        mouseData.y = p.mouseY + ran2;
+        p.strokeWeight(userSettings.brushSize * 0.08 + theNumber);
+        if (mouseData.lastX) {
+          p.line(mouseData.lastX, mouseData.lastY, mouseData.x, mouseData.y);
+          p.line(p.pmouseX, p.pmouseY, p.mouseX, p.mouseY);
+          p.strokeWeight(1);
+          for (let i = 0; i < Math.floor(Math.random() * 20); i++) {
+            p.line(
+              p.pmouseX + p.random(-3, 3),
+              p.pmouseY + p.random(-3, 3),
+              p.mouseX + p.random(-3, 3),
+              p.mouseY + p.random(-3, 3)
+            );
+          }
+        } else {
+          p.line(p.mouseX + p.random(-3, 3), p.mouseY + p.random(-3, 3), mouseData.x, mouseData.y);
+          p.line(p.pmouseX, p.pmouseY, p.mouseX, p.mouseY);
+          p.strokeWeight(1);
+          p.line(
+            p.pmouseX + p.random(-3, 3),
+            p.pmouseY + p.random(-3, 3),
+            p.mouseX + p.random(-3, 3),
+            p.mouseY + p.random(-3, 3)
+          );
+          p.line(
+            p.pmouseX + p.random(-3, 3),
+            p.pmouseY + p.random(-3, 3),
+            p.mouseX + p.random(-3, 3),
+            p.mouseY + p.random(-3, 3)
+          );
+          p.line(
+            p.pmouseX + p.random(-3, 3),
+            p.pmouseY + p.random(-3, 3),
+            p.mouseX + p.random(-3, 3),
+            p.mouseY + p.random(-3, 3)
+          );
+          p.line(
+            p.pmouseX + p.random(-3, 3),
+            p.pmouseY + p.random(-3, 3),
+            p.mouseX + p.random(-3, 3),
+            p.mouseY + p.random(-3, 3)
+          );
+          p.line(
+            p.pmouseX + p.random(-3, 3),
+            p.pmouseY + p.random(-3, 3),
+            p.mouseX + p.random(-3, 3),
+            p.mouseY + p.random(-3, 3)
+          );
+        }
+        mouseData.lastX = mouseData.x;
+        mouseData.lastY = mouseData.y;
       }
     }
     if (takingPhoto) {
