@@ -620,17 +620,14 @@ let sketch = function (p) {
 */
       if (p.mouseIsPressed) {
         let change = getMouseChange();
-        if (change > 7 && change < 10) {
-          mouseData.timeSinceMouseDown -= 2 + p.random(-1, 1);
+        if (change > 7 && change < 20) {
+          mouseData.timeSinceMouseDown -= 2;
         }
-        if (change >= 10 && change < 14) {
-          mouseData.timeSinceMouseDown -= 3 + p.random(-1, 1);
+        if (change >= 20 && change < 30) {
+          mouseData.timeSinceMouseDown -= 3;
         }
-        if (change >= 14 && change < 20) {
-          mouseData.timeSinceMouseDown -= 4 + p.random(-1, 1);
-        }
-        if (change >= 20) {
-          mouseData.timeSinceMouseDown -= 7 + p.random(-2, 2);
+        if (change >= 30) {
+          mouseData.timeSinceMouseDown -= 4;
         }
         if (mouseData.timeSinceMouseDown < 0) {
           mouseData.timeSinceMouseDown = mouseData.timeSinceMouseDown * -1;
@@ -649,49 +646,9 @@ let sketch = function (p) {
         if (mouseData.lastX) {
           p.line(mouseData.lastX, mouseData.lastY, mouseData.x, mouseData.y);
           p.line(p.pmouseX, p.pmouseY, p.mouseX, p.mouseY);
-          p.strokeWeight(1);
-          for (let i = 0; i < Math.floor(Math.random() * 20); i++) {
-            p.line(
-              p.pmouseX + p.random(-3, 3),
-              p.pmouseY + p.random(-3, 3),
-              p.mouseX + p.random(-3, 3),
-              p.mouseY + p.random(-3, 3)
-            );
-          }
         } else {
           p.line(p.mouseX + p.random(-3, 3), p.mouseY + p.random(-3, 3), mouseData.x, mouseData.y);
           p.line(p.pmouseX, p.pmouseY, p.mouseX, p.mouseY);
-          p.strokeWeight(1);
-          p.line(
-            p.pmouseX + p.random(-3, 3),
-            p.pmouseY + p.random(-3, 3),
-            p.mouseX + p.random(-3, 3),
-            p.mouseY + p.random(-3, 3)
-          );
-          p.line(
-            p.pmouseX + p.random(-3, 3),
-            p.pmouseY + p.random(-3, 3),
-            p.mouseX + p.random(-3, 3),
-            p.mouseY + p.random(-3, 3)
-          );
-          p.line(
-            p.pmouseX + p.random(-3, 3),
-            p.pmouseY + p.random(-3, 3),
-            p.mouseX + p.random(-3, 3),
-            p.mouseY + p.random(-3, 3)
-          );
-          p.line(
-            p.pmouseX + p.random(-3, 3),
-            p.pmouseY + p.random(-3, 3),
-            p.mouseX + p.random(-3, 3),
-            p.mouseY + p.random(-3, 3)
-          );
-          p.line(
-            p.pmouseX + p.random(-3, 3),
-            p.pmouseY + p.random(-3, 3),
-            p.mouseX + p.random(-3, 3),
-            p.mouseY + p.random(-3, 3)
-          );
         }
         mouseData.lastX = mouseData.x;
         mouseData.lastY = mouseData.y;
