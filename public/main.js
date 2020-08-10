@@ -589,7 +589,7 @@ let sketch = function (p) {
       p.stroke(userSettings.inkColor.r, userSettings.inkColor.g, userSettings.inkColor.b);
       p.strokeWeight(3);
 
-      if (touchCors.x) {
+      if (touchCors.x && touchCors.force) {
         if (!touchCors.lastX) {
           let ran = p.random(-1, 1);
           let ranTwo = p.random(-1, 1);
