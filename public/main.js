@@ -40,6 +40,7 @@ const domEls = {
   practiceUserCanvas: document.getElementById('user-canvas'),
   practiceCloser: document.getElementById('practice-closer'),
   loader: document.getElementById('loader'),
+  nav: document.getElementById('nav-bar'),
   toolsOut: false
 };
 
@@ -179,6 +180,11 @@ const resetGame = () => {
   domEls.startButton.style.display = 'block';
   domEls.statsDisplay.style.display = 'none';
   domEls.mondaiText.innerText = '';
+  domEls.checkAnswerBox.style.display = 'none';
+  domEls.practiceBox.hidden = true;
+  preventDrawing = false;
+  practicing = false;
+  domEls.mondaiButt.disabled = false;
 };
 
 const getWordSet = async (title) => {
@@ -434,6 +440,11 @@ window.addEventListener('resize', (e) => {
   //Stop stupid mobile browsers from moving bottom div around
   //domEls.bottom.style.top = 'calc(var(--vh, 1vh) * 100)';
   //domEls.bottom.style.marginTop = '-50px';
+});
+domEls.nav.addEventListener('click', (e) => {
+  if (e.target.id != 'select-study-set-butt') {
+    domEls.studySetSelector.style.display = 'none';
+  }
 });
 
 let mirror;
