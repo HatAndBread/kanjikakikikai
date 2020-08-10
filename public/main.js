@@ -196,10 +196,11 @@ const getWordSet = async (title) => {
   }
   butt.style.fontWeight = '900';
   butt.style.boxShadow = '10px 5px 5px #e63946';
-  loader.hidden = false;
+  domEls.loader.style.display = 'flex';
+
   const res = await fetch(`/get-words/${title}`);
   const data = await res.json();
-  loader.hidden = true;
+  domEls.loader.style.display = 'none';
   currentSet = data.set;
   console.log(currentSet);
   resetUserStats(currentSet.title);
@@ -220,8 +221,11 @@ const getPreDefinedWordSet = async (src, title) => {
   }
   butt.style.fontWeight = '900';
   butt.style.boxShadow = '10px 5px 5px #e63946';
+  domEls.loader.style.display = 'flex';
+
   const res = await fetch(`./word-sets/${src}`);
   const words = await res.json();
+  domEls.loader.style.display = 'none';
   currentSet = {};
   currentSet.title = title;
   currentSet.words = words;
