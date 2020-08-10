@@ -588,7 +588,7 @@ let sketch = function (p) {
     if (!preventDrawing) {
       p.stroke(userSettings.inkColor.r, userSettings.inkColor.g, userSettings.inkColor.b);
       p.strokeWeight(3);
-      /*
+
       if (touchCors.x) {
         if (!touchCors.lastX) {
           let ran = p.random(-1, 1);
@@ -617,8 +617,8 @@ let sketch = function (p) {
           touchCors.lastY = touchCors.y + ranTwo;
         }
       }
-*/
-      if (p.mouseIsPressed) {
+
+      if (p.mouseIsPressed && !touchCors.force) {
         let change = getMouseChange();
         if (change > 7 && change < 20) {
           mouseData.timeSinceMouseDown -= 2;
