@@ -74,7 +74,7 @@ const setup = () => {
   } else {
     return {
       brushSize: 30,
-      inkColor: { r: 230, g: 57, b: 70 },
+      inkColor: '#1d3557',
       questionsPerRound: 10,
       practiceAfterFailure: true
     };
@@ -96,7 +96,7 @@ document.documentElement.style.setProperty('--vh', `${vh}px`);
 //******************** */
 
 const userStats = {
-  studySetUsingNow: 'random kanji',
+  studySetUsingNow: 'jlpt5',
   percentCorrect: 100,
   numberCorrect: 0,
   questionOutOf: {
@@ -242,7 +242,27 @@ const getPreDefinedWordSet = async (src, title) => {
   resetGame();
 };
 
-getPreDefinedWordSet('jlpt-five.jscsrc', 'Random Kanji'); // set up initially
+if (userSettings.loadOnStart) {
+  switch (userSettings.loadOnStart) {
+    case 'jlpt2':
+      getPreDefinedWordSet('jlpt-two.jscsrc', 'JLPT2');
+      break;
+    case 'jlpt3':
+      getPreDefinedWordSet('jlpt-three.jscsrc', 'JLPT3');
+      break;
+    case 'jlpt4':
+      getPreDefinedWordSet('jlpt-four.jscsrc', 'JLPT4');
+      break;
+    case 'jlpt5':
+      getPreDefinedWordSet('jlpt-five.jscsrc', 'JLPT5');
+      break;
+    default:
+      getWordSet(userSettings.loadOnStart);
+      break;
+  }
+} else {
+  getPreDefinedWordSet('jlpt-five.jscsrc', 'JLPT5'); // set up initially
+}
 
 for (let i = 0; i < domEls.selectorButts.length; i++) {
   domEls.selectorButts[i].addEventListener('click', (e) => {
@@ -275,7 +295,7 @@ for (let i = 0; i < domEls.selectorButts.length; i++) {
           title = 'JLPT5';
           break;
         default:
-          fileName = 'jlpt-two.jscsrc';
+          fileName = 'jlpt-five.jscsrc';
           title = 'Random Kanji';
           break;
       }
@@ -589,7 +609,7 @@ let sketch = function (p) {
       clearCanvas = false;
     }
     if (!preventDrawing) {
-      p.stroke(userSettings.inkColor.r, userSettings.inkColor.g, userSettings.inkColor.b);
+      p.stroke(userSettings.inkColor);
       p.strokeWeight(3);
 
       if (touchCors.x && touchCors.force) {
@@ -716,7 +736,7 @@ function practiceDrawing(p) {
       p.clear();
       clearCanvasTwo = false;
     }
-    p.stroke(userSettings.inkColor.r, userSettings.inkColor.g, userSettings.inkColor.b);
+    p.stroke('#1d3557');
     p.strokeWeight(2);
     if (touchCors.x) {
       if (!touchCors.lastX) {

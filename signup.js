@@ -30,9 +30,10 @@ signup.post('/', async (req, res) => {
           myDictionaries: [],
           userSettings: {
             brushSize: 30,
-            inkColor: { r: 230, g: 57, b: 70 },
+            inkColor: '#1d3557',
             questionsPerRound: 10,
-            practiceAfterFailure: true
+            practiceAfterFailure: true,
+            loadOnStart: 'jlpt5'
           }
         },
         (err, newDoc) => {

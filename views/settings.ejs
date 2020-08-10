@@ -11,22 +11,8 @@
     </div>
     <div class="divider"></div>
     <div id="color-selector">
-        
-        <div id = "ranges">
-            <div style="display: flex;">
-        <label for="red-range">Ink red level: </label>
-    <input type="range" name="red-range" id="red-range" min="0" max ="255" value="<%-settings.inkColor.r %>">
-    </div>
-    <div style="display: flex;">
-    <label for="green-range">Ink green level: </label>
-    <input type="range" name="green-range" id="green-range" min="0" max ="255" value="<%-settings.inkColor.g %>">
-    </div>
-    <div style="display: flex;">
-    <label for="blue-range">Ink blue level: </label>
-    <input type="range" name="blue-range" id="blue-range" min="0" max ="255" value="<%-settings.inkColor.b %>">
-    </div>
-    </div>
-    <div id="color-select-canvas"></div>
+        <label for="ink-color">Ink color: </label>
+        <input type="color" name="ink-color" id="ink-color" value="<%- settings.inkColor %>">
     </div>
     <div class="divider"></div>
     <div id="practice-selector">
@@ -44,6 +30,19 @@
         <p id="question-number-disp"><%= settings.questionsPerRound%></p>
     </div>
     <div class="divider"></div>
+    <div id="load-start">
+        <label for="on-start">Study set to load on start: </label>
+        <select name="on-start" id="on-start">
+        <% for (let i = 0; i < userInfo.myDictionaries.length; i++){ console.log(userInfo.myDictionaries);%>
+            <option class = "select-options" value="<%- userInfo.myDictionaries[i].title%>"><%=userInfo.myDictionaries[i].title %></option>
+       <% } %>
+       <option class="select-options"  value="jlpt2">JLPT2</option>
+            <option class="select-options" value="jlpt3">JLPT3</option>
+            <option class="select-options"  value="jlpt4">JLPT4</option>
+            <option class="select-options" value="jlpt5">JLPT5</option>
+       </select>
+    </div>
+    <div class="divider"></div>
     <div id="save-settings">
         <button class="main-button" id="save-changes-butt">Save changes</button>
     </div>
@@ -56,46 +55,42 @@
 
     const canvas = document.getElementById('color-select-canvas');
     const brushSize = document.getElementById('brush-size')
-    const red = document.getElementById('red-range')
-    const green = document.getElementById('green-range')
-    const blue = document.getElementById('blue-range')
     const questionNumRange = document.getElementById('question-number-selector')
     const questionNumDisp = document.getElementById('question-number-disp')
     const practiceSelector = document.getElementById('practice-selector')
     const info = JSON.parse(document.getElementById('info').innerText)
     const saveButt = document.getElementById('save-changes-butt');
+    const colorInput = document.getElementById('ink-color')
+    const onStart = document.getElementById('on-start')
+    const options = document.getElementsByClassName('select-options')
+    for (let i = 0; i < options.length; i++){
+        if (options[i].value === info.loadOnStart){
+            options[i].selected = true;
+        }
+    }
+    
+   
     
     console.log(info)
     
-    let r = red.value;
-    let g = green.value;
-    let b = blue.value;
-    canvas.style.backgroundColor = `rgb(${r},${g},${b}) `
 
     const newSettings ={
     brushSize: brushSize.value,
-    inkColor: { r: r, g: g, b: b },
+    inkColor: info.inkColor,
     questionsPerRound: questionNumDisp.innerText,
-    practiceAfterFailure: info.practiceAfterFailure}
+    practiceAfterFailure: info.practiceAfterFailure,
+    loadOnStart: info.loadOnStart}
     console.log(newSettings)
 
-    red.addEventListener('input',(e)=>{
-        r = e.target.value;
-        canvas.style.backgroundColor = `rgb(${r},${g},${b}) `;
-        newSettings.inkColor.r = r;
+onStart.addEventListener('change',(e)=>{
+    newSettings.loadOnStart = e.target.value;
+    console.log(newSettings)
+})
+     colorInput.addEventListener('change',(e)=>{
+        newSettings.inkColor = e.target.value
+        console.log(newSettings)
     })
-     green.addEventListener('input',(e)=>{
-        g = e.target.value;
-        canvas.style.backgroundColor = `rgb(${r},${g},${b}) `;
-        console.log(newSettings);
-        newSettings.inkColor.g = g;
-    })
-     blue.addEventListener('input',(e)=>{
-        b = e.target.value;
-        canvas.style.backgroundColor = `rgb(${r},${g},${b}) `
-        console.log(newSettings);
-        newSettings.inkColor.b = b;
-    })
+
     questionNumRange.addEventListener('input',(e)=>{
         questionNumDisp.innerText = e.target.value;
         console.log(newSettings);
