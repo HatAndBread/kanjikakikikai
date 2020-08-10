@@ -39,6 +39,7 @@ const domEls = {
   practiceKanjiExample: document.getElementById('kanji-example'),
   practiceUserCanvas: document.getElementById('user-canvas'),
   practiceCloser: document.getElementById('practice-closer'),
+  loader: document.getElementById('loader'),
   toolsOut: false
 };
 
@@ -195,8 +196,10 @@ const getWordSet = async (title) => {
   }
   butt.style.fontWeight = '900';
   butt.style.boxShadow = '10px 5px 5px #e63946';
+  loader.hidden = false;
   const res = await fetch(`/get-words/${title}`);
   const data = await res.json();
+  loader.hidden = true;
   currentSet = data.set;
   console.log(currentSet);
   resetUserStats(currentSet.title);
@@ -236,7 +239,6 @@ for (let i = 0; i < domEls.selectorButts.length; i++) {
     domEls.studySetSelector.style.display = 'none';
     preventDrawing = false;
     if (
-      e.target.value === 'jlpt1' ||
       e.target.value === 'jlpt2' ||
       e.target.value === 'jlpt3' ||
       e.target.value === 'jlpt4' ||
@@ -246,10 +248,6 @@ for (let i = 0; i < domEls.selectorButts.length; i++) {
       let fileName;
       let title;
       switch (e.target.value) {
-        case 'jlpt1':
-          fileName = 'jlpt-two.jscsrc';
-          title = 'JLPT1';
-          break;
         case 'jlpt2':
           fileName = 'jlpt-two.jscsrc';
           title = 'JLPT2';
@@ -455,13 +453,6 @@ const mouseData = {
   y: null
 };
 
-let touching = false;
-function touchLoop() {
-  if (touching) {
-    requestAnimationFrame(touchLoop);
-  }
-}
-
 const getTouches = (e) => {
   if (!practicing) {
     let x = Math.floor(e.touches[0].clientX - domEls.canvas.getBoundingClientRect().x);
@@ -491,16 +482,13 @@ document.addEventListener(
   },
   false
 );
-document.addEventListener('touchstart', () => {
-  touching = true;
-  touchLoop();
-});
+
 let lastTouchEnd = 0;
 document.addEventListener(
   'touchend',
   function (event) {
     mouseData.timeSinceMouseDown = 0;
-    touching = false;
+
     let now = new Date().getTime();
     if (now - lastTouchEnd <= 100) {
       event.preventDefault();
