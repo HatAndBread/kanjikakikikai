@@ -11,7 +11,7 @@ const checkAuthenticated = require('./checkAuthenticated');
 
 const fs = require('fs'); // delete me!
 
-let PORT = 3000 || process.env.PORT;
+let PORT = process.env.PORT || 3000;
 const login = require('./login');
 const signup = require('./signup');
 const addWords = require('./add-words');
