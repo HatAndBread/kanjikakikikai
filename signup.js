@@ -33,7 +33,7 @@ signup.post('/', async (req, res) => {
           password: password,
           myDictionaries: [],
           userSettings: {
-            brushSize: 30,
+            brushSize: 70,
             inkColor: '#1d3557',
             questionsPerRound: 10,
             practiceAfterFailure: true,

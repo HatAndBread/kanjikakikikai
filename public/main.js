@@ -74,7 +74,7 @@ const setup = () => {
     return settings;
   } else {
     return {
-      brushSize: 30,
+      brushSize: 70,
       inkColor: '#1d3557',
       questionsPerRound: 10,
       practiceAfterFailure: true
