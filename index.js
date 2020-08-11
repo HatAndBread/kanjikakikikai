@@ -21,6 +21,7 @@ const about = require('./about');
 const settings = require('./settings');
 
 app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, '/public/views'));
 app.use(express.static('public'));
 app.use(favicon(path.join(__dirname, 'public', 'assets', 'favicon.ico')));
 app.use(express.json({ limit: '1mb' })); // FIX LIMIT!
@@ -43,9 +44,8 @@ app.get('/', checkAuthenticated, (req, res) => {
   console.log(req.session.passport);
   let userInfo = req.user;
   delete userInfo.password;
-  
-  res.render('index', { userInfo: userInfo });
 
+  res.render('index', { userInfo: userInfo });
 });
 
 app.get('/logout', (req, res) => {

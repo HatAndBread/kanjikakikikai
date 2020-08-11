@@ -774,6 +774,14 @@ new p5(sketch, domEls.canvas);
 new p5(yourDrawing, domEls.yourDrawing);
 new p5(practiceDrawing, domEls.practiceUserCanvas);
 
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function () {
+    navigator.serviceWorker
+      .register('/sw.js')
+      .then((res) => console.log('service worker registered'))
+      .catch((err) => console.log('service worker not registered', err));
+  });
+}
 /*
 //text file parser
 

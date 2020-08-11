@@ -1,0 +1,84 @@
+    <%- include('header')%>
+  <body style="background-color: #f1faee;">
+    <%- include('navbar') -%>
+    <div id="create-new-set">
+      <form action="/add-words" method="POST">
+        <table id="new-word-table">
+          <tr>
+            <label for="dictionary-title">Name of study set: </label>
+            <input type="text" name="dictionary-title" id="dictionary-title" required />
+            <div class="divider"></div>
+          </tr>
+          <tr>
+            <th>かんじ</th>
+            <th>よみかた</th>
+            <th>definition</th>
+          </tr>
+          <tr>
+            <td>
+              <input maxlength="10" type="text" name="kanji-input" id="kanji-input" placeholder="漢字" required />
+            </td>
+            <td>
+              <input
+                maxlength="10"
+                type="text"
+                name="yomikata-input"
+                id="yomikata-input"
+                placeholder="かんじ"
+                required
+              />
+            </td>
+            <td>
+              <input maxlength="20" type="text" name="definition-input" id="definition-input" placeholder="optional" />
+            </td>
+          </tr>
+        </table>
+              <div id="create-new-buttons">
+                <a href="/" class="nav-button">Cancel</a>
+        <button id="add-another-word-butt" class="main-button" type="button">Add new</button>
+        <button id="save-new-study-set-butt" class="main-button" type="submit">Save</button>
+        </div>
+      </form>
+
+    </div>
+  </body>
+  <script>
+    const addAnotherWordButt = document.getElementById('add-another-word-butt');
+    const table = document.getElementById('new-word-table');
+    const editButt = document.getElementById('edit-study-butt');
+    const createNewSet = document.getElementById('create-new-set');
+
+    addAnotherWordButt.addEventListener('click', () => {
+      const newRow = document.createElement('tr');
+      const newWord = document.createElement('td');
+      const newDef = document.createElement('td');
+      const newDefinition = document.createElement('td');
+      const kanjiInput = document.createElement('input');
+      const yomikataInput = document.createElement('input');
+      const definitionInput = document.createElement('input');
+      kanjiInput.type = 'text';
+      yomikataInput.type = 'text';
+      definitionInput.type = 'text';
+      kanjiInput.name = 'kanji-input';
+      yomikataInput.name = 'yomikata-input';
+      definitionInput.name = 'definition-input';
+      kanjiInput.id = 'kanji-input';
+      yomikataInput.id = 'yomikata-input';
+      definitionInput.id = 'definition-input';
+      kanjiInput.maxLength = 10;
+      yomikataInput.maxLength = 10;
+      definitionInput.maxLength = 20;
+      kanjiInput.required = true;
+      yomikataInput.required = true;
+      definitionInput.required = false;
+      newWord.appendChild(kanjiInput);
+      newDef.appendChild(yomikataInput);
+      newDefinition.appendChild(definitionInput);
+      newRow.appendChild(newWord);
+      newRow.appendChild(newDef);
+      newRow.appendChild(newDefinition);
+      table.appendChild(newRow);
+      createNewSet.scrollTop = createNewSet.scrollHeight;
+    });
+  </script>
+</html>
