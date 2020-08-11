@@ -13,25 +13,9 @@
             <th>かんじ</th>
             <th>よみかた</th>
             <th>definition</th>
+            <th></th>
           </tr>
-          <tr>
-            <td>
-              <input maxlength="10" type="text" name="kanji-input" id="kanji-input" placeholder="漢字" required />
-            </td>
-            <td>
-              <input
-                maxlength="10"
-                type="text"
-                name="yomikata-input"
-                id="yomikata-input"
-                placeholder="かんじ"
-                required
-              />
-            </td>
-            <td>
-              <input maxlength="20" type="text" name="definition-input" id="definition-input" placeholder="optional" />
-            </td>
-          </tr>
+          
         </table>
               <div id="create-new-buttons">
                 <a href="/" class="nav-button">Cancel</a>
@@ -48,14 +32,23 @@
     const editButt = document.getElementById('edit-study-butt');
     const createNewSet = document.getElementById('create-new-set');
 
-    addAnotherWordButt.addEventListener('click', () => {
-      const newRow = document.createElement('tr');
+const addNew = ()=>{
+    const newRow = document.createElement('tr');
       const newWord = document.createElement('td');
       const newDef = document.createElement('td');
       const newDefinition = document.createElement('td');
+      const gomi = document.createElement('td')
       const kanjiInput = document.createElement('input');
       const yomikataInput = document.createElement('input');
       const definitionInput = document.createElement('input');
+      
+const gomibako = document.createElement('input');
+  gomibako.type = 'image';
+  gomibako.class = 'gomibako';
+  gomibako.src = './assets/trash.png';
+  gomibako.alt = 'DELETE';
+  gomibako.style = 'width: 30px; height: 30px;';
+
       kanjiInput.type = 'text';
       yomikataInput.type = 'text';
       definitionInput.type = 'text';
@@ -74,11 +67,19 @@
       newWord.appendChild(kanjiInput);
       newDef.appendChild(yomikataInput);
       newDefinition.appendChild(definitionInput);
+      gomi.append(gomibako);
       newRow.appendChild(newWord);
       newRow.appendChild(newDef);
       newRow.appendChild(newDefinition);
+      newRow.appendChild(gomi)
       table.appendChild(newRow);
       createNewSet.scrollTop = createNewSet.scrollHeight;
-    });
+      gomibako.addEventListener('click', (e)=>{
+        e.preventDefault()
+        newRow.remove()
+      })
+}
+addNew()
+    addAnotherWordButt.addEventListener('click', addNew);
   </script>
 </html>

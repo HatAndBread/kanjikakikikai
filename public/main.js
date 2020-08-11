@@ -41,6 +41,7 @@ const domEls = {
   practiceCloser: document.getElementById('practice-closer'),
   loader: document.getElementById('loader'),
   nav: document.getElementById('nav-bar'),
+  attention: document.getElementById('attention-getter'),
   toolsOut: false
 };
 
@@ -182,7 +183,7 @@ const resetGame = () => {
   domEls.mondaiText.innerText = '';
   domEls.checkAnswerBox.style.display = 'none';
   domEls.practiceBox.hidden = true;
-  preventDrawing = false;
+  preventDrawing = true;
   practicing = false;
   domEls.mondaiButt.disabled = false;
 };
@@ -321,6 +322,7 @@ const getMondai = () => {
 };
 
 const checkAnswer = () => {
+  domEls.attention.style.animationName = '';
   takingPhoto = true;
   domEls.statsDisplay.style.display = 'none';
   domEls.kanjiAnswer.innerText = currentMondai.kanji;
@@ -355,6 +357,7 @@ domEls.maru.addEventListener('click', (e) => {
     getMondai();
     userStats.updateStats(true);
     domEls.statsDisplay.style.display = 'block';
+    domEls.attention.style.animationName = 'attention';
   } else {
     userStats.updateStats(true);
     finishGame();
@@ -367,6 +370,9 @@ domEls.practiceCloser.addEventListener('click', (e) => {
   domEls.practiceBox.hidden = true;
   practicing = false;
   preventDrawing = false;
+  if (userStats.questionOutOf.currentQuestion < userSettings.questionsPerRound) {
+    domEls.attention.style.animationName = 'attention';
+  }
   console.log(userStats);
   if (userStats.questionOutOf.currentQuestion <= userSettings.questionsPerRound) {
     domEls.statsDisplay.style.display = 'block';
@@ -392,6 +398,9 @@ domEls.batsu.addEventListener('click', (e) => {
   if (userStats.questionOutOf.currentQuestion < userSettings.questionsPerRound) {
     getMondai();
     userStats.updateStats(false);
+    if (!userSettings.practiceAfterFailure) {
+      domEls.attention.style.animationName = 'attention';
+    }
   } else {
     userStats.updateStats(false);
     domEls.statsDisplay.style.display = 'none';
@@ -468,8 +477,6 @@ domEls.nav.addEventListener('click', (e) => {
 });
 
 let mirror;
-
-let quickTouch = false;
 
 const touchCors = {
   x: null,
@@ -658,9 +665,9 @@ let sketch = function (p) {
         if (mouseData.timeSinceMouseDown < 50) {
           mouseData.timeSinceMouseDown += 1;
         }
-        console.log(mouseData);
+
         let theNumber = mouseData.timeSinceMouseDown - mouseData.timeSinceMouseDown * 0.3 + p.random(-1, 1);
-        console.log(theNumber);
+
         let ran = p.random(-1, 1);
         let ran2 = p.random(-1, 1);
         mouseData.x = p.mouseX + ran;
@@ -782,6 +789,7 @@ if ('serviceWorker' in navigator) {
       .catch((err) => console.log('service worker not registered', err));
   });
 }
+
 /*
 //text file parser
 

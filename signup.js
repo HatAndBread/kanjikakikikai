@@ -5,7 +5,7 @@ const users = require('./db');
 const signup = express.Router();
 
 signup.get('/', (req, res) => {
-  res.render('signup', { userInfo: req.user, page: 'signup' });
+  res.render('signup', { userInfo: req.user, page: 'signup', message: null });
 });
 
 signup.post('/', async (req, res) => {
@@ -21,7 +21,11 @@ signup.post('/', async (req, res) => {
       console.log(err);
     }
     if (docs.length > 0) {
-      res.send('Sorry, that user name is already taken.　🙍‍♀️　🙍‍');
+      res.render('signup', {
+        userInfo: req.user,
+        page: 'signup',
+        message: 'Sorry, that user name is already taken.　 😢‍'
+      });
     } else {
       users.insert(
         {
@@ -43,7 +47,11 @@ signup.post('/', async (req, res) => {
               console.log('success');
               res.redirect('/');
             } else {
-              res.send('Server error. Please try again later.　🙍‍♀️');
+              res.render('signup', {
+                userInfo: req.user,
+                page: 'signup',
+                message: 'Server error. Please try again later. 😢'
+              });
               console.log(err);
             }
           });
