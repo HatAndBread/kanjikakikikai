@@ -1,5 +1,6 @@
 const express = require('express');
 const session = require('express-session');
+const NedbStore = require('connect-nedb-session')(session);
 const passport = require('passport');
 const flash = require('express-flash');
 const favicon = require('serve-favicon');
@@ -27,7 +28,20 @@ app.use(favicon(path.join(__dirname, 'public', 'assets', 'favicon.ico')));
 app.use(express.json({ limit: '1mb' })); // FIX LIMIT!
 app.use(express.urlencoded({ extended: false }));
 app.use(flash());
-app.use(session({ secret: process.env.SESSION_SECRET, saveUninitialized: false, resave: false, failureFlash: true }));
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    saveUninitialized: false,
+    resave: false,
+    failureFlash: true,
+    cookie: {
+      path: '/',
+      httpOnly: true,
+      maxAge: 365 * 24 * 3600 * 1000 // One year for example
+    },
+    store: new NedbStore({ filename: './persist.db' })
+  })
+);
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(methodOverride('_method'));
