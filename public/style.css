@@ -52,7 +52,8 @@ input:after {
 /*  Bad idea? Did this to keep page from scrolling unexpectedly when drawing. */
 body {
   position: fixed;
-  background-color: #f1faee;
+  background-color: #e63946;
+
   top: 0;
   left: 0px;
 }
