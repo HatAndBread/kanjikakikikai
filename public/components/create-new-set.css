@@ -13,6 +13,7 @@
   top: 70px;
   left: 10px;
   right: 10px;
+  overflow: auto;
 }
 #create-new-set input {
   background-color: #f1faee;
