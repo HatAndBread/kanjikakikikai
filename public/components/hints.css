@@ -69,7 +69,7 @@
   left: 30px;
   font-size: 18px;
   opacity: 0;
-
+  pointer-events: none;
   animation-duration: 9s;
 }
 

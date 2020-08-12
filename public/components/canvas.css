@@ -22,6 +22,7 @@
   right: 6%;
   width: stretch;
   z-index: 3;
+  pointer-events: none;
 }
 
 @media only screen and (max-width: 400px) {

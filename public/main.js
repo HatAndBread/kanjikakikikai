@@ -570,20 +570,8 @@ const allowTouching = (element) => {
   });
 };
 
-allowTouching(domEls.statsDisplay);
-allowTouching(domEls.hints);
 allowTouching(domEls.canvas);
-if (domEls.greeting) {
-  allowTouching(domEls.greeting);
-}
 allowTouching(domEls.practiceUserCanvas);
-
-domEls.statsDisplay.addEventListener('click', (e) => {
-  e.preventDefault();
-});
-domEls.hints.addEventListener('click', (e) => {
-  e.preventDefault();
-});
 
 ////////////////////////////////////////////////////////
 
