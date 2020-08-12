@@ -1,7 +1,11 @@
 .main-button:focus,
+.main-button.focus,
 .main-button:active,
 .main-button.active,
-.main-button:focus:active {
+.main-button:focus:active,
+.main-button:active:focus,
+.main-button.focus.active,
+.main-button.active.focus {
   background-image: none;
   outline: none;
   -webkit-box-shadow: none;
@@ -27,6 +31,7 @@
   cursor: pointer;
   padding: 4px;
   overflow: hidden;
+  outline: 0;
 }
 
 #start-button {
