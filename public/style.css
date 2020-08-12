@@ -77,7 +77,8 @@ ul {
 
 @font-face {
   font-family: 'umeboshi';
-  src: url(assets/umeboshi_.woff) format('woff'), url(assets/umeboshi_.ttf) format('truetype');
+  src: url(assets/umeboshi_.woff) format('woff'), url(assets/umeboshi.woff2) format('woff2'),
+    url(assets/umeboshi_.ttf) format('truetype');
   font-weight: normal;
   font-style: normal;
   font-display: swap;

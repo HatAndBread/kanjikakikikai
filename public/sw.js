@@ -14,6 +14,7 @@ const assets = [
   '/assets/iphonexr_splash.png',
   '/assets/umeboshi_.woff',
   '/assets/umeboshi_.ttf',
+  '/assets/umeboshi.woff2',
   '/word-sets/jlpt-five.jscsrc',
   '/word-sets/jlpt-four.jscsrc',
   '/word-sets/jlpt-three.jscsrc',
