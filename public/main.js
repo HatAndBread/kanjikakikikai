@@ -589,6 +589,11 @@ let sketch = function (p) {
     };
   };
   p.draw = function () {
+    if (domEls.canvas.clientWidth !== initialWidth || domEls.canvas.clientHeight !== initialHeight) {
+      p.resizeCanvas(domEls.canvas.clientWidth, domEls.canvas.clientHeight);
+      initialWidth = domEls.canvas.clientWidth;
+      initialHeight = domEls.canvas.clientHeight;
+    }
     if (clearCanvas) {
       p.clear();
       clearCanvas = false;
@@ -673,11 +678,11 @@ let sketch = function (p) {
 
   p.windowResized = function () {
     //stretches image to fit when user resizes
-    //pg = p.createGraphics(p.width, p.height);
-    //pg.image(cnv, 0, 0, domEls.canvas.clientWidth, domEls.canvas.clientHeight);
-    //pg.loadPixels();
+    pg = p.createGraphics(p.width, p.height);
+    pg.image(cnv, 0, 0, domEls.canvas.clientWidth, domEls.canvas.clientHeight);
+    pg.loadPixels();
     p.resizeCanvas(domEls.canvas.clientWidth, domEls.canvas.clientHeight);
-    //p.image(pg, 0, 0);
+    p.image(pg, 0, 0);
   };
 };
 
