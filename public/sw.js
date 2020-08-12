@@ -19,6 +19,8 @@ const assets = [
   '/word-sets/jlpt-four.jscsrc',
   '/word-sets/jlpt-three.jscsrc',
   '/word-sets/jlpt-two.jscsrc',
+  '/word-sets/basic.jscsrc',
+  '/word-sets/places.jscsrc',
   '/p5.min.js'
 ];
 

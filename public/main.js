@@ -90,7 +90,7 @@ let currentMondai = {
 };
 
 const userStats = {
-  studySetUsingNow: 'jlpt5',
+  studySetUsingNow: 'basic',
   percentCorrect: 100,
   numberCorrect: 0,
   questionOutOf: {
@@ -245,12 +245,18 @@ if (userSettings.loadOnStart) {
     case 'jlpt5':
       getPreDefinedWordSet('jlpt-five.jscsrc', 'JLPT5');
       break;
+    case 'basic':
+      getPreDefinedWordSet('basic.jscsrc', 'Basic');
+      break;
+    case 'places':
+      getPreDefinedWordSet('places.jscsrc', 'Places');
+      break;
     default:
       getWordSet(userSettings.loadOnStart);
       break;
   }
 } else {
-  getPreDefinedWordSet('jlpt-five.jscsrc', 'JLPT5'); // set up initially
+  getPreDefinedWordSet('basic.jscsrc', 'Basic'); // set up initially
 }
 
 for (let i = 0; i < domEls.selectorButts.length; i++) {
@@ -262,7 +268,8 @@ for (let i = 0; i < domEls.selectorButts.length; i++) {
       e.target.value === 'jlpt3' ||
       e.target.value === 'jlpt4' ||
       e.target.value === 'jlpt5' ||
-      e.target.value === 'random-kanji'
+      e.target.value === 'places' ||
+      e.target.value === 'basic'
     ) {
       let fileName;
       let title;
@@ -282,6 +289,14 @@ for (let i = 0; i < domEls.selectorButts.length; i++) {
         case 'jlpt5':
           fileName = 'jlpt-five.jscsrc';
           title = 'JLPT5';
+          break;
+        case 'basic':
+          fileName = 'basic.jscsrc';
+          title = 'Basic';
+          break;
+        case 'places':
+          fileName = 'places.jscsrc';
+          title = 'Places';
           break;
         default:
           fileName = 'jlpt-five.jscsrc';
@@ -322,13 +337,13 @@ const checkAnswer = () => {
     domEls.kanjiAnswer.style.fontSize = '70px';
   }
   if (currentMondai.kanji.length === 4) {
-    domEls.kanjiAnswer.style.fontSize = '58px';
+    domEls.kanjiAnswer.style.fontSize = '48px';
   }
   if (currentMondai.kanji.length === 5) {
-    domEls.kanjiAnswer.style.fontSize = '44px';
+    domEls.kanjiAnswer.style.fontSize = '40px';
   }
   if (currentMondai.kanji.length > 5) {
-    domEls.kanjiAnswer.style.fontSize = '32px';
+    domEls.kanjiAnswer.style.fontSize = '30px';
   }
   domEls.mondaiButt.disabled = true;
   domEls.mondaiButt.style.display = 'none';

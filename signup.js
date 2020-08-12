@@ -37,7 +37,7 @@ signup.post('/', async (req, res) => {
             inkColor: '#1d3557',
             questionsPerRound: 10,
             practiceAfterFailure: true,
-            loadOnStart: 'jlpt5'
+            loadOnStart: 'basic'
           }
         },
         (err, newDoc) => {
