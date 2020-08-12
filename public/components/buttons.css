@@ -1,5 +1,21 @@
-
-
+.main-button:focus,
+.main-button:active,
+.main-button.active,
+.main-button:focus:active {
+  background-image: none;
+  outline: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+#start-button:focus,
+#start-button:active,
+#start-button.active,
+#start-button:focus:active {
+  background-image: none;
+  outline: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
 
 .main-button {
   border-radius: 10px;
@@ -12,8 +28,6 @@
   padding: 4px;
   overflow: hidden;
 }
-
-
 
 #start-button {
   position: fixed;
@@ -47,8 +61,6 @@
   }
 }
 
-
-
 #mondai-button {
   width: 130px;
 }
@@ -56,18 +68,3 @@
   min-width: 72px;
   overflow: hidden;
 }
-/*
-
-@media (orientation: landscape) {
-  #start-button {
-    top: calc(50% - 50px);
-  }
-}
-
-@media (orientation: portrait) {
-  #start-button {
-    top: 40%;
-  }
-}
-
-*/
