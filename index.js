@@ -54,8 +54,6 @@ app.use('/about', about);
 app.use('/settings', settings);
 
 app.get('/', checkAuthenticated, (req, res) => {
-  console.log(req.user);
-  console.log(req.session.passport);
   let userInfo = req.user;
   delete userInfo.password;
 
@@ -70,7 +68,6 @@ app.get('/logout', (req, res) => {
 app.post('/send-jason', (req, res) => {
   const data = req.body;
   const jason = JSON.stringify(data);
-  console.log(req.body);
   fs.writeFile('jason.txt', jason, function (err) {
     if (err) {
       console.log(err);

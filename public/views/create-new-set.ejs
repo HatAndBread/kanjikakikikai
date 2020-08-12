@@ -1,6 +1,7 @@
     <%- include('header')%>
-  <body style="background-color: #f1faee;">
+  <body>
     <%- include('navbar') -%>
+    <div id="stuff-container">
     <div id="create-new-set">
       <form action="/add-words" method="POST">
         <table id="new-word-table">
@@ -24,6 +25,7 @@
         </div>
       </form>
 
+    </div>
     </div>
   </body>
   <script>

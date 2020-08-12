@@ -1,8 +1,9 @@
 <%- include('header') -%>
 <script src="p5.min.js"></script>
-<body style="background-color: #f1faee;">
+<body>
 <%- include('navbar') -%>
 <% const settings=userInfo.userSettings %>
+<div id="stuff-container">
 <div id="info" hidden><%= JSON.stringify(settings)%></div>
 <div id="settings-main">
     <div id="brush-stuff">
@@ -47,6 +48,7 @@
         <button class="main-button" id="save-changes-butt">Save changes</button>
     </div>
     
+</div>
 </div>
 </body>
 </html>
