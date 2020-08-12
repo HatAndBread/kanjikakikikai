@@ -84,17 +84,13 @@ const setup = () => {
 
 const userSettings = setup();
 console.log(userSettings);
+
 let currentSet;
 let currentMondai = {
   kanji: null,
   yomikata: null,
   definition: null
 };
-
-// Will give you the actual viewheight of mobile browsers with navigation bars
-let vh = window.innerHeight * 0.01;
-document.documentElement.style.setProperty('--vh', `${vh}px`);
-//******************** */
 
 const userStats = {
   studySetUsingNow: 'jlpt5',
@@ -166,11 +162,6 @@ function createStatsTable() {
   domEls.statsDisplay.appendChild(statsTable);
 }
 createStatsTable();
-
-const canvasSettings = {
-  width: domEls.canvas.clientWidth,
-  height: domEls.canvas.clientHeight
-};
 
 const smallCanvasSettings = {
   width: domEls.yourDrawing.clientWidth,
@@ -458,18 +449,10 @@ keshi.addEventListener('click', () => {
 });
 
 window.addEventListener('resize', (e) => {
-  canvasSettings.width = domEls.canvas.clientWidth;
-  canvasSettings.height = domEls.canvas.clientHeight;
   smallCanvasSettings.width = domEls.yourDrawing.clientWidth;
   smallCanvasSettings.height = domEls.yourDrawing.clientHeight;
-  console.log(smallCanvasSettings.width);
-  console.log(smallCanvasSettings.height);
-  vh = window.innerHeight * 0.01;
-  document.documentElement.style.setProperty('--vh', `${vh}px`);
-  //Stop stupid mobile browsers from moving bottom div around
-  //domEls.bottom.style.top = 'calc(var(--vh, 1vh) * 100)';
-  //domEls.bottom.style.marginTop = '-50px';
 });
+
 domEls.nav.addEventListener('click', (e) => {
   if (e.target.id != 'select-study-set-butt') {
     domEls.studySetSelector.style.display = 'none';
@@ -661,13 +644,13 @@ let sketch = function (p) {
           mouseData.timeSinceMouseDown += 1;
         }
 
-        let theNumber = mouseData.timeSinceMouseDown - mouseData.timeSinceMouseDown * 0.3 + p.random(-1, 1);
+        let increasedBrushSize = mouseData.timeSinceMouseDown - mouseData.timeSinceMouseDown * 0.3 + p.random(-1, 1);
 
         let ran = p.random(-1, 1);
         let ran2 = p.random(-1, 1);
         mouseData.x = p.mouseX + ran;
         mouseData.y = p.mouseY + ran2;
-        p.strokeWeight(userSettings.brushSize * 0.08 + theNumber);
+        p.strokeWeight(userSettings.brushSize * 0.08 + increasedBrushSize);
         if (mouseData.lastX) {
           p.line(mouseData.lastX, mouseData.lastY, mouseData.x, mouseData.y);
           p.line(p.pmouseX, p.pmouseY, p.mouseX, p.mouseY);
@@ -690,11 +673,11 @@ let sketch = function (p) {
 
   p.windowResized = function () {
     //stretches image to fit when user resizes
-    pg = p.createGraphics(p.width, p.height);
-    pg.image(cnv, 0, 0, canvasSettings.width, canvasSettings.height);
-    pg.loadPixels();
+    //pg = p.createGraphics(p.width, p.height);
+    //pg.image(cnv, 0, 0, domEls.canvas.clientWidth, domEls.canvas.clientHeight);
+    //pg.loadPixels();
     p.resizeCanvas(domEls.canvas.clientWidth, domEls.canvas.clientHeight);
-    p.image(pg, 0, 0);
+    //p.image(pg, 0, 0);
   };
 };
 
