@@ -85,26 +85,13 @@
   margin-left: 20px;
 }
 
-@media only screen and (max-width: 1200px) and (min-width: 345px) and (orientation: portrait) {
+@media only screen and (max-width: 1200px) and (orientation: portrait) {
   #kanji_answer {
     writing-mode: vertical-rl;
     text-orientation: upright;
-    width: 25%;
-    height: 40vh;
-    padding-right: 15%;
-  }
-  #your-drawing {
     width: 40%;
     height: 40vh;
-  }
-}
-@media only screen and (max-width: 344px) and (orientation: portrait) {
-  #kanji_answer {
-    writing-mode: vertical-rl;
-    text-orientation: upright;
-    width: 30%;
-    height: 40vh;
-    padding-right: 10%;
+    vertical-align: middle;
   }
   #your-drawing {
     width: 40%;

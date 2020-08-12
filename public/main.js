@@ -317,18 +317,18 @@ const checkAnswer = () => {
   domEls.checkAnswerBox.style.display = 'block';
   smallCanvasSettings.width = domEls.yourDrawing.clientWidth;
   smallCanvasSettings.height = domEls.yourDrawing.clientHeight;
-  domEls.kanjiAnswer.style.fontSize = '72px';
+  domEls.kanjiAnswer.style.fontSize = '100px';
   if (currentMondai.kanji.length === 3) {
-    domEls.kanjiAnswer.style.fontSize = '58px';
+    domEls.kanjiAnswer.style.fontSize = '72px';
   }
   if (currentMondai.kanji.length === 4) {
-    domEls.kanjiAnswer.style.fontSize = '44px';
+    domEls.kanjiAnswer.style.fontSize = '58px';
   }
   if (currentMondai.kanji.length === 5) {
-    domEls.kanjiAnswer.style.fontSize = '32px';
+    domEls.kanjiAnswer.style.fontSize = '44px';
   }
   if (currentMondai.kanji.length > 5) {
-    domEls.kanjiAnswer.style.fontSize = '24px';
+    domEls.kanjiAnswer.style.fontSize = '32px';
   }
   domEls.mondaiButt.disabled = true;
   domEls.mondaiButt.style.display = 'none';
