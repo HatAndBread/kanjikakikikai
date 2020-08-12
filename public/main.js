@@ -579,9 +579,16 @@ let sketch = function (p) {
   let pg;
   let cnv;
   let getMouseChange;
+  let initialWidth;
+  let initialHeight;
 
   p.setup = function () {
-    cnv = p.createCanvas(canvasSettings.width, canvasSettings.height);
+    initialWidth = domEls.canvas.clientWidth;
+    initialHeight = domEls.canvas.clientHeight;
+    console.log('initial!');
+    console.log(initialWidth);
+    console.log(initialHeight);
+    cnv = p.createCanvas(initialWidth, initialHeight);
     getMouseChange = () => {
       let xChange = p.pmouseX - p.mouseX;
       let yChange = p.pmouseY - p.mouseY;
@@ -686,7 +693,7 @@ let sketch = function (p) {
     pg = p.createGraphics(p.width, p.height);
     pg.image(cnv, 0, 0, canvasSettings.width, canvasSettings.height);
     pg.loadPixels();
-    p.resizeCanvas(canvasSettings.width, canvasSettings.height);
+    p.resizeCanvas(domEls.canvas.clientWidth, domEls.canvas.clientHeight);
     p.image(pg, 0, 0);
   };
 };
