@@ -317,9 +317,9 @@ const checkAnswer = () => {
   domEls.checkAnswerBox.style.display = 'block';
   smallCanvasSettings.width = domEls.yourDrawing.clientWidth;
   smallCanvasSettings.height = domEls.yourDrawing.clientHeight;
-  domEls.kanjiAnswer.style.fontSize = '100px';
+  domEls.kanjiAnswer.style.fontSize = '88px';
   if (currentMondai.kanji.length === 3) {
-    domEls.kanjiAnswer.style.fontSize = '72px';
+    domEls.kanjiAnswer.style.fontSize = '70px';
   }
   if (currentMondai.kanji.length === 4) {
     domEls.kanjiAnswer.style.fontSize = '58px';
