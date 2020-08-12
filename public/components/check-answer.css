@@ -88,7 +88,6 @@
 @media only screen and (max-width: 1200px) and (orientation: portrait) {
   #kanji_answer {
     writing-mode: vertical-rl;
-    text-orientation: upright;
     width: 40%;
     height: 40vh;
     vertical-align: middle;
