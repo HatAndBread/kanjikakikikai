@@ -28,6 +28,7 @@ self.addEventListener('install', (installEvent) => {
 });
 
 self.addEventListener('fetch', (fetchEvent) => {
+  self.skipWaiting(); // change this!!!
   fetchEvent.respondWith(
     caches.match(fetchEvent.request).then((res) => {
       return res || fetch(fetchEvent.request);
