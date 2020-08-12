@@ -1,7 +1,3 @@
-/*====================
-GLOBALS***************
-====================*/
-
 let takingPhoto = false;
 let clearCanvas = false;
 let clearCanvasTwo = false;
@@ -63,6 +59,7 @@ const getGreeting = (userName) => {
 };
 
 const setup = () => {
+  //get user settings. they are sent from server to ejs file and saved in a hidden div.
   let userInfo = document.getElementById('user-info');
   if (userInfo) {
     let data = JSON.parse(userInfo.innerText);
@@ -162,7 +159,7 @@ function createStatsTable() {
   domEls.statsDisplay.appendChild(statsTable);
 }
 createStatsTable();
-
+// defines size of canvas that is used to compare user's writing with the correct answer.
 const smallCanvasSettings = {
   width: domEls.yourDrawing.clientWidth,
   height: domEls.yourDrawing.clientHeight
@@ -320,18 +317,18 @@ const checkAnswer = () => {
   domEls.checkAnswerBox.style.display = 'block';
   smallCanvasSettings.width = domEls.yourDrawing.clientWidth;
   smallCanvasSettings.height = domEls.yourDrawing.clientHeight;
-  domEls.kanjiAnswer.style.fontSize = '58px';
+  domEls.kanjiAnswer.style.fontSize = '72px';
   if (currentMondai.kanji.length === 3) {
-    domEls.kanjiAnswer.style.fontSize = '42px';
+    domEls.kanjiAnswer.style.fontSize = '58px';
   }
   if (currentMondai.kanji.length === 4) {
-    domEls.kanjiAnswer.style.fontSize = '32px';
+    domEls.kanjiAnswer.style.fontSize = '44px';
   }
   if (currentMondai.kanji.length === 5) {
-    domEls.kanjiAnswer.style.fontSize = '26px';
+    domEls.kanjiAnswer.style.fontSize = '32px';
   }
   if (currentMondai.kanji.length > 5) {
-    domEls.kanjiAnswer.style.fontSize = '14px';
+    domEls.kanjiAnswer.style.fontSize = '24px';
   }
   domEls.mondaiButt.disabled = true;
   domEls.mondaiButt.style.display = 'none';
@@ -459,6 +456,7 @@ domEls.nav.addEventListener('click', (e) => {
   }
 });
 
+//mirror is used to keep image data of user's writing so it be compared with correct answer later.
 let mirror;
 
 const touchCors = {
@@ -494,7 +492,7 @@ const getTouches = (e) => {
   }
 };
 
-//prevent zooming on mobile//////////////////////////////
+//prevent unwanted zooming on mobile
 domEls.canvas.addEventListener('click', (e) => {
   e.preventDefault();
 });
@@ -507,7 +505,6 @@ document.addEventListener(
   },
   false
 );
-
 let lastTouchEnd = 0;
 document.addEventListener(
   'touchend',
@@ -522,6 +519,7 @@ document.addEventListener(
   },
   false
 );
+
 document.addEventListener('mouseup', () => {
   mouseData.timeSinceMouseDown = 0;
   mouseData.lastX = null;
@@ -556,7 +554,7 @@ const allowTouching = (element) => {
 allowTouching(domEls.canvas);
 allowTouching(domEls.practiceUserCanvas);
 
-////////////////////////////////////////////////////////
+///////////////////////p5 canvas stuff/////////////////////////////////
 
 let sketch = function (p) {
   let pg;
@@ -759,6 +757,7 @@ new p5(sketch, domEls.canvas);
 new p5(yourDrawing, domEls.yourDrawing);
 new p5(practiceDrawing, domEls.practiceUserCanvas);
 
+// Register service worker
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function () {
     navigator.serviceWorker
@@ -771,127 +770,3 @@ if ('serviceWorker' in navigator) {
       });
   });
 }
-
-/*
-//text file parser
-
-const parseText = async (path) => {
-  const data = await fetch(`/${path}.txt`);
-  const text = await data.text();
-  const textToArr = text.split('\n');
-
-  for (let i = 0; i < textToArr.length; i++) {
-    const newArr = textToArr[i].split('');
-    textToArr[i] = newArr;
-  }
-  console.log(textToArr);
-
-  for (let i = 0; i < textToArr.length; i++) {
-    for (let j = 0; j < textToArr[i].length; j++) {
-      if (textToArr[i][j] === ' ' || textToArr[i][j] === '	') {
-        textToArr[i][j] = '*';
-      }
-    }
-  }
-
-  for (let i = 0; i < textToArr.length; i++) {
-    const newString = textToArr[i].join('');
-    textToArr[i] = newString.split('*');
-
-    if (textToArr[i].length > 3) {
-      let def = [];
-      for (let j = 2; j < textToArr[i].length; j++) {
-        def.push(textToArr[i][j]);
-      }
-      let string = def.join(' ');
-      textToArr[i][2] = string;
-    }
-  }
-
-  const words = [];
-  for (let i = 0; i < textToArr.length; i++) {
-    words.push({ kanji: textToArr[i][0], yomikata: textToArr[i][1], definition: textToArr[i][2] });
-  }
-  const jason = JSON.stringify(words);
-  async function sendJason() {
-    const hello = await fetch('/send-jason', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-        // 'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: jason
-    });
-  }
-  console.log(words);
-  sendJason();
-};
-
-parseText('jlpt3');
-
-
-*/
-
-/*
-
-const parseText = async (path) => {
-  const data = await fetch(`/${path}.txt`);
-  const text = await data.text();
-  const textToArr = text.split('\n');
-
-  for (let i = 0; i < textToArr.length; i++) {
-    const newArr = textToArr[i].split('');
-    textToArr[i] = newArr;
-  }
-  for (let i = 0; i < textToArr.length; i++) {
-    for (let j = 0; j < textToArr[i].length; j++) {
-      if (textToArr[i][j] === ' ' || textToArr[i][j] === '	') {
-        textToArr[i][j] = '*';
-      }
-    }
-  }
-  for (let i = 0; i < textToArr.length; i++) {
-    const newString = textToArr[i].join('');
-    textToArr[i] = newString;
-  }
-  for (let i = 0; i < textToArr.length; i++) {
-    const newArr = textToArr[i].split('*');
-    textToArr[i] = newArr;
-    textToArr[i].shift();
-  }
-  for (let i = textToArr.length - 1; i >= 0; i--) {
-    textToArr[i].splice(2, 1); //erase part of speech
-    if (textToArr[i][1] === '') {
-      textToArr.splice(i, 1);
-    }
-    if (textToArr[i].length > 3) {
-      let word = [];
-      for (let j = 2; j < textToArr[i].length; j++) {
-        word.push(textToArr[i][j]);
-      }
-      let string = word.join(' ');
-      textToArr[i].splice(2, textToArr[i].length);
-      textToArr[i].push(string);
-    }
-  }
-  
-  const words = [];
-  for (let i = 0; i < textToArr.length; i++) {
-    words.push({ kanji: textToArr[i][1], yomikata: textToArr[i][0], definition: textToArr[i][2] });
-  }
-  const jason = JSON.stringify(words);
-  async function sendJason() {
-    const hello = await fetch('/send-jason', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-        // 'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: jason
-    });
-  }
-  console.log(words);
-  sendJason();
-  
-};
-*/

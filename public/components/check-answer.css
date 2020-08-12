@@ -25,18 +25,15 @@
   overflow: auto;
 }
 
-#right-or-wrong{
+#right-or-wrong {
   width: 100%;
   margin-top: 10px;
   display: block;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  
-  
 }
 
-
-#maru{
+#maru {
   grid-column-start: 1;
   grid-column-end: 2;
   border-radius: 10px;
@@ -44,23 +41,20 @@
   background-color: #f1faee;
 }
 
-#batsu{
+#batsu {
   grid-column-start: 2;
   grid-column-end: 5;
-   border-radius: 10px;
+  border-radius: 10px;
   font-size: 42px;
   background-color: #f1faee;
 }
 
-#maru:focus{
+#maru:focus {
   outline: none;
 }
-#batsu:focus{
+#batsu:focus {
   outline: none;
 }
-
-
-
 
 #answers {
   position: relative;
@@ -69,6 +63,7 @@
   justify-content: space-between;
 }
 #kanji_answer {
+  font-family: 'umeboshi';
   background-color: #f1faee;
   display: block;
   color: #1d3557;
@@ -90,13 +85,26 @@
   margin-left: 20px;
 }
 
-
-@media only screen and (max-width: 1200px) and (orientation: portrait) {
+@media only screen and (max-width: 1200px) and (min-width: 345px) and (orientation: portrait) {
   #kanji_answer {
     writing-mode: vertical-rl;
     text-orientation: upright;
+    width: 25%;
+    height: 40vh;
+    padding-right: 15%;
+  }
+  #your-drawing {
     width: 40%;
     height: 40vh;
+  }
+}
+@media only screen and (max-width: 344px) and (orientation: portrait) {
+  #kanji_answer {
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    width: 30%;
+    height: 40vh;
+    padding-right: 10%;
   }
   #your-drawing {
     width: 40%;
@@ -117,7 +125,6 @@
   }
 }
 
-
 @media only screen and (max-height: 390px) {
   #check-answer {
     bottom: 0;
@@ -125,11 +132,10 @@
     left: 0;
     right: 0;
   }
-  
 }
 
-@media only screen and (min-height: 500px){
-  #right-or-wrong{
+@media only screen and (min-height: 500px) {
+  #right-or-wrong {
     margin-top: 70px;
   }
 }
