@@ -590,9 +590,14 @@ let sketch = function (p) {
   };
   p.draw = function () {
     if (domEls.canvas.clientWidth !== initialWidth || domEls.canvas.clientHeight !== initialHeight) {
+      //change canvas size and stretch image on resize
+      pg = p.createGraphics(initialWidth, initialHeight);
+      pg.image(cnv, 0, 0, initialWidth, initialHeight);
       p.resizeCanvas(domEls.canvas.clientWidth, domEls.canvas.clientHeight);
+      pg.loadPixels();
       initialWidth = domEls.canvas.clientWidth;
       initialHeight = domEls.canvas.clientHeight;
+      p.image(pg, 0, 0, initialWidth, initialHeight);
     }
     if (clearCanvas) {
       p.clear();
@@ -675,15 +680,6 @@ let sketch = function (p) {
       mirror.loadPixels();
     }
   };
-
-  p.windowResized = function () {
-    //stretches image to fit when user resizes
-    pg = p.createGraphics(p.width, p.height);
-    pg.image(cnv, 0, 0, domEls.canvas.clientWidth, domEls.canvas.clientHeight);
-    pg.loadPixels();
-    p.resizeCanvas(domEls.canvas.clientWidth, domEls.canvas.clientHeight);
-    p.image(pg, 0, 0);
-  };
 };
 
 function yourDrawing(p) {
@@ -703,7 +699,6 @@ function yourDrawing(p) {
       clearCanvas = true;
     }
   };
-  p.windowResized = function () {};
 }
 
 function practiceDrawing(p) {
