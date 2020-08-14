@@ -30,5 +30,5 @@ settings.post('/', checkAuthenticated, (req, res) => {
       });
     }
   });
-  res.redirect({ message: 'success' });
+  res.send({ message: 'success' });
 });

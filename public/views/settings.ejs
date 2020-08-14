@@ -37,10 +37,12 @@
         <% for (let i = 0; i < userInfo.myDictionaries.length; i++){ console.log(userInfo.myDictionaries);%>
             <option class = "select-options" value="<%- userInfo.myDictionaries[i].title%>"><%=userInfo.myDictionaries[i].title %></option>
        <% } %>
+       <option class="select-options"  value="basic">Basic</option>
        <option class="select-options"  value="jlpt2">JLPT2</option>
             <option class="select-options" value="jlpt3">JLPT3</option>
             <option class="select-options"  value="jlpt4">JLPT4</option>
             <option class="select-options" value="jlpt5">JLPT5</option>
+            <option class="select-options"  value="places">Places</option>
        </select>
     </div>
     <div class="divider"></div>

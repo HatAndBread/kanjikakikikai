@@ -603,7 +603,7 @@ let sketch = function (p) {
   };
   p.draw = function () {
     if (domEls.canvas.clientWidth !== initialWidth || domEls.canvas.clientHeight !== initialHeight) {
-      //change canvas size and stretch image on resize
+      //change canvas size and stretch image on window resize
       pg = p.createGraphics(initialWidth, initialHeight);
       pg.image(cnv, 0, 0, initialWidth, initialHeight);
       p.resizeCanvas(domEls.canvas.clientWidth, domEls.canvas.clientHeight);
@@ -620,7 +620,7 @@ let sketch = function (p) {
       p.stroke(userSettings.inkColor);
       p.strokeWeight(3);
 
-      if (touchCors.x && touchCors.force) {
+      if (touchCors.x && touchCors.force && touchCors.force < 1) {
         if (!touchCors.lastX) {
           let ran = p.random(-1, 1);
           let ranTwo = p.random(-1, 1);
@@ -649,7 +649,7 @@ let sketch = function (p) {
         }
       }
 
-      if (p.mouseIsPressed && !touchCors.force) {
+      if ((p.mouseIsPressed && !touchCors.force) || (p.mouseIsPressed && touchCors.force === 1)) {
         let change = getMouseChange();
         if (change > 7 && change < 20) {
           mouseData.timeSinceMouseDown -= 2;
