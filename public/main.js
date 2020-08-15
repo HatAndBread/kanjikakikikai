@@ -38,6 +38,7 @@ const domEls = {
   loader: document.getElementById('loader'),
   nav: document.getElementById('nav-bar'),
   attention: document.getElementById('attention-getter'),
+  exampleDisplay: document.getElementById('example-display'),
   toolsOut: false
 };
 
@@ -329,12 +330,55 @@ function isKanji(ch) {
   return (ch >= '\u4e00' && ch <= '\u9faf') || (ch >= '\u3400' && ch <= '\u4dbf');
 }
 
+const centerVideo = () => {
+  domEls.exampleDisplay.style.top = `${window.innerHeight / 2 - videoSize.height / 2}px`;
+  domEls.exampleDisplay.style.left = `${window.innerWidth / 2 - videoSize.width / 2}px`;
+};
+
+let videoSize = {
+  width: 0,
+  height: 0
+};
 const getAnimation = async (ch) => {
+  domEls.loader.style.display = 'flex';
   const res = await fetch(`/get-strokes/${ch}`);
   const data = await res.json();
   if (data.link) {
+    domEls.exampleDisplay.style.pointerEvents = 'all';
     let link = data.link;
+    let video = document.createElement('video');
+    let source = document.createElement('source');
+    let closer = document.createElement('span');
+    let ex = document.createTextNode('✕');
+    closer.style.color = '#e63946';
+    closer.appendChild(ex);
+    closer.style.cursor = 'pointer';
+    closer.style.zIndex = 101;
+    closer.style.position = 'absolute';
+    closer.addEventListener('click', () => {
+      domEls.exampleDisplay.hidden = true;
+      domEls.exampleDisplay.style.pointerEvents = 'none';
+      domEls.exampleDisplay.querySelectorAll('*').forEach((n) => n.remove());
+    });
+    video.controls = true;
+    console.log(video);
+    source.type = 'video/mp4';
+    source.src = link;
+    video.appendChild(source);
+    domEls.exampleDisplay.appendChild(closer);
+    domEls.exampleDisplay.appendChild(video);
     console.log(link);
+    video.addEventListener('loadedmetadata', () => {
+      console.log('loaded');
+      videoSize.width = video.videoWidth;
+      videoSize.height = video.videoHeight;
+      centerVideo();
+      domEls.exampleDisplay.appendChild(closer);
+      closer.style.left = `${video.videoWidth - 20}px`;
+      closer.style.top = '5px';
+      domEls.exampleDisplay.hidden = false;
+      domEls.loader.style.display = 'none';
+    });
   } else {
     console.log(data);
   }
@@ -352,6 +396,7 @@ const checkAnswer = () => {
     span.style.fontFamily = `'umeboshi', 'Dosis', sans-serif`;
     span.appendChild(kanjiText);
     if (itIsKanji) {
+      span.style.cursor = 'pointer';
       span.addEventListener('click', (e) => {
         getAnimation(e.target.innerText);
       });
@@ -427,6 +472,7 @@ domEls.batsu.addEventListener('click', (e) => {
       span.style.fontFamily = `'umeboshi', 'Dosis', sans-serif`;
       span.appendChild(kanjiText);
       if (itIsKanji) {
+        span.style.cursor = 'pointer';
         span.addEventListener('click', (e) => {
           getAnimation(e.target.innerText);
         });
@@ -505,6 +551,7 @@ keshi.addEventListener('click', () => {
 window.addEventListener('resize', (e) => {
   smallCanvasSettings.width = domEls.yourDrawing.clientWidth;
   smallCanvasSettings.height = domEls.yourDrawing.clientHeight;
+  centerVideo();
 });
 
 domEls.nav.addEventListener('click', (e) => {

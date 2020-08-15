@@ -1,0 +1,13 @@
+#example-display {
+  position: fixed;
+  pointer-events: none;
+  top: 62px;
+  z-index: 100;
+}
+
+#video-closer {
+  cursor: pointer;
+  position: relative;
+  color: var(--nav-color);
+  top: 25px;
+}
