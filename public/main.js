@@ -367,6 +367,7 @@ const getAnimation = async (ch) => {
     source.type = 'video/mp4';
     source.src = link;
     video.appendChild(source);
+    video.muted = true;
     domEls.exampleDisplay.appendChild(closer);
     domEls.exampleDisplay.appendChild(video);
     console.log(link);
