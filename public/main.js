@@ -752,7 +752,6 @@ function practiceDrawing(p) {
 
     if (p.mouseIsPressed) {
       p.line(p.pmouseX, p.pmouseY, p.mouseX, p.mouseY);
-      p.line(p.pmouseX, p.pmouseY, p.mouseX + p.random(-1, 1), p.mouseY + p.random(-1, 1));
     }
   };
   p.windowResized = function () {
