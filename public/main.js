@@ -335,6 +335,12 @@ const centerVideo = () => {
   domEls.exampleDisplay.style.left = `${window.innerWidth / 2 - videoSize.width / 2}px`;
 };
 
+const closeVideo = () => {
+  domEls.exampleDisplay.hidden = true;
+  domEls.exampleDisplay.style.pointerEvents = 'none';
+  domEls.exampleDisplay.querySelectorAll('*').forEach((n) => n.remove());
+};
+
 let videoSize = {
   width: 0,
   height: 0
@@ -355,11 +361,7 @@ const getAnimation = async (ch) => {
     closer.style.cursor = 'pointer';
     closer.style.zIndex = 101;
     closer.style.position = 'absolute';
-    closer.addEventListener('click', () => {
-      domEls.exampleDisplay.hidden = true;
-      domEls.exampleDisplay.style.pointerEvents = 'none';
-      domEls.exampleDisplay.querySelectorAll('*').forEach((n) => n.remove());
-    });
+    closer.addEventListener('click', closeVideo);
     video.controls = true;
     console.log(video);
     source.type = 'video/mp4';
@@ -368,17 +370,19 @@ const getAnimation = async (ch) => {
     domEls.exampleDisplay.appendChild(closer);
     domEls.exampleDisplay.appendChild(video);
     console.log(link);
-    video.addEventListener('loadedmetadata', () => {
+    video.addEventListener('canplaythrough', () => {
       console.log('loaded');
       videoSize.width = video.videoWidth;
       videoSize.height = video.videoHeight;
       centerVideo();
       domEls.exampleDisplay.appendChild(closer);
+      video.play();
       closer.style.left = `${video.videoWidth - 20}px`;
       closer.style.top = '5px';
       domEls.exampleDisplay.hidden = false;
       domEls.loader.style.display = 'none';
     });
+    video.addEventListener('ended', closeVideo);
   } else {
     console.log(data);
   }
