@@ -325,11 +325,39 @@ const getMondai = () => {
   clearMirror = true;
 };
 
+function isKanji(ch) {
+  return (ch >= '\u4e00' && ch <= '\u9faf') || (ch >= '\u3400' && ch <= '\u4dbf');
+}
+
+const getAnimation = async (ch) => {
+  const res = await fetch(`/get-strokes/${ch}`);
+  const data = await res.json();
+  if (data.link) {
+    let link = data.link;
+    console.log(link);
+  } else {
+    console.log(data);
+  }
+};
+
 const checkAnswer = () => {
   domEls.attention.style.animationName = '';
   takingPhoto = true;
   domEls.statsDisplay.style.display = 'none';
-  domEls.kanjiAnswer.innerText = currentMondai.kanji;
+  domEls.kanjiAnswer.textContent = '';
+  for (let i = 0; i < currentMondai.kanji.length; i++) {
+    let itIsKanji = isKanji(currentMondai.kanji[i]);
+    const kanjiText = document.createTextNode(currentMondai.kanji[i]);
+    const span = document.createElement('span');
+    span.style.fontFamily = `'umeboshi', 'Dosis', sans-serif`;
+    span.appendChild(kanjiText);
+    if (itIsKanji) {
+      span.addEventListener('click', (e) => {
+        getAnimation(e.target.innerText);
+      });
+    }
+    domEls.kanjiAnswer.appendChild(span);
+  }
   domEls.checkAnswerBox.style.display = 'block';
   smallCanvasSettings.width = domEls.yourDrawing.clientWidth;
   smallCanvasSettings.height = domEls.yourDrawing.clientHeight;
@@ -391,7 +419,20 @@ domEls.batsu.addEventListener('click', (e) => {
     practicing = true;
     domEls.statsDisplay.style.display = 'none';
     domEls.practiceBox.hidden = false;
-    domEls.practiceKanjiExample.innerText = currentMondai.kanji;
+    domEls.practiceKanjiExample.textContent = '';
+    for (let i = 0; i < currentMondai.kanji.length; i++) {
+      let itIsKanji = isKanji(currentMondai.kanji[i]);
+      const kanjiText = document.createTextNode(currentMondai.kanji[i]);
+      const span = document.createElement('span');
+      span.style.fontFamily = `'umeboshi', 'Dosis', sans-serif`;
+      span.appendChild(kanjiText);
+      if (itIsKanji) {
+        span.addEventListener('click', (e) => {
+          getAnimation(e.target.innerText);
+        });
+      }
+      domEls.practiceKanjiExample.appendChild(span);
+    }
   } else {
     preventDrawing = false;
     domEls.statsDisplay.style.display = 'block';

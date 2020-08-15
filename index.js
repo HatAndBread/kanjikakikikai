@@ -20,6 +20,7 @@ const editWords = require('./edit-words');
 const getWords = require('./get-words');
 const about = require('./about');
 const settings = require('./settings');
+const getStrokes = require('./get-strokes');
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/public/views'));
@@ -52,6 +53,7 @@ app.use('/edit-sets', editWords);
 app.use('/get-words', getWords);
 app.use('/about', about);
 app.use('/settings', settings);
+app.use('/get-strokes', getStrokes);
 
 app.get('/', checkAuthenticated, (req, res) => {
   let userInfo = req.user;
