@@ -613,5 +613,110 @@
     "kanji": "お茶",
     "yomikata": "おちゃ",
     "definition": "tea"
+  },
+  {
+    "kanji": "谷",
+    "yomikata": "たに",
+    "definition": "valley"
+  },
+  {
+    "kanji": "私",
+    "yomikata": "わたし",
+    "definition": "me"
+  },
+  {
+    "kanji": "時間",
+    "yomikata": "じかん",
+    "definition": "time"
+  },
+  {
+    "kanji": "牛",
+    "yomikata": "うし",
+    "definition": "cow 🐄"
+  },
+  {
+    "kanji": "肉",
+    "yomikata": "にく",
+    "definition": "meat"
+  },
+  {
+    "kanji": "国",
+    "yomikata": "くに",
+    "definition": "country"
+  },
+  {
+    "kanji": "電車",
+    "yomikata": "でんしゃ",
+    "definition": "train"
+  },
+  {
+    "kanji": "電話",
+    "yomikata": "でんわ",
+    "definition": "telephone"
+  },
+  {
+    "kanji": "馬",
+    "yomikata": "うま",
+    "definition": "horse"
+  },
+  {
+    "kanji": "駅",
+    "yomikata": "えき",
+    "definition": "station"
+  },
+  {
+    "kanji": "毎日",
+    "yomikata": "まいにち",
+    "definition": "everyday"
+  },
+  {
+    "kanji": "母",
+    "yomikata": "はは",
+    "definition": "mother"
+  },
+  {
+    "kanji": "父",
+    "yomikata": "ちち",
+    "definition": "father"
+  },
+  {
+    "kanji": "兄",
+    "yomikata": "あに",
+    "definition": "older brother"
+  },
+  {
+    "kanji": "弟",
+    "yomikata": "おとうと",
+    "definition": "younger brother"
+  },
+  {
+    "kanji": "姉",
+    "yomikata": "あね",
+    "definition": "older sister"
+  },
+  {
+    "kanji": "妹",
+    "yomikata": "いもうと",
+    "definition": "younger sister"
+  },
+  {
+    "kanji": "前",
+    "yomikata": "まえ",
+    "definition": "before"
+  },
+  {
+    "kanji": "声",
+    "yomikata": "こえ",
+    "definition": "voice"
+  },
+  {
+    "kanji": "同じ",
+    "yomikata": "おなじ",
+    "definition": "same"
+  },
+  {
+    "kanji": "雪",
+    "yomikata": "ゆき",
+    "definition": "snow"
   }
 ]
