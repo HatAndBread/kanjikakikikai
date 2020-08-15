@@ -1435,11 +1435,6 @@
     "definition": "house, family"
   },
   {
-    "kanji": "うち",
-    "yomikata": "（三つの~）",
-    "definition": "inside"
-  },
-  {
     "kanji": "打合せ",
     "yomikata": "うちあわせ",
     "definition": "business meeting, previous arrangement, appointment"
@@ -1973,11 +1968,6 @@
     "kanji": "終える",
     "yomikata": "おえる",
     "definition": "to finish"
-  },
-  {
-    "kanji": "おお~",
-    "yomikata": "大~",
-    "definition": "big ~"
   },
   {
     "kanji": "多い",
@@ -5825,11 +5815,6 @@
     "definition": "to kick"
   },
   {
-    "kanji": "けれど/けれども",
-    "yomikata": "",
-    "definition": "but, however"
-  },
-  {
     "kanji": "険しい",
     "yomikata": "けわしい",
     "definition": "inaccessible place, sharp eyes"
@@ -6800,11 +6785,6 @@
     "definition": "flour, meal, powder"
   },
   {
-    "kanji": "この",
-    "yomikata": "この",
-    "definition": "this"
-  },
-  {
     "kanji": "好み",
     "yomikata": "このみ",
     "definition": "liking, taste, choice"
@@ -7343,11 +7323,6 @@
     "kanji": "射す",
     "yomikata": "さす",
     "definition": "to shine, to strike"
-  },
-  {
-    "kanji": "さす",
-    "yomikata": "（傘を~）",
-    "definition": "to light (a fire), to apply moxa cautery"
   },
   {
     "kanji": "流石",
@@ -8115,11 +8090,6 @@
     "definition": "(1) discourtesy, impoliteness, (2) Excuse me, Goodbye"
   },
   {
-    "kanji": "しつれいしました",
-    "yomikata": "（感）",
-    "definition": "Excuse me., I'm sorry."
-  },
-  {
     "kanji": "実例",
     "yomikata": "じつれい",
     "definition": "example, illustration"
@@ -8275,16 +8245,6 @@
     "definition": "sisters"
   },
   {
-    "kanji": "しまう",
-    "yomikata": "（終わる）",
-    "definition": "to finish, to close, to do something completely"
-  },
-  {
-    "kanji": "しまった",
-    "yomikata": "（感）",
-    "definition": "Damn it!"
-  },
-  {
     "kanji": "閉まる",
     "yomikata": "しまる",
     "definition": "to close, to be closed"
@@ -8328,11 +8288,6 @@
     "kanji": "示す",
     "yomikata": "しめす",
     "definition": "to denote, to show, to point out, to indicate"
-  },
-  {
-    "kanji": "しめた",
-    "yomikata": "（感）",
-    "definition": "I've got it, all right, fine"
   },
   {
     "kanji": "占める",
@@ -9475,19 +9430,9 @@
     "definition": "amateur, novice"
   },
   {
-    "kanji": "しわ",
-    "yomikata": "（顔を~）",
-    "definition": "wrinkles, creases"
-  },
-  {
     "kanji": "芯",
     "yomikata": "しん",
     "definition": "core, heart, wick, marrow"
-  },
-  {
-    "kanji": "~人",
-    "yomikata": "~じん",
-    "definition": "~ person"
   },
   {
     "kanji": "進学",
@@ -10080,11 +10025,6 @@
     "definition": "finished"
   },
   {
-    "kanji": "すみません",
-    "yomikata": "（感）",
-    "definition": "sorry, excuse me"
-  },
-  {
     "kanji": "住む",
     "yomikata": "すむ",
     "definition": "to abide, to reside, to live in, to inhabit, to dwell"
@@ -10128,11 +10068,6 @@
     "kanji": "狡い",
     "yomikata": "ずるい",
     "definition": "sly, cunning"
-  },
-  {
-    "kanji": "すると",
-    "yomikata": "すると",
-    "definition": "thereupon, hereupon"
   },
   {
     "kanji": "鋭い",
@@ -10810,11 +10745,6 @@
     "definition": "along ~"
   },
   {
-    "kanji": "そう",
-    "yomikata": "そう",
-    "definition": "so"
-  },
-  {
     "kanji": "象",
     "yomikata": "ぞう",
     "definition": "elephant"
@@ -10970,11 +10900,6 @@
     "definition": "speed"
   },
   {
-    "kanji": "そこ",
-    "yomikata": "そこ",
-    "definition": "bottom, sole"
-  },
-  {
     "kanji": "底",
     "yomikata": "そこ",
     "definition": "bottom, sole"
@@ -11040,11 +10965,6 @@
     "definition": "to be furnished with"
   },
   {
-    "kanji": "その",
-    "yomikata": "その",
-    "definition": "the, that"
-  },
-  {
     "kanji": "側",
     "yomikata": "そば",
     "definition": "side, edge, third person"
@@ -11078,11 +10998,6 @@
     "kanji": "剃る",
     "yomikata": "そる",
     "definition": "to shave"
-  },
-  {
-    "kanji": "それ",
-    "yomikata": "（接。感）",
-    "definition": "it, that"
   },
   {
     "kanji": "逸れる",
@@ -11435,7 +11350,7 @@
     "definition": "continent"
   },
   {
-    "kanji": "Ͼ立",
+    "kanji": "対立",
     "yomikata": "たいりつ",
     "definition": "confrontation, opposition, antagonism"
   },
@@ -11490,11 +11405,6 @@
     "definition": "treasure"
   },
   {
-    "kanji": "だから",
-    "yomikata": "だから",
-    "definition": "so, therefore"
-  },
-  {
     "kanji": "滝",
     "yomikata": "たき",
     "definition": "waterfall"
@@ -11528,11 +11438,6 @@
     "kanji": "竹",
     "yomikata": "たけ",
     "definition": "bamboo, middle (of a three-tier ranking system)"
-  },
-  {
-    "kanji": "たしか",
-    "yomikata": "（~３年前だった）",
-    "definition": "certain, sure, definite, if I'm not mistaken, if I remember correctly"
   },
   {
     "kanji": "確か",
@@ -13175,11 +13080,6 @@
     "definition": "applying"
   },
   {
-    "kanji": "できる",
-    "yomikata": "（可能。出現。発生）",
-    "definition": "to be able to, to be ready, to occur"
-  },
-  {
     "kanji": "出来るだけ",
     "yomikata": "できるだけ",
     "definition": "if at all possible"
@@ -13303,11 +13203,6 @@
     "kanji": "出迎える",
     "yomikata": "でむかえる",
     "definition": "to meet, to greet"
-  },
-  {
-    "kanji": "でも",
-    "yomikata": "でも",
-    "definition": "but, however"
   },
   {
     "kanji": "寺",
@@ -13505,11 +13400,6 @@
     "definition": "counter for large animals"
   },
   {
-    "kanji": "どう",
-    "yomikata": "（接。副）",
-    "definition": "child, servant, foolishness"
-  },
-  {
     "kanji": "銅",
     "yomikata": "どう",
     "definition": "copper"
@@ -13523,11 +13413,6 @@
     "kanji": "答案",
     "yomikata": "とうあん",
     "definition": "examination paper, examination script"
-  },
-  {
-    "kanji": "どういたしまして",
-    "yomikata": "（感）",
-    "definition": "you are welcome, don't mention it"
   },
   {
     "kanji": "統一",
@@ -14115,11 +14000,6 @@
     "definition": "to take (a photo), to make (a film)"
   },
   {
-    "kanji": "どれ",
-    "yomikata": "どれ",
-    "definition": "well, now, let me see, which (of three or more)"
-  },
-  {
     "kanji": "取れる",
     "yomikata": "とれる",
     "definition": "to come off, to be taken off, to be removed"
@@ -14133,11 +14013,6 @@
     "kanji": "泥棒",
     "yomikata": "どろぼう",
     "definition": "thief, burglar, robber, theft"
-  },
-  {
-    "kanji": "とん",
-    "yomikata": "（1000",
-    "definition": "ton"
   },
   {
     "kanji": "丼",
@@ -15220,11 +15095,6 @@
     "definition": "case, situation"
   },
   {
-    "kanji": "はい",
-    "yomikata": "（感）",
-    "definition": "wear, put on (sword)"
-  },
-  {
     "kanji": "灰",
     "yomikata": "はい",
     "definition": "ash"
@@ -15343,11 +15213,6 @@
     "kanji": "吐き気",
     "yomikata": "はきけ",
     "definition": "nausea, sickness in the stomach"
-  },
-  {
-    "kanji": "はく",
-    "yomikata": "（ズボンを~）",
-    "definition": "to wear, to put on (a sword)"
   },
   {
     "kanji": "履く",
@@ -16240,11 +16105,6 @@
     "definition": "man, person"
   },
   {
-    "kanji": "一~",
-    "yomikata": "ひと~",
-    "definition": "a single ~"
-  },
-  {
     "kanji": "一言",
     "yomikata": "ひとこと",
     "definition": "single word"
@@ -16263,11 +16123,6 @@
     "kanji": "等しい",
     "yomikata": "ひとしい",
     "definition": "equal"
-  },
-  {
-    "kanji": "一つ",
-    "yomikata": "ひとつ",
-    "definition": "one"
   },
   {
     "kanji": "一通り",
@@ -18095,22 +17950,12 @@
     "definition": "to be puzzled, to be perplexed, to lose one's way"
   },
   {
-    "kanji": "丸",
+    "kanji": "丸・円",
     "yomikata": "まる",
     "definition": "circle, full (month), perfection, purity, suffix for ship names"
   },
   {
-    "kanji": "円",
-    "yomikata": "まる",
-    "definition": "circle, money"
-  },
-  {
-    "kanji": "丸い",
-    "yomikata": "まるい",
-    "definition": "round, circular, spherical"
-  },
-  {
-    "kanji": "円い",
+    "kanji": "丸い・円い",
     "yomikata": "まるい",
     "definition": "round, circular, spherical"
   },
@@ -18453,11 +18298,6 @@
     "kanji": "未来",
     "yomikata": "みらい",
     "definition": "future (life, tense)"
-  },
-  {
-    "kanji": "ミリ",
-    "yomikata": "（メートル）",
-    "definition": "milli-, 10^-3"
   },
   {
     "kanji": "魅力",
@@ -19913,11 +19753,6 @@
     "kanji": "宜しい",
     "yomikata": "よろしい",
     "definition": "(hon) good, OK, all right, fine, very well, will do, may, can"
-  },
-  {
-    "kanji": "よろしく",
-    "yomikata": "（感）",
-    "definition": "well, properly, suitably, best regards, please remember me"
   },
   {
     "kanji": "弱い",

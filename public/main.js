@@ -74,7 +74,8 @@ const setup = () => {
       brushSize: 70,
       inkColor: '#1d3557',
       questionsPerRound: 10,
-      practiceAfterFailure: true
+      practiceAfterFailure: true,
+      senseForce: false
     };
   }
 };
@@ -619,70 +620,82 @@ let sketch = function (p) {
     if (!preventDrawing) {
       p.stroke(userSettings.inkColor);
       p.strokeWeight(3);
-
-      if (touchCors.x && touchCors.force && touchCors.force < 1) {
-        if (!touchCors.lastX) {
-          let ran = p.random(-1, 1);
-          let ranTwo = p.random(-1, 1);
-          p.line(touchCors.x + p.random(-3, 3), touchCors.y + p.random(-3, 3), touchCors.x + ran, touchCors.y + ranTwo);
-          p.line(touchCors.x, touchCors.y, touchCors.x, touchCors.y);
-          if (touchCors.force) {
-            p.strokeWeight(touchCors.force * userSettings.brushSize + p.random(-2, 2));
+      if (userSettings.senseForce) {
+        if (touchCors.x && touchCors.force && touchCors.force < 1) {
+          if (!touchCors.lastX) {
+            let ran = p.random(-1, 1);
+            let ranTwo = p.random(-1, 1);
+            p.line(
+              touchCors.x + p.random(-3, 3),
+              touchCors.y + p.random(-3, 3),
+              touchCors.x + ran,
+              touchCors.y + ranTwo
+            );
             p.line(touchCors.x, touchCors.y, touchCors.x, touchCors.y);
+            if (touchCors.force) {
+              p.strokeWeight(touchCors.force * userSettings.brushSize + p.random(-2, 2));
+              p.line(touchCors.x, touchCors.y, touchCors.x, touchCors.y);
 
-            p.strokeWeight(3);
+              p.strokeWeight(3);
+            }
+            touchCors.lastX = touchCors.x + ran;
+            touchCors.lastY = touchCors.y + ranTwo;
+          } else {
+            let ran = p.random(-1, 1);
+            let ranTwo = p.random(-1, 1);
+            p.line(touchCors.lastX, touchCors.lastY, touchCors.x + ran, touchCors.y);
+            if (touchCors.force) {
+              p.strokeWeight(touchCors.force * userSettings.brushSize + p.random(-2, 2));
+              p.line(touchCors.lastX, touchCors.lastY, touchCors.x, touchCors.y);
+
+              p.strokeWeight(3);
+            }
+            touchCors.lastX = touchCors.x + ran;
+            touchCors.lastY = touchCors.y + ranTwo;
           }
-          touchCors.lastX = touchCors.x + ran;
-          touchCors.lastY = touchCors.y + ranTwo;
-        } else {
+        }
+
+        if ((p.mouseIsPressed && !touchCors.force) || (p.mouseIsPressed && touchCors.force === 1)) {
+          let change = getMouseChange();
+          if (change > 7 && change < 20) {
+            mouseData.timeSinceMouseDown -= 2;
+          }
+          if (change >= 20 && change < 30) {
+            mouseData.timeSinceMouseDown -= 3;
+          }
+          if (change >= 30) {
+            mouseData.timeSinceMouseDown -= 4;
+          }
+          if (mouseData.timeSinceMouseDown < 0) {
+            mouseData.timeSinceMouseDown = mouseData.timeSinceMouseDown * -1;
+          }
+          if (mouseData.timeSinceMouseDown < 50) {
+            mouseData.timeSinceMouseDown += 1;
+          }
+
+          let increasedBrushSize = mouseData.timeSinceMouseDown - mouseData.timeSinceMouseDown * 0.3 + p.random(-1, 1);
+
           let ran = p.random(-1, 1);
-          let ranTwo = p.random(-1, 1);
-          p.line(touchCors.lastX, touchCors.lastY, touchCors.x + ran, touchCors.y);
-          if (touchCors.force) {
-            p.strokeWeight(touchCors.force * userSettings.brushSize + p.random(-2, 2));
-            p.line(touchCors.lastX, touchCors.lastY, touchCors.x, touchCors.y);
-
-            p.strokeWeight(3);
+          let ran2 = p.random(-1, 1);
+          mouseData.x = p.mouseX + ran;
+          mouseData.y = p.mouseY + ran2;
+          p.strokeWeight(userSettings.brushSize * 0.08 + increasedBrushSize);
+          if (mouseData.lastX) {
+            p.line(mouseData.lastX, mouseData.lastY, mouseData.x, mouseData.y);
+            p.line(p.pmouseX, p.pmouseY, p.mouseX, p.mouseY);
+          } else {
+            p.line(p.mouseX + p.random(-3, 3), p.mouseY + p.random(-3, 3), mouseData.x, mouseData.y);
+            p.line(p.pmouseX, p.pmouseY, p.mouseX, p.mouseY);
           }
-          touchCors.lastX = touchCors.x + ran;
-          touchCors.lastY = touchCors.y + ranTwo;
+          mouseData.lastX = mouseData.x;
+          mouseData.lastY = mouseData.y;
         }
-      }
-
-      if ((p.mouseIsPressed && !touchCors.force) || (p.mouseIsPressed && touchCors.force === 1)) {
-        let change = getMouseChange();
-        if (change > 7 && change < 20) {
-          mouseData.timeSinceMouseDown -= 2;
-        }
-        if (change >= 20 && change < 30) {
-          mouseData.timeSinceMouseDown -= 3;
-        }
-        if (change >= 30) {
-          mouseData.timeSinceMouseDown -= 4;
-        }
-        if (mouseData.timeSinceMouseDown < 0) {
-          mouseData.timeSinceMouseDown = mouseData.timeSinceMouseDown * -1;
-        }
-        if (mouseData.timeSinceMouseDown < 50) {
-          mouseData.timeSinceMouseDown += 1;
-        }
-
-        let increasedBrushSize = mouseData.timeSinceMouseDown - mouseData.timeSinceMouseDown * 0.3 + p.random(-1, 1);
-
-        let ran = p.random(-1, 1);
-        let ran2 = p.random(-1, 1);
-        mouseData.x = p.mouseX + ran;
-        mouseData.y = p.mouseY + ran2;
-        p.strokeWeight(userSettings.brushSize * 0.08 + increasedBrushSize);
-        if (mouseData.lastX) {
-          p.line(mouseData.lastX, mouseData.lastY, mouseData.x, mouseData.y);
-          p.line(p.pmouseX, p.pmouseY, p.mouseX, p.mouseY);
-        } else {
-          p.line(p.mouseX + p.random(-3, 3), p.mouseY + p.random(-3, 3), mouseData.x, mouseData.y);
+      } else {
+        // DRAW IF USER SETTINGS IS SET TO NOT DETECT FORCE
+        if (p.mouseIsPressed) {
+          p.strokeWeight(userSettings.brushSize / 6);
           p.line(p.pmouseX, p.pmouseY, p.mouseX, p.mouseY);
         }
-        mouseData.lastX = mouseData.x;
-        mouseData.lastY = mouseData.y;
       }
     }
     if (takingPhoto) {
@@ -734,31 +747,10 @@ function practiceDrawing(p) {
       p.clear();
       clearCanvasTwo = false;
     }
-    p.stroke('#1d3557');
-    p.strokeWeight(2);
-    if (touchCors.x) {
-      if (!touchCors.lastX) {
-        p.line(touchCors.x, touchCors.y, touchCors.x, touchCors.y);
-        if (touchCors.force) {
-          p.strokeWeight(touchCors.force * 15 + p.random(-2, 2));
-          p.line(touchCors.x, touchCors.y, touchCors.x, touchCors.y);
-          p.strokeWeight(2);
-        }
-        touchCors.lastX = touchCors.x;
-        touchCors.lastY = touchCors.y;
-      } else {
-        p.line(touchCors.lastX, touchCors.lastY, touchCors.x, touchCors.y);
-        if (touchCors.force) {
-          p.strokeWeight(touchCors.force * 15 + p.random(-2, 2));
-          p.line(touchCors.lastX, touchCors.lastY, touchCors.x, touchCors.y);
-          p.strokeWeight(2);
-        }
-        touchCors.lastX = touchCors.x;
-        touchCors.lastY = touchCors.y;
-      }
-    }
+    p.stroke(userSettings.inkColor);
+    p.strokeWeight(5);
 
-    if (p.mouseIsPressed && !touchCors.lastX) {
+    if (p.mouseIsPressed) {
       p.line(p.pmouseX, p.pmouseY, p.mouseX, p.mouseY);
       p.line(p.pmouseX, p.pmouseY, p.mouseX + p.random(-1, 1), p.mouseY + p.random(-1, 1));
     }

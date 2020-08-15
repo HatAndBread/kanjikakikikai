@@ -46,6 +46,15 @@
        </select>
     </div>
     <div class="divider"></div>
+     <div id="force-selector">
+        <label for="force-selector">Detect touch-screen pressure: </label>
+        <% if (settings.senseForce){ %>
+        <input type="checkbox" name="force-selector" id="force-selector" checked>
+       <% }else{ %>
+<input type="checkbox" name="force-selector" id="force-selector" >
+       <% }%>
+    </div>
+     <div class="divider"></div>
     <div id="save-settings">
         <button class="main-button" id="save-changes-butt">Save changes</button>
     </div>
@@ -67,6 +76,7 @@
     const colorInput = document.getElementById('ink-color')
     const onStart = document.getElementById('on-start')
     const options = document.getElementsByClassName('select-options')
+    const forceSelector = document.getElementById('force-selector')
     for (let i = 0; i < options.length; i++){
         if (options[i].value === info.loadOnStart){
             options[i].selected = true;
@@ -83,7 +93,8 @@
     inkColor: info.inkColor,
     questionsPerRound: questionNumDisp.innerText,
     practiceAfterFailure: info.practiceAfterFailure,
-    loadOnStart: info.loadOnStart}
+    loadOnStart: info.loadOnStart,
+    senseForce: info.senseForce}
     console.log(newSettings)
 
 onStart.addEventListener('change',(e)=>{
@@ -116,6 +127,10 @@ onStart.addEventListener('change',(e)=>{
         if (res.message = 'success'){
             window.location.href = '/'
         }
+    })
+    forceSelector.addEventListener('input', (e)=>{
+        newSettings.senseForce = e.target.checked
+        console.log(newSettings)
     })
       
       
