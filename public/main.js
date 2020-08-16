@@ -373,7 +373,7 @@ const getAnimation = async (ch) => {
     domEls.video.src = link;
     domEls.video.type = 'video/mp4';
     domEls.video.muted = true;
-    domEls.video.addEventListener('canplaythrough', () => {
+    domEls.video.addEventListener('loadedmetadata', () => {
       videoSize.width = domEls.video.videoWidth;
       videoSize.height = domEls.video.videoHeight;
       centerVideo();
