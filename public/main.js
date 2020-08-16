@@ -377,7 +377,7 @@ const getAnimation = async (ch) => {
       videoSize.width = domEls.video.videoWidth;
       videoSize.height = domEls.video.videoHeight;
       centerVideo();
-      let promise = undefined; //domEls.video.play();
+      let promise = domEls.video.play();
       console.log(promise);
       if (promise !== undefined) {
         console.log('it can play');
