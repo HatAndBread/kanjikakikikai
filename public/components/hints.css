@@ -48,7 +48,8 @@
 #video-hint {
   position: fixed;
   pointer-events: none;
-  z-index: 10000;
+  z-index: 100;
+
   background-color: rgba(40, 40, 40, 0.3);
   color: #f1faee;
   border-radius: 10px;

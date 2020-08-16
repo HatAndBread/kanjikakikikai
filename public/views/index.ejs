@@ -153,9 +153,7 @@
 
     <div id="check-answer">
       <div id="answers">
-        <div id="video-hint">
-          <p id="video-hint-text">Hint: Touch or click any kanji to see its stroke order❣️📽✨</p>
-        </div>
+
         <div id="kanji_answer"></div>
         <div id="your-drawing"></div>
       </div>
@@ -193,8 +191,12 @@
     <div hidden id="example-display">
       <input:button id="video-closer">✕</input:button>
       <input id="play-button" type="image" src="./assets/play.png" alt="PLAY" />
-      <video src="" id="video" width="248" height="248"></video>
+      <video src="" id="video" width="248" height="248" style="background-color: #f1faee;"></video>
     </div>
+    <div id="video-hint">
+          <p id="video-hint-text">Hint: Touch or click any kanji to see its stroke order❣️📽✨</p>
+        </div>
+
   </body>
 </html>
 <script src="p5.min.js"></script>
