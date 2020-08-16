@@ -5,9 +5,25 @@
   z-index: 100;
 }
 
+#video {
+  position: absolute;
+  display: block;
+  top: 0px;
+  left: 0px;
+  pointer-events: none;
+}
+
 #video-closer {
+  display: block;
   cursor: pointer;
   position: relative;
   color: var(--nav-color);
-  top: 25px;
+  z-index: 101;
+}
+
+#play-button {
+  display: block;
+  position: relative;
+  cursor: relative;
+  z-index: 101;
 }

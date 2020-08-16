@@ -39,6 +39,9 @@ const domEls = {
   nav: document.getElementById('nav-bar'),
   attention: document.getElementById('attention-getter'),
   exampleDisplay: document.getElementById('example-display'),
+  video: document.getElementById('video'),
+  playButton: document.getElementById('play-button'),
+  videoCloser: document.getElementById('video-closer'),
   toolsOut: false
 };
 
@@ -333,12 +336,26 @@ function isKanji(ch) {
 const centerVideo = () => {
   domEls.exampleDisplay.style.top = `${window.innerHeight / 2 - videoSize.height / 2}px`;
   domEls.exampleDisplay.style.left = `${window.innerWidth / 2 - videoSize.width / 2}px`;
+  console.log(videoSize.height);
+  console.log(videoSize.width);
+  domEls.videoCloser.style.left = `${videoSize.width - 20}px`;
+  domEls.videoCloser.style.top = `5px`;
+  domEls.playButton.style.top = `${videoSize.height / 2 - 64}px`;
+  domEls.playButton.style.left = `${videoSize.width / 2 - 32}px`;
 };
+
+domEls.playButton.addEventListener('click', () => {
+  domEls.playButton.style.display = 'none';
+  domEls.video.play();
+});
+domEls.videoCloser.addEventListener('click', () => {
+  closeVideo();
+});
 
 const closeVideo = () => {
   domEls.exampleDisplay.hidden = true;
   domEls.exampleDisplay.style.pointerEvents = 'none';
-  domEls.exampleDisplay.querySelectorAll('*').forEach((n) => n.remove());
+  domEls.video.src = '';
 };
 
 let videoSize = {
@@ -352,38 +369,27 @@ const getAnimation = async (ch) => {
   if (data.link) {
     domEls.exampleDisplay.style.pointerEvents = 'all';
     let link = data.link;
-    let video = document.createElement('video');
-    let source = document.createElement('source');
-    let closer = document.createElement('span');
-    let ex = document.createTextNode('✕');
-    closer.style.color = '#e63946';
-    closer.appendChild(ex);
-    closer.style.cursor = 'pointer';
-    closer.style.zIndex = 101;
-    closer.style.position = 'absolute';
-    closer.addEventListener('click', closeVideo);
-    video.controls = true;
-    console.log(video);
-    source.type = 'video/mp4';
-    source.src = link;
-    video.appendChild(source);
-    video.muted = true;
-    domEls.exampleDisplay.appendChild(closer);
-    domEls.exampleDisplay.appendChild(video);
-    console.log(link);
-    video.addEventListener('canplaythrough', () => {
-      console.log('loaded');
-      videoSize.width = video.videoWidth;
-      videoSize.height = video.videoHeight;
+    domEls.video.controls = false;
+    domEls.video.src = link;
+    domEls.video.type = 'video/mp4';
+    domEls.video.muted = true;
+    domEls.video.addEventListener('canplaythrough', () => {
+      videoSize.width = domEls.video.videoWidth;
+      videoSize.height = domEls.video.videoHeight;
       centerVideo();
-      domEls.exampleDisplay.appendChild(closer);
-      video.play();
-      closer.style.left = `${video.videoWidth - 20}px`;
-      closer.style.top = '5px';
+      let promise = undefined; //domEls.video.play();
+      console.log(promise);
+      if (promise !== undefined) {
+        console.log('it can play');
+        domEls.playButton.style.display = 'none';
+        domEls.video.play();
+      } else {
+        domEls.playButton.style.display = 'block';
+      }
       domEls.exampleDisplay.hidden = false;
       domEls.loader.style.display = 'none';
     });
-    video.addEventListener('ended', closeVideo);
+    domEls.video.addEventListener('ended', closeVideo);
   } else {
     console.log(data);
   }
