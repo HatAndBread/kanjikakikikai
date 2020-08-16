@@ -91,6 +91,38 @@
     font-size: 8vw;
   }
 }
+@media only screen and (max-width: 380px) {
+  #maru {
+    font-size: 34px;
+  }
+  #batsu {
+    font-size: 34px;
+  }
+}
+@media only screen and (max-width: 325px) {
+  #maru {
+    font-size: 28px;
+  }
+  #batsu {
+    font-size: 28px;
+  }
+}
+@media only screen and (max-width: 280px) {
+  #maru {
+    font-size: 22px;
+  }
+  #batsu {
+    font-size: 22px;
+  }
+}
+@media only screen and (max-width: 247px) {
+  #maru {
+    font-size: 8vw;
+  }
+  #batsu {
+    font-size: 8vw;
+  }
+}
 
 #maru:focus {
   outline: none;

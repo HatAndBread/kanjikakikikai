@@ -19,6 +19,7 @@
 @import url(components/example-display.css);
 @import url(components/video.css);
 
+
 :root {
   --nav-color: #e63946; /* define global variable in root */
 }
