@@ -33,7 +33,7 @@
   transition: background-color 0.1s linear;
 }
 
-@media only screen and (max-width: 1200px) {
+@media only screen and (max-width: 3000px) {
   #tools {
     background-color: var(--nav-color);
     position: fixed;
