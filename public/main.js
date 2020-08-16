@@ -4,6 +4,7 @@ let clearCanvasTwo = false;
 let clearMirror = false;
 let preventDrawing = true;
 let practicing = false;
+let videoOpen = false;
 
 const domEls = {
   mondaiButt: document.getElementById('mondai-button'),
@@ -348,6 +349,7 @@ const centerVideo = () => {
 domEls.playButton.addEventListener('click', () => {
   domEls.playButton.style.display = 'none';
   domEls.video.play();
+  videoOpen = true;
 });
 domEls.videoCloser.addEventListener('click', () => {
   closeVideo();
@@ -357,6 +359,8 @@ const closeVideo = () => {
   domEls.exampleDisplay.hidden = true;
   domEls.exampleDisplay.style.pointerEvents = 'none';
   domEls.video.src = '';
+  videoOpen = false;
+  domEls.loader.style.display = 'none';
 };
 
 let videoSize = {
@@ -365,6 +369,7 @@ let videoSize = {
 };
 const getAnimation = async (ch) => {
   domEls.loader.style.display = 'flex';
+  videoOpen = true;
   const res = await fetch(`/get-strokes/${ch}`);
   const data = await res.json();
   if (data.link) {
@@ -398,7 +403,8 @@ const getAnimation = async (ch) => {
       );
     });
   } else {
-    alert('Sorry. Video is not available right now. 😢');
+    closeVideo();
+    alert('Sorry. There is no video available for that kanji right now. 😢');
   }
 };
 
@@ -444,79 +450,84 @@ const checkAnswer = () => {
 
 domEls.maru.addEventListener('click', (e) => {
   e.preventDefault();
-  domEls.checkAnswerBox.style.display = 'none';
-  preventDrawing = false;
-  domEls.mondaiButt.disabled = false;
-  domEls.mondaiButt.style.display = 'block';
-  if (userStats.questionOutOf.currentQuestion < userSettings.questionsPerRound) {
-    getMondai();
-    userStats.updateStats(true);
-    domEls.statsDisplay.style.display = 'block';
-    domEls.attention.style.animationName = 'attention';
-  } else {
-    userStats.updateStats(true);
-    finishGame();
-  }
+  if (!videoOpen) {
+    domEls.checkAnswerBox.style.display = 'none';
+    preventDrawing = false;
+    domEls.mondaiButt.disabled = false;
+    domEls.mondaiButt.style.display = 'block';
+    if (userStats.questionOutOf.currentQuestion < userSettings.questionsPerRound) {
+      getMondai();
+      userStats.updateStats(true);
+      domEls.statsDisplay.style.display = 'block';
+      domEls.attention.style.animationName = 'attention';
+    } else {
+      userStats.updateStats(true);
+      finishGame();
+    }
 
-  createStatsTable();
+    createStatsTable();
+  }
 });
 
 domEls.practiceCloser.addEventListener('click', (e) => {
-  domEls.practiceBox.hidden = true;
-  practicing = false;
-  preventDrawing = false;
-  if (userStats.questionOutOf.currentQuestion < userSettings.questionsPerRound) {
-    domEls.attention.style.animationName = 'attention';
-  }
-  console.log(userStats);
-  if (userStats.questionOutOf.currentQuestion <= userSettings.questionsPerRound) {
-    domEls.statsDisplay.style.display = 'block';
+  if (!videoOpen) {
+    domEls.practiceBox.hidden = true;
+    practicing = false;
+    preventDrawing = false;
+    if (userStats.questionOutOf.currentQuestion < userSettings.questionsPerRound) {
+      domEls.attention.style.animationName = 'attention';
+    }
+    console.log(userStats);
+    if (userStats.questionOutOf.currentQuestion <= userSettings.questionsPerRound) {
+      domEls.statsDisplay.style.display = 'block';
+    }
   }
 });
 
 domEls.batsu.addEventListener('click', (e) => {
   e.preventDefault();
-
-  if (userSettings.practiceAfterFailure) {
-    preventDrawing = true;
-    practicing = true;
-    domEls.statsDisplay.style.display = 'none';
-    domEls.practiceBox.hidden = false;
-    domEls.practiceKanjiExample.textContent = '';
-    for (let i = 0; i < currentMondai.kanji.length; i++) {
-      let itIsKanji = isKanji(currentMondai.kanji[i]);
-      const kanjiText = document.createTextNode(currentMondai.kanji[i]);
-      const span = document.createElement('span');
-      span.style.fontFamily = `'umeboshi', 'Dosis', sans-serif`;
-      span.appendChild(kanjiText);
-      if (itIsKanji) {
-        span.style.cursor = 'pointer';
-        span.addEventListener('click', (e) => {
-          getAnimation(e.target.innerText);
-        });
+  if (!videoOpen) {
+    if (userSettings.practiceAfterFailure) {
+      preventDrawing = true;
+      practicing = true;
+      domEls.statsDisplay.style.display = 'none';
+      domEls.practiceBox.hidden = false;
+      domEls.practiceKanjiExample.textContent = '';
+      for (let i = 0; i < currentMondai.kanji.length; i++) {
+        let itIsKanji = isKanji(currentMondai.kanji[i]);
+        const kanjiText = document.createTextNode(currentMondai.kanji[i]);
+        const span = document.createElement('span');
+        span.style.fontFamily = `'umeboshi', 'Dosis', sans-serif`;
+        span.appendChild(kanjiText);
+        if (itIsKanji) {
+          span.style.cursor = 'pointer';
+          span.addEventListener('click', (e) => {
+            getAnimation(e.target.innerText);
+          });
+        }
+        domEls.practiceKanjiExample.appendChild(span);
       }
-      domEls.practiceKanjiExample.appendChild(span);
+    } else {
+      preventDrawing = false;
+      domEls.statsDisplay.style.display = 'block';
     }
-  } else {
-    preventDrawing = false;
-    domEls.statsDisplay.style.display = 'block';
-  }
-  domEls.checkAnswerBox.style.display = 'none';
-  domEls.mondaiButt.disabled = false;
-  domEls.mondaiButt.style.display = 'block';
-  if (userStats.questionOutOf.currentQuestion < userSettings.questionsPerRound) {
-    getMondai();
-    userStats.updateStats(false);
-    if (!userSettings.practiceAfterFailure) {
-      domEls.attention.style.animationName = 'attention';
+    domEls.checkAnswerBox.style.display = 'none';
+    domEls.mondaiButt.disabled = false;
+    domEls.mondaiButt.style.display = 'block';
+    if (userStats.questionOutOf.currentQuestion < userSettings.questionsPerRound) {
+      getMondai();
+      userStats.updateStats(false);
+      if (!userSettings.practiceAfterFailure) {
+        domEls.attention.style.animationName = 'attention';
+      }
+    } else {
+      userStats.updateStats(false);
+      domEls.statsDisplay.style.display = 'none';
+      finishGame();
     }
-  } else {
-    userStats.updateStats(false);
-    domEls.statsDisplay.style.display = 'none';
-    finishGame();
-  }
 
-  createStatsTable();
+    createStatsTable();
+  }
 });
 
 domEls.setSelectorButt.addEventListener('click', () => {
@@ -723,7 +734,7 @@ let sketch = function (p) {
       p.clear();
       clearCanvas = false;
     }
-    if (!preventDrawing) {
+    if (!preventDrawing && !videoOpen) {
       p.stroke(userSettings.inkColor);
       p.strokeWeight(3);
       if (userSettings.senseForce) {
@@ -856,7 +867,7 @@ function practiceDrawing(p) {
     p.stroke(userSettings.inkColor);
     p.strokeWeight(5);
 
-    if (p.mouseIsPressed) {
+    if (p.mouseIsPressed && !videoOpen) {
       p.line(p.pmouseX, p.pmouseY, p.mouseX, p.mouseY);
     }
   };
