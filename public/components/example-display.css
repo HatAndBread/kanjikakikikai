@@ -3,7 +3,6 @@
   pointer-events: none;
   top: 62px;
   z-index: 100;
-  background-color: var(--nav-color);
   border-radius: 10px;
 }
 

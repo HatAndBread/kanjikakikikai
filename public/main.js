@@ -336,8 +336,6 @@ function isKanji(ch) {
 const centerVideo = () => {
   domEls.exampleDisplay.style.top = `${window.innerHeight / 2 - videoSize.height / 2}px`;
   domEls.exampleDisplay.style.left = `${window.innerWidth / 2 - videoSize.width / 2}px`;
-  domEls.exampleDisplay.style.width = videoSize.width;
-  domEls.exampleDisplay.style.height = videoSize.height;
   console.log(videoSize.height);
   console.log(videoSize.width);
 
@@ -386,6 +384,8 @@ const getAnimation = async (ch) => {
           domEls.playButton.style.display = 'none';
           domEls.exampleDisplay.hidden = false;
           domEls.loader.style.display = 'none';
+          domEls.video.loop = true;
+          domEls.video.removeEventListener('ended', closeVideo);
           domEls.video.play();
         },
         (err) => {
@@ -393,12 +393,12 @@ const getAnimation = async (ch) => {
           domEls.exampleDisplay.hidden = false;
           domEls.loader.style.display = 'none';
           domEls.playButton.style.display = 'block';
+          domEls.video.addEventListener('ended', closeVideo);
         }
       );
     });
-    domEls.video.addEventListener('ended', closeVideo);
   } else {
-    console.log(data);
+    alert('Sorry. Video is not available right now. 😢');
   }
 };
 
