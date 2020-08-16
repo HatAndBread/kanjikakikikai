@@ -153,13 +153,16 @@
 
     <div id="check-answer">
       <div id="answers">
+        <div id="video-hint">
+          <p id="video-hint-text">Hint: Touch or click any kanji to see its stroke order❣️📽✨</p>
+        </div>
         <div id="kanji_answer"></div>
         <div id="your-drawing"></div>
       </div>
-
+      <div id="instructions">できましたか?😇</div>
       <div id="right-or-wrong">
-        <button id="maru">🙆‍♀️</button>
-        <button id="batsu">🤦‍♀️</button>
+        <button id="maru">🙆‍♀️YES✨</button>
+        <button id="batsu">🤦‍♀️NO😭</button>
       </div>
     </div>
     <button id="start-button" class="main-button" type="button">START</button>
@@ -190,7 +193,7 @@
     <div hidden id="example-display">
       <input:button id="video-closer">✕</input:button>
       <input id="play-button" type="image" src="./assets/play.png" alt="PLAY" />
-      <video src="" id="video"></video>
+      <video src="" id="video" width="248" height="248"></video>
     </div>
   </body>
 </html>

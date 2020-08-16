@@ -28,6 +28,65 @@
   }
 }
 
+@keyframes video-hint {
+  0% {
+    opacity: 1;
+    transform: translateY(100px);
+  }
+  15% {
+    transform: translateY(0px);
+  }
+  30% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(100px);
+  }
+}
+#video-hint {
+  position: fixed;
+  pointer-events: none;
+  z-index: 10000;
+  background-color: rgba(40, 40, 40, 0.3);
+  color: #f1faee;
+  border-radius: 10px;
+  bottom: 60px;
+  left: 10px;
+  right: 10px;
+  font-weight: 900;
+  opacity: 0;
+  animation-duration: 11s;
+  text-align: center;
+  font-size: 18px;
+}
+@media only screen and (max-height: 390px) {
+  #video-hint {
+    bottom: 0px;
+  }
+}
+@media only screen and (min-width: 730px) {
+  #video-hint {
+    font-size: 32px;
+  }
+}
+@media only screen and (min-width: 549px) and (max-width: 729px) {
+  #video-hint {
+    font-size: 24px;
+  }
+}
+@media screen and (orientation: portrait) {
+  #video-hint {
+    bottom: 0px;
+    left: 0;
+    right: 0;
+    height: 15vh;
+    border-radius: 0px;
+    background-color: var(--nav-color);
+  }
+}
+
 #attention-getter {
   position: fixed;
   background-color: rgba(40, 40, 40, 0.3);
@@ -58,42 +117,51 @@
   border-radius: 50%;
   background-color: rgba(40, 40, 40, 0.3);
   color: #f1faee;
-  width: 100px;
-  height: 100px;
+  width: 200px;
+  height: 150px;
   text-align: center;
   z-index: 100;
   /*
   top: calc(var(--vh, 1vh) * 65);
   */
-  bottom: 100px;
-  left: 30px;
-  font-size: 18px;
+  bottom: 75px;
+  left: 15px;
+  font-size: 28px;
   opacity: 0;
   pointer-events: none;
-  animation-duration: 9s;
+  animation-duration: 11s;
 }
 
 #point-hand {
   position: relative;
-  left: 50px;
-  top: -55px;
+  left: 70px;
+  top: -65px;
   font-size: 42px;
-  transform: rotate(-30deg);
+  transform: rotate(-40deg);
+}
+@media (orientation: portrait) {
+  #point-hand {
+    transform: rotate(-70deg);
+  }
 }
 #point-down {
   position: relative;
-  left: -20px;
-  top: -60px;
+  left: -45px;
+  top: -65px;
   font-size: 42px;
-  transform: rotate(110deg);
+  transform: rotate(115deg);
 }
 @keyframes grow {
   0% {
-    font-size: 0px;
+    width: 0px;
+    height: 0px;
+
     opacity: 0;
   }
   20% {
-    font-size: 18px;
+    width: 200px;
+    height: 150px;
+
     opacity: 1;
   }
   95% {

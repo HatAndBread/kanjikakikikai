@@ -43,6 +43,7 @@ const domEls = {
   video: document.getElementById('video'),
   playButton: document.getElementById('play-button'),
   videoCloser: document.getElementById('video-closer'),
+  videoHint: document.getElementById('video-hint'),
   toolsOut: false
 };
 
@@ -409,6 +410,11 @@ const getAnimation = async (ch) => {
 };
 
 const checkAnswer = () => {
+  if (userStats.questionOutOf.currentQuestion === 1) {
+    domEls.videoHint.style.animationName = 'video-hint';
+  } else {
+    domEls.videoHint.style.animationName = '';
+  }
   domEls.attention.style.animationName = '';
   takingPhoto = true;
   domEls.statsDisplay.style.display = 'none';
