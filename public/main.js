@@ -378,16 +378,20 @@ const getAnimation = async (ch) => {
       videoSize.height = domEls.video.videoHeight;
       centerVideo();
       let promise = domEls.video.play();
-      console.log(promise);
-      if (promise !== undefined) {
-        console.log('it can play');
-        domEls.playButton.style.display = 'none';
-        domEls.video.play();
-      } else {
-        domEls.playButton.style.display = 'block';
-      }
-      domEls.exampleDisplay.hidden = false;
-      domEls.loader.style.display = 'none';
+      promise.then(
+        () => {
+          domEls.playButton.style.display = 'none';
+          domEls.exampleDisplay.hidden = false;
+          domEls.loader.style.display = 'none';
+          domEls.video.play();
+        },
+        (err) => {
+          console.log(err);
+          domEls.exampleDisplay.hidden = false;
+          domEls.loader.style.display = 'none';
+          domEls.playButton.style.display = 'block';
+        }
+      );
     });
     domEls.video.addEventListener('ended', closeVideo);
   } else {
