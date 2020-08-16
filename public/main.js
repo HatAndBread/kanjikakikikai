@@ -647,7 +647,6 @@ document.addEventListener(
 let lastTouchEnd = 0;
 document.addEventListener(
   'touchend',
-  { passive: false },
   function (event) {
     mouseData.timeSinceMouseDown = 0;
 
