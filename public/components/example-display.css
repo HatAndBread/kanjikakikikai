@@ -1,0 +1,30 @@
+#example-display {
+  position: fixed;
+  pointer-events: none;
+  top: 62px;
+  z-index: 100;
+  border-radius: 10px;
+}
+
+#video {
+  position: absolute;
+  display: block;
+  top: 0px;
+  left: 0px;
+  pointer-events: none;
+}
+
+#video-closer {
+  display: block;
+  cursor: pointer;
+  position: relative;
+  color: var(--nav-color);
+  z-index: 101;
+}
+
+#play-button {
+  display: block;
+  position: relative;
+  cursor: pointer;
+  z-index: 101;
+}

@@ -156,7 +156,14 @@
     top: 0px;
   }
   #set-selector-window {
-    height: 90px;
+    position: fixed;
+    top: 60px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin-left: unset;
+    width: unset;
+    height: unset;
   }
   .editor-buttons {
     font-size: 8px;

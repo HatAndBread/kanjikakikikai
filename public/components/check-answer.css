@@ -25,42 +25,79 @@
   overflow: auto;
 }
 
-#right-or-wrong{
+#right-or-wrong {
   width: 100%;
-  margin-top: 10px;
+  margin-top: 34px;
   display: block;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  
-  
+}
+#instructions {
+  position: fixed;
+  left: 0;
+  right: 0;
+  color: #1d3557;
+  font-size: 28px;
+  text-align: center;
+  box-sizing: border-box;
 }
 
-
-#maru{
+#maru {
   grid-column-start: 1;
   grid-column-end: 2;
   border-radius: 10px;
   font-size: 42px;
   background-color: #f1faee;
+  padding: 0px;
 }
 
-#batsu{
+#batsu {
   grid-column-start: 2;
   grid-column-end: 5;
-   border-radius: 10px;
+  border-radius: 10px;
   font-size: 42px;
   background-color: #f1faee;
+  padding: 0px;
+}
+@media only screen and (max-width: 380px) {
+  #maru {
+    font-size: 36px;
+  }
+  #batsu {
+    font-size: 36px;
+  }
+}
+@media only screen and (max-width: 325px) {
+  #maru {
+    font-size: 28px;
+  }
+  #batsu {
+    font-size: 28px;
+  }
+}
+@media only screen and (max-width: 280px) {
+  #maru {
+    font-size: 20px;
+  }
+  #batsu {
+    font-size: 20px;
+  }
+}
+@media only screen and (max-width: 247px) {
+  #maru {
+    font-size: 8vw;
+  }
+  #batsu {
+    font-size: 8vw;
+  }
 }
 
-#maru:focus{
+#maru:focus {
   outline: none;
 }
-#batsu:focus{
+#batsu:focus {
   outline: none;
 }
-
-
-
 
 #answers {
   position: relative;
@@ -69,6 +106,7 @@
   justify-content: space-between;
 }
 #kanji_answer {
+  font-family: 'umeboshi', 'Dosis', sans-serif;
   background-color: #f1faee;
   display: block;
   color: #1d3557;
@@ -90,11 +128,9 @@
   margin-left: 20px;
 }
 
-
 @media only screen and (max-width: 1200px) and (orientation: portrait) {
   #kanji_answer {
     writing-mode: vertical-rl;
-    text-orientation: upright;
     width: 40%;
     height: 40vh;
   }
@@ -117,6 +153,22 @@
   }
 }
 
+@media only screen and (max-height: 280px) {
+  #maru {
+    font-size: 32px;
+  }
+  #batsu {
+    font-size: 32px;
+  }
+}
+@media only screen and (max-height: 250px) {
+  #maru {
+    font-size: 22px;
+  }
+  #batsu {
+    font-size: 22px;
+  }
+}
 
 @media only screen and (max-height: 390px) {
   #check-answer {
@@ -125,11 +177,13 @@
     left: 0;
     right: 0;
   }
-  
 }
 
-@media only screen and (min-height: 500px){
-  #right-or-wrong{
+@media only screen and (min-height: 500px) {
+  #instructions {
+    transform: translateY(35px);
+  }
+  #right-or-wrong {
     margin-top: 70px;
   }
 }

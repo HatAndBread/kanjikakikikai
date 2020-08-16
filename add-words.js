@@ -13,19 +13,33 @@ addWords.get('/', checkAuthenticated, (req, res) => {
 });
 
 addWords.post('/', (req, res) => {
-  console.log(req.user);
+  req.body.dictionaryTitle = req.body['dictionary-title'];
+  req.body.kanjiInput = req.body['kanji-input'];
+  req.body.yomikataInput = req.body['yomikata-input'];
+  req.body.definitionInput = req.body['definition-input'];
   console.log(req.body);
   db.findOne({ _id: req.user._id }, (err, doc) => {
+    if (err) {
+      console.log(err);
+    }
     if (doc) {
       const newDict = {
-        title: req.body['dictionary-title'],
+        title: req.body.dictionaryTitle,
         words: []
       };
-      for (let i = 0; i < req.body['kanji-input'].length; i++) {
+      if (Array.isArray(req.body.kanjiInput)) {
+        for (let i = 0; i < req.body.kanjiInput.length; i++) {
+          newDict.words.push({
+            kanji: req.body.kanjiInput[i],
+            yomikata: req.body.yomikataInput[i],
+            definition: req.body.definitionInput[i]
+          });
+        }
+      } else {
         newDict.words.push({
-          kanji: req.body['kanji-input'][i],
-          yomikata: req.body['yomikata-input'][i],
-          definition: req.body['definition-input'][i]
+          kanji: req.body.kanjiInput,
+          yomikata: req.body.yomikataInput,
+          definition: req.body.definitionInput
         });
       }
       console.log(newDict);

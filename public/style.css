@@ -15,6 +15,9 @@
 @import url(components/game-finished.css);
 @import url(components/greeting.css);
 @import url(components/practice.css);
+@import url(components/settings.css);
+@import url(components/example-display.css);
+@import url(components/video.css);
 
 :root {
   --nav-color: #e63946; /* define global variable in root */
@@ -51,11 +54,36 @@ input:after {
 /*  Bad idea? Did this to keep page from scrolling unexpectedly when drawing. */
 body {
   position: fixed;
-  background-color: #f1faee;
+  background-color: #e63946;
+
   top: 0;
   left: 0px;
 }
 
 ul {
   list-style: none;
+}
+
+#loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+  pointer-events: none;
+}
+
+
+
+@font-face {
+  font-family: 'umeboshi';
+  src: url(assets/umeboshi_.woff) format('woff'), url(assets/umeboshi.woff2) format('woff2'),
+    url(assets/umeboshi_.ttf) format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }

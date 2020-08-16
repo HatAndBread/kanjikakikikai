@@ -1,0 +1,91 @@
+#settings-main {
+  position: fixed;
+  overflow: auto;
+  width: 95vw;
+  top: 65px;
+  bottom: 0;
+  left: 10px;
+  margin-right: 10px;
+  background-color: #f1faee;
+}
+
+#settings-main .divider {
+  background-color: #1d3557;
+}
+
+#settings-main input[type='range'] {
+  width: 100px;
+}
+#ranges {
+  display: flex;
+  flex-direction: column;
+  width: 150px;
+  height: 150px;
+}
+
+#color-select-canvas {
+  border-radius: 50%;
+  height: 150px;
+  width: 20vw;
+}
+#color-selector {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+
+  margin-top: 20px;
+}
+#color-selector label {
+}
+
+#brush-stuff {
+  display: flex;
+  justify-content: flex-start;
+
+  margin-top: 20px;
+}
+#brush-size {
+  width: 200px;
+}
+#practice-selector {
+  margin-top: 20px;
+}
+#number-of-questions {
+  display: flex;
+  justify-content: flex-start;
+
+  margin-top: 20px;
+}
+#save-settings {
+  display: flex;
+  justify-content: flex-start;
+
+  margin-top: 20px;
+}
+#save-changes-butt {
+  background-color: #e63946;
+  color: #f1faee;
+}
+
+@media only screen and (max-width: 450px) {
+  #brush-stuff {
+    justify-content: flex-start;
+  }
+  #color-selector {
+    justify-content: flex-start;
+  }
+}
+
+@media only screen and (max-width: 254px) {
+  #ink-label {
+    padding: 0;
+  }
+  #color-selector {
+    flex-direction: column;
+  }
+  #color-select-canvas {
+    height: 30vh;
+    width: 100vw;
+  }
+}

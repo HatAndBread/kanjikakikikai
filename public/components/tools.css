@@ -78,6 +78,6 @@
 
 @media only screen and (max-height: 400px) {
   #tools {
-    height: 72%;
+    height: calc(100vh - 62px);
   }
 }

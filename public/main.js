@@ -1,13 +1,10 @@
-/*====================
-GLOBALS***************
-====================*/
-
 let takingPhoto = false;
 let clearCanvas = false;
 let clearCanvasTwo = false;
 let clearMirror = false;
 let preventDrawing = true;
 let practicing = false;
+let videoOpen = false;
 
 const domEls = {
   mondaiButt: document.getElementById('mondai-button'),
@@ -39,6 +36,14 @@ const domEls = {
   practiceKanjiExample: document.getElementById('kanji-example'),
   practiceUserCanvas: document.getElementById('user-canvas'),
   practiceCloser: document.getElementById('practice-closer'),
+  loader: document.getElementById('loader'),
+  nav: document.getElementById('nav-bar'),
+  attention: document.getElementById('attention-getter'),
+  exampleDisplay: document.getElementById('example-display'),
+  video: document.getElementById('video'),
+  playButton: document.getElementById('play-button'),
+  videoCloser: document.getElementById('video-closer'),
+  videoHint: document.getElementById('video-hint'),
   toolsOut: false
 };
 
@@ -60,6 +65,7 @@ const getGreeting = (userName) => {
 };
 
 const setup = () => {
+  //get user settings. they are sent from server to ejs file and saved in a hidden div.
   let userInfo = document.getElementById('user-info');
   if (userInfo) {
     let data = JSON.parse(userInfo.innerText);
@@ -71,16 +77,18 @@ const setup = () => {
     return settings;
   } else {
     return {
-      brushSize: 30,
-      inkColor: '#e63946',
+      brushSize: 70,
+      inkColor: '#1d3557',
       questionsPerRound: 10,
-      practiceAfterFailure: true
+      practiceAfterFailure: true,
+      senseForce: false
     };
   }
 };
 
 const userSettings = setup();
 console.log(userSettings);
+
 let currentSet;
 let currentMondai = {
   kanji: null,
@@ -88,13 +96,8 @@ let currentMondai = {
   definition: null
 };
 
-// Will give you the actual viewheight of mobile browsers with navigation bars
-let vh = window.innerHeight * 0.01;
-document.documentElement.style.setProperty('--vh', `${vh}px`);
-//******************** */
-
 const userStats = {
-  studySetUsingNow: 'random kanji',
+  studySetUsingNow: 'basic',
   percentCorrect: 100,
   numberCorrect: 0,
   questionOutOf: {
@@ -163,12 +166,7 @@ function createStatsTable() {
   domEls.statsDisplay.appendChild(statsTable);
 }
 createStatsTable();
-
-const canvasSettings = {
-  width: domEls.canvas.clientWidth,
-  height: domEls.canvas.clientHeight
-};
-
+// defines size of canvas that is used to compare user's writing with the correct answer.
 const smallCanvasSettings = {
   width: domEls.yourDrawing.clientWidth,
   height: domEls.yourDrawing.clientHeight
@@ -178,6 +176,11 @@ const resetGame = () => {
   domEls.startButton.style.display = 'block';
   domEls.statsDisplay.style.display = 'none';
   domEls.mondaiText.innerText = '';
+  domEls.checkAnswerBox.style.display = 'none';
+  domEls.practiceBox.hidden = true;
+  preventDrawing = true;
+  practicing = false;
+  domEls.mondaiButt.disabled = false;
 };
 
 const getWordSet = async (title) => {
@@ -195,8 +198,11 @@ const getWordSet = async (title) => {
   }
   butt.style.fontWeight = '900';
   butt.style.boxShadow = '10px 5px 5px #e63946';
+  domEls.loader.style.display = 'flex';
+
   const res = await fetch(`/get-words/${title}`);
   const data = await res.json();
+  domEls.loader.style.display = 'none';
   currentSet = data.set;
   console.log(currentSet);
   resetUserStats(currentSet.title);
@@ -217,8 +223,11 @@ const getPreDefinedWordSet = async (src, title) => {
   }
   butt.style.fontWeight = '900';
   butt.style.boxShadow = '10px 5px 5px #e63946';
+  domEls.loader.style.display = 'flex';
+
   const res = await fetch(`./word-sets/${src}`);
   const words = await res.json();
+  domEls.loader.style.display = 'none';
   currentSet = {};
   currentSet.title = title;
   currentSet.words = words;
@@ -229,27 +238,49 @@ const getPreDefinedWordSet = async (src, title) => {
   resetGame();
 };
 
-getPreDefinedWordSet('jlpt-five.jscsrc', 'Random Kanji'); // set up initially
+if (userSettings.loadOnStart) {
+  switch (userSettings.loadOnStart) {
+    case 'jlpt2':
+      getPreDefinedWordSet('jlpt-two.jscsrc', 'JLPT2');
+      break;
+    case 'jlpt3':
+      getPreDefinedWordSet('jlpt-three.jscsrc', 'JLPT3');
+      break;
+    case 'jlpt4':
+      getPreDefinedWordSet('jlpt-four.jscsrc', 'JLPT4');
+      break;
+    case 'jlpt5':
+      getPreDefinedWordSet('jlpt-five.jscsrc', 'JLPT5');
+      break;
+    case 'basic':
+      getPreDefinedWordSet('basic.jscsrc', 'Basic');
+      break;
+    case 'places':
+      getPreDefinedWordSet('places.jscsrc', 'Places');
+      break;
+    default:
+      getWordSet(userSettings.loadOnStart);
+      break;
+  }
+} else {
+  getPreDefinedWordSet('basic.jscsrc', 'Basic'); // set up initially
+}
 
 for (let i = 0; i < domEls.selectorButts.length; i++) {
   domEls.selectorButts[i].addEventListener('click', (e) => {
     domEls.studySetSelector.style.display = 'none';
     preventDrawing = false;
     if (
-      e.target.value === 'jlpt1' ||
       e.target.value === 'jlpt2' ||
       e.target.value === 'jlpt3' ||
       e.target.value === 'jlpt4' ||
       e.target.value === 'jlpt5' ||
-      e.target.value === 'random-kanji'
+      e.target.value === 'places' ||
+      e.target.value === 'basic'
     ) {
       let fileName;
       let title;
       switch (e.target.value) {
-        case 'jlpt1':
-          fileName = 'jlpt-two.jscsrc';
-          title = 'JLPT1';
-          break;
         case 'jlpt2':
           fileName = 'jlpt-two.jscsrc';
           title = 'JLPT2';
@@ -266,8 +297,16 @@ for (let i = 0; i < domEls.selectorButts.length; i++) {
           fileName = 'jlpt-five.jscsrc';
           title = 'JLPT5';
           break;
+        case 'basic':
+          fileName = 'basic.jscsrc';
+          title = 'Basic';
+          break;
+        case 'places':
+          fileName = 'places.jscsrc';
+          title = 'Places';
+          break;
         default:
-          fileName = 'jlpt-two.jscsrc';
+          fileName = 'jlpt-five.jscsrc';
           title = 'Random Kanji';
           break;
       }
@@ -292,25 +331,123 @@ const getMondai = () => {
   clearMirror = true;
 };
 
+function isKanji(ch) {
+  return (ch >= '\u4e00' && ch <= '\u9faf') || (ch >= '\u3400' && ch <= '\u4dbf');
+}
+
+const centerVideo = () => {
+  domEls.exampleDisplay.style.top = `${window.innerHeight / 2 - videoSize.height / 2}px`;
+  domEls.exampleDisplay.style.left = `${window.innerWidth / 2 - videoSize.width / 2}px`;
+  console.log(videoSize.height);
+  console.log(videoSize.width);
+
+  domEls.videoCloser.style.left = `${videoSize.width - 20}px`;
+  domEls.videoCloser.style.top = `5px`;
+  domEls.playButton.style.top = `${videoSize.height / 2 - 64}px`;
+  domEls.playButton.style.left = `${videoSize.width / 2 - 32}px`;
+};
+
+domEls.playButton.addEventListener('click', () => {
+  domEls.playButton.style.display = 'none';
+  domEls.video.play();
+  videoOpen = true;
+});
+domEls.videoCloser.addEventListener('click', () => {
+  closeVideo();
+});
+
+const closeVideo = () => {
+  domEls.exampleDisplay.hidden = true;
+  domEls.exampleDisplay.style.pointerEvents = 'none';
+  domEls.video.src = '';
+  videoOpen = false;
+  domEls.loader.style.display = 'none';
+};
+
+let videoSize = {
+  width: 0,
+  height: 0
+};
+const getAnimation = async (ch) => {
+  domEls.loader.style.display = 'flex';
+  videoOpen = true;
+  const res = await fetch(`/get-strokes/${ch}`);
+  const data = await res.json();
+  if (data.link) {
+    domEls.exampleDisplay.style.pointerEvents = 'all';
+    let link = data.link;
+    domEls.video.controls = false;
+    domEls.video.src = link;
+    domEls.video.type = 'video/mp4';
+    domEls.video.muted = true;
+    domEls.video.addEventListener('loadedmetadata', () => {
+      videoSize.width = domEls.video.videoWidth;
+      videoSize.height = domEls.video.videoHeight;
+      centerVideo();
+      let promise = domEls.video.play();
+      promise.then(
+        () => {
+          domEls.playButton.style.display = 'none';
+          domEls.exampleDisplay.hidden = false;
+          domEls.loader.style.display = 'none';
+          domEls.video.loop = true;
+          domEls.video.removeEventListener('ended', closeVideo);
+          domEls.video.play();
+        },
+        (err) => {
+          console.log(err);
+          domEls.exampleDisplay.hidden = false;
+          domEls.loader.style.display = 'none';
+          domEls.playButton.style.display = 'block';
+          domEls.video.addEventListener('ended', closeVideo);
+        }
+      );
+    });
+  } else {
+    closeVideo();
+    alert('Sorry. There is no video available for that kanji right now. 😢');
+  }
+};
+
 const checkAnswer = () => {
+  if (userStats.questionOutOf.currentQuestion === 1) {
+    domEls.videoHint.style.animationName = 'video-hint';
+  } else {
+    domEls.videoHint.style.animationName = '';
+  }
+  domEls.attention.style.animationName = '';
   takingPhoto = true;
   domEls.statsDisplay.style.display = 'none';
-  domEls.kanjiAnswer.innerText = currentMondai.kanji;
+  domEls.kanjiAnswer.textContent = '';
+  for (let i = 0; i < currentMondai.kanji.length; i++) {
+    let itIsKanji = isKanji(currentMondai.kanji[i]);
+    const kanjiText = document.createTextNode(currentMondai.kanji[i]);
+    const span = document.createElement('span');
+    span.style.fontFamily = `'umeboshi', 'Dosis', sans-serif`;
+    span.appendChild(kanjiText);
+    if (itIsKanji) {
+      span.style.cursor = 'pointer';
+      span.addEventListener('click', (e) => {
+        getAnimation(e.target.innerText);
+      });
+    }
+    domEls.kanjiAnswer.appendChild(span);
+  }
   domEls.checkAnswerBox.style.display = 'block';
   smallCanvasSettings.width = domEls.yourDrawing.clientWidth;
   smallCanvasSettings.height = domEls.yourDrawing.clientHeight;
-  domEls.kanjiAnswer.style.fontSize = '58px';
+  domEls.kanjiAnswer.style.fontSize = '88px';
   if (currentMondai.kanji.length === 3) {
-    domEls.kanjiAnswer.style.fontSize = '42px';
+    domEls.kanjiAnswer.style.fontSize = '70px';
   }
   if (currentMondai.kanji.length === 4) {
-    domEls.kanjiAnswer.style.fontSize = '32px';
+    domEls.kanjiAnswer.style.fontSize = '48px';
   }
   if (currentMondai.kanji.length === 5) {
-    domEls.kanjiAnswer.style.fontSize = '26px';
+    domEls.kanjiAnswer.style.fontSize = '40px';
   }
   if (currentMondai.kanji.length > 5) {
-    domEls.kanjiAnswer.style.fontSize = '14px';
+    domEls.kanjiAnswer.style.fontSize = '30px';
   }
   domEls.mondaiButt.disabled = true;
   domEls.mondaiButt.style.display = 'none';
@@ -319,58 +456,84 @@ const checkAnswer = () => {
 
 domEls.maru.addEventListener('click', (e) => {
   e.preventDefault();
-  domEls.checkAnswerBox.style.display = 'none';
-  preventDrawing = false;
-  domEls.mondaiButt.disabled = false;
-  domEls.mondaiButt.style.display = 'block';
-  if (userStats.questionOutOf.currentQuestion < userSettings.questionsPerRound) {
-    getMondai();
-    userStats.updateStats(true);
-    domEls.statsDisplay.style.display = 'block';
-  } else {
-    userStats.updateStats(true);
-    finishGame();
-  }
+  if (!videoOpen) {
+    domEls.checkAnswerBox.style.display = 'none';
+    preventDrawing = false;
+    domEls.mondaiButt.disabled = false;
+    domEls.mondaiButt.style.display = 'block';
+    if (userStats.questionOutOf.currentQuestion < userSettings.questionsPerRound) {
+      getMondai();
+      userStats.updateStats(true);
+      domEls.statsDisplay.style.display = 'block';
+      domEls.attention.style.animationName = 'attention';
+    } else {
+      userStats.updateStats(true);
+      finishGame();
+    }
 
-  createStatsTable();
+    createStatsTable();
+  }
 });
 
 domEls.practiceCloser.addEventListener('click', (e) => {
-  domEls.practiceBox.hidden = true;
-  practicing = false;
-  preventDrawing = false;
-  console.log(userStats);
-  if (userStats.questionOutOf.currentQuestion <= userSettings.questionsPerRound) {
-    domEls.statsDisplay.style.display = 'block';
+  if (!videoOpen) {
+    domEls.practiceBox.hidden = true;
+    practicing = false;
+    preventDrawing = false;
+    if (userStats.questionOutOf.currentQuestion < userSettings.questionsPerRound) {
+      domEls.attention.style.animationName = 'attention';
+    }
+    console.log(userStats);
+    if (userStats.questionOutOf.currentQuestion <= userSettings.questionsPerRound) {
+      domEls.statsDisplay.style.display = 'block';
+    }
   }
 });
 
 domEls.batsu.addEventListener('click', (e) => {
   e.preventDefault();
+  if (!videoOpen) {
+    if (userSettings.practiceAfterFailure) {
+      preventDrawing = true;
+      practicing = true;
+      domEls.statsDisplay.style.display = 'none';
+      domEls.practiceBox.hidden = false;
+      domEls.practiceKanjiExample.textContent = '';
+      for (let i = 0; i < currentMondai.kanji.length; i++) {
+        let itIsKanji = isKanji(currentMondai.kanji[i]);
+        const kanjiText = document.createTextNode(currentMondai.kanji[i]);
+        const span = document.createElement('span');
+        span.style.fontFamily = `'umeboshi', 'Dosis', sans-serif`;
+        span.appendChild(kanjiText);
+        if (itIsKanji) {
+          span.style.cursor = 'pointer';
+          span.addEventListener('click', (e) => {
+            getAnimation(e.target.innerText);
+          });
+        }
+        domEls.practiceKanjiExample.appendChild(span);
+      }
+    } else {
+      preventDrawing = false;
+      domEls.statsDisplay.style.display = 'block';
+    }
+    domEls.checkAnswerBox.style.display = 'none';
+    domEls.mondaiButt.disabled = false;
+    domEls.mondaiButt.style.display = 'block';
+    if (userStats.questionOutOf.currentQuestion < userSettings.questionsPerRound) {
+      getMondai();
+      userStats.updateStats(false);
+      if (!userSettings.practiceAfterFailure) {
+        domEls.attention.style.animationName = 'attention';
+      }
+    } else {
+      userStats.updateStats(false);
+      domEls.statsDisplay.style.display = 'none';
+      finishGame();
+    }
 
-  if (userSettings.practiceAfterFailure) {
-    preventDrawing = true;
-    practicing = true;
-    domEls.statsDisplay.style.display = 'none';
-    domEls.practiceBox.hidden = false;
-    domEls.practiceKanjiExample.innerText = currentMondai.kanji;
-  } else {
-    preventDrawing = false;
-    domEls.statsDisplay.style.display = 'block';
+    createStatsTable();
   }
-  domEls.checkAnswerBox.style.display = 'none';
-  domEls.mondaiButt.disabled = false;
-  domEls.mondaiButt.style.display = 'block';
-  if (userStats.questionOutOf.currentQuestion < userSettings.questionsPerRound) {
-    getMondai();
-    userStats.updateStats(false);
-  } else {
-    userStats.updateStats(false);
-    domEls.statsDisplay.style.display = 'none';
-    finishGame();
-  }
-
-  createStatsTable();
 });
 
 domEls.setSelectorButt.addEventListener('click', () => {
@@ -421,34 +584,39 @@ keshi.addEventListener('click', () => {
 });
 
 window.addEventListener('resize', (e) => {
-  canvasSettings.width = domEls.canvas.clientWidth;
-  canvasSettings.height = domEls.canvas.clientHeight;
   smallCanvasSettings.width = domEls.yourDrawing.clientWidth;
   smallCanvasSettings.height = domEls.yourDrawing.clientHeight;
-  console.log(smallCanvasSettings.width);
-  console.log(smallCanvasSettings.height);
-  vh = window.innerHeight * 0.01;
-  document.documentElement.style.setProperty('--vh', `${vh}px`);
-  //Stop stupid mobile browsers from moving bottom div around
-  //domEls.bottom.style.top = 'calc(var(--vh, 1vh) * 100)';
-  //domEls.bottom.style.marginTop = '-50px';
+  centerVideo();
 });
 
-let mirror;
+domEls.nav.addEventListener('click', (e) => {
+  if (e.target.id != 'select-study-set-butt') {
+    domEls.studySetSelector.style.display = 'none';
+  }
+});
 
-let quickTouch = false;
+//mirror is used to keep image data of user's writing so it be compared with correct answer later.
+let mirror;
 
 const touchCors = {
   x: null,
   y: null,
   lastX: null,
   lastY: null,
-  force: null
+  force: null,
+  distanceSinceLast: null
+};
+
+const mouseData = {
+  timeSinceMouseDown: 0,
+  lastX: null,
+  lastY: null,
+  x: null,
+  y: null
 };
 
 const getTouches = (e) => {
   if (!practicing) {
-    console.log(touchCors);
     let x = Math.floor(e.touches[0].clientX - domEls.canvas.getBoundingClientRect().x);
     let y = Math.floor(e.touches[0].clientY - domEls.canvas.getBoundingClientRect().y);
     touchCors.x = x;
@@ -463,7 +631,7 @@ const getTouches = (e) => {
   }
 };
 
-//prevent zooming on mobile//////////////////////////////
+//prevent unwanted zooming on mobile
 domEls.canvas.addEventListener('click', (e) => {
   e.preventDefault();
 });
@@ -480,6 +648,8 @@ let lastTouchEnd = 0;
 document.addEventListener(
   'touchend',
   function (event) {
+    mouseData.timeSinceMouseDown = 0;
+
     let now = new Date().getTime();
     if (now - lastTouchEnd <= 100) {
       event.preventDefault();
@@ -488,6 +658,12 @@ document.addEventListener(
   },
   false
 );
+
+document.addEventListener('mouseup', () => {
+  mouseData.timeSinceMouseDown = 0;
+  mouseData.lastX = null;
+  mouseData.lastY = null;
+});
 
 const allowTouching = (element) => {
   element.addEventListener('click', (e) => {
@@ -508,74 +684,141 @@ const allowTouching = (element) => {
     touchCors.lastX = null;
     touchCors.lastY = null;
     touchCors.force = null;
+    mouseData.timeSinceMouseDown = 0;
+    mouseData.lastX = null;
+    mouseData.lastY = null;
   });
 };
 
-allowTouching(domEls.statsDisplay);
-allowTouching(domEls.hints);
 allowTouching(domEls.canvas);
-if (domEls.greeting) {
-  allowTouching(domEls.greeting);
-}
 allowTouching(domEls.practiceUserCanvas);
 
-domEls.statsDisplay.addEventListener('click', (e) => {
-  e.preventDefault();
-});
-domEls.hints.addEventListener('click', (e) => {
-  e.preventDefault();
-});
-
-////////////////////////////////////////////////////////
+///////////////////////p5 canvas stuff/////////////////////////////////
 
 let sketch = function (p) {
   let pg;
   let cnv;
+  let getMouseChange;
+  let initialWidth;
+  let initialHeight;
 
   p.setup = function () {
-    cnv = p.createCanvas(canvasSettings.width, canvasSettings.height);
+    initialWidth = domEls.canvas.clientWidth;
+    initialHeight = domEls.canvas.clientHeight;
+    console.log('initial!');
+    console.log(initialWidth);
+    console.log(initialHeight);
+    cnv = p.createCanvas(initialWidth, initialHeight);
+    getMouseChange = () => {
+      let xChange = p.pmouseX - p.mouseX;
+      let yChange = p.pmouseY - p.mouseY;
+      if (xChange < 0) {
+        xChange = xChange * -1;
+      }
+      if (yChange < 0) {
+        yChange = yChange * -1;
+      }
+      if (xChange > yChange) {
+        return xChange;
+      } else {
+        return yChange;
+      }
+    };
   };
   p.draw = function () {
+    if (domEls.canvas.clientWidth !== initialWidth || domEls.canvas.clientHeight !== initialHeight) {
+      //change canvas size and stretch image on window resize
+      pg = p.createGraphics(initialWidth, initialHeight);
+      pg.image(cnv, 0, 0, initialWidth, initialHeight);
+      p.resizeCanvas(domEls.canvas.clientWidth, domEls.canvas.clientHeight);
+      pg.loadPixels();
+      initialWidth = domEls.canvas.clientWidth;
+      initialHeight = domEls.canvas.clientHeight;
+      p.image(pg, 0, 0, initialWidth, initialHeight);
+    }
     if (clearCanvas) {
       p.clear();
       clearCanvas = false;
     }
-    if (!preventDrawing) {
-      p.stroke(230, 57, 70);
-
+    if (!preventDrawing && !videoOpen) {
+      p.stroke(userSettings.inkColor);
       p.strokeWeight(3);
-
-      if (touchCors.x) {
-        if (!touchCors.lastX) {
-          let ran = p.random(-1, 1);
-          let ranTwo = p.random(-1, 1);
-          p.line(touchCors.x + p.random(-3, 3), touchCors.y + p.random(-3, 3), touchCors.x + ran, touchCors.y + ranTwo);
-          p.line(touchCors.x, touchCors.y, touchCors.x, touchCors.y);
-          if (touchCors.force) {
-            p.strokeWeight(touchCors.force * userSettings.brushSize + p.random(-2, 2));
+      if (userSettings.senseForce) {
+        if (touchCors.x && touchCors.force && touchCors.force < 1) {
+          if (!touchCors.lastX) {
+            let ran = p.random(-1, 1);
+            let ranTwo = p.random(-1, 1);
+            p.line(
+              touchCors.x + p.random(-3, 3),
+              touchCors.y + p.random(-3, 3),
+              touchCors.x + ran,
+              touchCors.y + ranTwo
+            );
             p.line(touchCors.x, touchCors.y, touchCors.x, touchCors.y);
+            if (touchCors.force) {
+              p.strokeWeight(touchCors.force * userSettings.brushSize + p.random(-2, 2));
+              p.line(touchCors.x, touchCors.y, touchCors.x, touchCors.y);
 
-            p.strokeWeight(3);
-          }
-          touchCors.lastX = touchCors.x + ran;
-          touchCors.lastY = touchCors.y + ranTwo;
-        } else {
-          let ran = p.random(-1, 1);
-          let ranTwo = p.random(-1, 1);
-          p.line(touchCors.lastX, touchCors.lastY, touchCors.x + ran, touchCors.y);
-          if (touchCors.force) {
-            p.strokeWeight(touchCors.force * userSettings.brushSize + p.random(-2, 2));
-            p.line(touchCors.lastX, touchCors.lastY, touchCors.x, touchCors.y);
+              p.strokeWeight(3);
+            }
+            touchCors.lastX = touchCors.x + ran;
+            touchCors.lastY = touchCors.y + ranTwo;
+          } else {
+            let ran = p.random(-1, 1);
+            let ranTwo = p.random(-1, 1);
+            p.line(touchCors.lastX, touchCors.lastY, touchCors.x + ran, touchCors.y);
+            if (touchCors.force) {
+              p.strokeWeight(touchCors.force * userSettings.brushSize + p.random(-2, 2));
+              p.line(touchCors.lastX, touchCors.lastY, touchCors.x, touchCors.y);
 
-            p.strokeWeight(3);
+              p.strokeWeight(3);
+            }
+            touchCors.lastX = touchCors.x + ran;
+            touchCors.lastY = touchCors.y + ranTwo;
           }
-          touchCors.lastX = touchCors.x + ran;
-          touchCors.lastY = touchCors.y + ranTwo;
         }
-      }
 
-      if (p.mouseIsPressed) {
-        p.line(p.pmouseX + p.random(0, 1), p.pmouseY, p.mouseX + p.random(0, 1), p.mouseY);
+        if ((p.mouseIsPressed && !touchCors.force) || (p.mouseIsPressed && touchCors.force === 1)) {
+          let change = getMouseChange();
+          if (change > 7 && change < 20) {
+            mouseData.timeSinceMouseDown -= 2;
+          }
+          if (change >= 20 && change < 30) {
+            mouseData.timeSinceMouseDown -= 3;
+          }
+          if (change >= 30) {
+            mouseData.timeSinceMouseDown -= 4;
+          }
+          if (mouseData.timeSinceMouseDown < 0) {
+            mouseData.timeSinceMouseDown = mouseData.timeSinceMouseDown * -1;
+          }
+          if (mouseData.timeSinceMouseDown < 50) {
+            mouseData.timeSinceMouseDown += 1;
+          }
+
+          let increasedBrushSize = mouseData.timeSinceMouseDown - mouseData.timeSinceMouseDown * 0.3 + p.random(-1, 1);
+
+          let ran = p.random(-1, 1);
+          let ran2 = p.random(-1, 1);
+          mouseData.x = p.mouseX + ran;
+          mouseData.y = p.mouseY + ran2;
+          p.strokeWeight(userSettings.brushSize * 0.08 + increasedBrushSize);
+          if (mouseData.lastX) {
+            p.line(mouseData.lastX, mouseData.lastY, mouseData.x, mouseData.y);
+            p.line(p.pmouseX, p.pmouseY, p.mouseX, p.mouseY);
+          } else {
+            p.line(p.mouseX + p.random(-3, 3), p.mouseY + p.random(-3, 3), mouseData.x, mouseData.y);
+            p.line(p.pmouseX, p.pmouseY, p.mouseX, p.mouseY);
+          }
+          mouseData.lastX = mouseData.x;
+          mouseData.lastY = mouseData.y;
+        }
+      } else {
+        // DRAW IF USER SETTINGS IS SET TO NOT DETECT FORCE
+        if (p.mouseIsPressed) {
+          p.strokeWeight(userSettings.brushSize / 6);
+          p.line(p.pmouseX, p.pmouseY, p.mouseX, p.mouseY);
+        }
       }
     }
     if (takingPhoto) {
@@ -585,15 +828,6 @@ let sketch = function (p) {
 
       mirror.loadPixels();
     }
-  };
-
-  p.windowResized = function () {
-    //stretches image to fit when user resizes
-    pg = p.createGraphics(p.width, p.height);
-    pg.image(cnv, 0, 0, canvasSettings.width, canvasSettings.height);
-    pg.loadPixels();
-    p.resizeCanvas(canvasSettings.width, canvasSettings.height);
-    p.image(pg, 0, 0);
   };
 };
 
@@ -614,7 +848,6 @@ function yourDrawing(p) {
       clearCanvas = true;
     }
   };
-  p.windowResized = function () {};
 }
 
 function practiceDrawing(p) {
@@ -637,33 +870,11 @@ function practiceDrawing(p) {
       p.clear();
       clearCanvasTwo = false;
     }
-    p.stroke(230, 57, 70);
-    p.strokeWeight(2);
-    if (touchCors.x) {
-      if (!touchCors.lastX) {
-        p.line(touchCors.x, touchCors.y, touchCors.x, touchCors.y);
-        if (touchCors.force) {
-          p.strokeWeight(touchCors.force * 15 + p.random(-2, 2));
-          p.line(touchCors.x, touchCors.y, touchCors.x, touchCors.y);
-          p.strokeWeight(2);
-        }
-        touchCors.lastX = touchCors.x;
-        touchCors.lastY = touchCors.y;
-      } else {
-        p.line(touchCors.lastX, touchCors.lastY, touchCors.x, touchCors.y);
-        if (touchCors.force) {
-          p.strokeWeight(touchCors.force * 15 + p.random(-2, 2));
-          p.line(touchCors.lastX, touchCors.lastY, touchCors.x, touchCors.y);
-          p.strokeWeight(2);
-        }
-        touchCors.lastX = touchCors.x;
-        touchCors.lastY = touchCors.y;
-      }
-    }
+    p.stroke(userSettings.inkColor);
+    p.strokeWeight(5);
 
-    if (p.mouseIsPressed && !touchCors.lastX) {
+    if (p.mouseIsPressed && !videoOpen) {
       p.line(p.pmouseX, p.pmouseY, p.mouseX, p.mouseY);
-      p.line(p.pmouseX, p.pmouseY, p.mouseX + p.random(-1, 1), p.mouseY + p.random(-1, 1));
     }
   };
   p.windowResized = function () {
@@ -675,126 +886,16 @@ new p5(sketch, domEls.canvas);
 new p5(yourDrawing, domEls.yourDrawing);
 new p5(practiceDrawing, domEls.practiceUserCanvas);
 
-/*
-//text file parser
-
-const parseText = async (path) => {
-  const data = await fetch(`/${path}.txt`);
-  const text = await data.text();
-  const textToArr = text.split('\n');
-
-  for (let i = 0; i < textToArr.length; i++) {
-    const newArr = textToArr[i].split('');
-    textToArr[i] = newArr;
-  }
-  console.log(textToArr);
-
-  for (let i = 0; i < textToArr.length; i++) {
-    for (let j = 0; j < textToArr[i].length; j++) {
-      if (textToArr[i][j] === ' ' || textToArr[i][j] === '	') {
-        textToArr[i][j] = '*';
-      }
-    }
-  }
-
-  for (let i = 0; i < textToArr.length; i++) {
-    const newString = textToArr[i].join('');
-    textToArr[i] = newString.split('*');
-
-    if (textToArr[i].length > 3) {
-      let def = [];
-      for (let j = 2; j < textToArr[i].length; j++) {
-        def.push(textToArr[i][j]);
-      }
-      let string = def.join(' ');
-      textToArr[i][2] = string;
-    }
-  }
-
-  const words = [];
-  for (let i = 0; i < textToArr.length; i++) {
-    words.push({ kanji: textToArr[i][0], yomikata: textToArr[i][1], definition: textToArr[i][2] });
-  }
-  const jason = JSON.stringify(words);
-  async function sendJason() {
-    const hello = await fetch('/send-jason', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-        // 'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: jason
-    });
-  }
-  console.log(words);
-  sendJason();
-};
-
-parseText('jlpt3');
-
-
-*/
-
-/*
-
-const parseText = async (path) => {
-  const data = await fetch(`/${path}.txt`);
-  const text = await data.text();
-  const textToArr = text.split('\n');
-
-  for (let i = 0; i < textToArr.length; i++) {
-    const newArr = textToArr[i].split('');
-    textToArr[i] = newArr;
-  }
-  for (let i = 0; i < textToArr.length; i++) {
-    for (let j = 0; j < textToArr[i].length; j++) {
-      if (textToArr[i][j] === ' ' || textToArr[i][j] === '	') {
-        textToArr[i][j] = '*';
-      }
-    }
-  }
-  for (let i = 0; i < textToArr.length; i++) {
-    const newString = textToArr[i].join('');
-    textToArr[i] = newString;
-  }
-  for (let i = 0; i < textToArr.length; i++) {
-    const newArr = textToArr[i].split('*');
-    textToArr[i] = newArr;
-    textToArr[i].shift();
-  }
-  for (let i = textToArr.length - 1; i >= 0; i--) {
-    textToArr[i].splice(2, 1); //erase part of speech
-    if (textToArr[i][1] === '') {
-      textToArr.splice(i, 1);
-    }
-    if (textToArr[i].length > 3) {
-      let word = [];
-      for (let j = 2; j < textToArr[i].length; j++) {
-        word.push(textToArr[i][j]);
-      }
-      let string = word.join(' ');
-      textToArr[i].splice(2, textToArr[i].length);
-      textToArr[i].push(string);
-    }
-  }
-  
-  const words = [];
-  for (let i = 0; i < textToArr.length; i++) {
-    words.push({ kanji: textToArr[i][1], yomikata: textToArr[i][0], definition: textToArr[i][2] });
-  }
-  const jason = JSON.stringify(words);
-  async function sendJason() {
-    const hello = await fetch('/send-jason', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-        // 'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: jason
-    });
-  }
-  console.log(words);
-  sendJason();
-  
-};
-*/
+// Register service worker
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function () {
+    navigator.serviceWorker
+      .register('/sw.js')
+      .then((res) => {
+        console.log('service worker registered');
+      })
+      .catch((err) => {
+        console.log('service worker not registered', err);
+      });
+  });
+}

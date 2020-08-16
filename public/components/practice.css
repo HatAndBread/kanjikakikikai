@@ -30,10 +30,11 @@
   box-sizing: border-box;
   background-color: #a8dadc;
   border-radius: 10px;
-  font-size: 66px;
+  font-size: 88px;
   border-style: solid;
   border-color: rgb(70, 123, 157);
   overflow: auto;
+  font-family: 'umeboshi', 'Dosis', sans-serif;
 }
 #user-canvas {
   width: 45%;

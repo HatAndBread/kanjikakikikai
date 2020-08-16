@@ -36,10 +36,7 @@
           <% }} %> <% if (userInfo){if (userInfo.myDictionaries.length > 0){%>
           <div class="list-seperate"></div>
           <% }} %>
-          <li>
-            <button userDefined="false" value="random-kanji" class="main-button set-selector">Random Kanji</button>
-          </li>
-          <li><button userDefined="false" value="jlpt1" class="main-button set-selector">JLPT1</button></li>
+
           <li><button userDefined="false" value="jlpt2" class="main-button set-selector">JLPT2</button></li>
           <li><button userDefined="false" value="jlpt3" class="main-button set-selector">JLPT3</button></li>
           <li><button userDefined="false" value="jlpt4" class="main-button set-selector">JLPT4</button></li>
@@ -60,15 +57,14 @@
         <a href="/logout" class="nav-button">Log out</a>
         <a href="/add-words" class="nav-button">Make new study sets</a>
         <a href="/edit-sets" class="nav-button">Edit my study sets</a>
-        <%}%>
         <a href="/settings" class="nav-button">Settings</a>
+        <%}%>
         <a href="/about" class="nav-button">About</a>
       </div>
     </div>
 
     <div id="background">
       <div id="main">
-
         <% if (userInfo){ %>
         <div id="greeting"></div>
 
@@ -119,6 +115,9 @@
       <div class="button-holder">
         <button id="practice-closer" class="main-button">Go to next question↪︎</button>
       </div>
+    </div>
+    <div id="loader">
+      <img src="./assets/loader.gif" alt="LOADING..." style="height: 100px; width: 100px;" />
     </div>
   </body>
 </html>

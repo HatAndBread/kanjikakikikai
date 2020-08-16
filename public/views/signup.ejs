@@ -1,0 +1,28 @@
+<%- include('header') -%>
+<body>
+<%- include('navbar') -%>
+<div id="stuff-container">
+<div class="loggy-formy">
+<h1>Sign up</h1>
+<div class="divider"></div>
+<form action="/signup" method="post">
+  <section>
+    <label for="username">Username: </label>
+    <input type="text" name="username" id="username" placeholder="Username" />
+  </section>
+  <section>
+    <label for="password" placeholder="Password">Password: </label>
+    <input type="password" name="password" id="password" />
+  </section>
+  <section>
+    <button type="submit" class="main-button">Sign up</button>
+  </section>
+</form>
+<a class="redirector" href="/login">Already signed up? Click here.</a>
+</div>
+<% if (message){%>
+  <div style="font-size: larger;"><%=message%></div>
+<% } %>
+</div>
+</body>
+</html>

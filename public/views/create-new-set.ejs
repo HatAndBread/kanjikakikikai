@@ -1,0 +1,87 @@
+    <%- include('header')%>
+  <body>
+    <%- include('navbar') -%>
+    <div id="stuff-container">
+    <div id="create-new-set">
+      <form action="/add-words" method="POST">
+        <table id="new-word-table">
+          <tr>
+            <label for="dictionary-title">Name of study set: </label>
+            <input type="text" name="dictionary-title" id="dictionary-title" required />
+            <div class="divider"></div>
+          </tr>
+          <tr>
+            <th>かんじ</th>
+            <th>よみかた</th>
+            <th>definition</th>
+            <th></th>
+          </tr>
+          
+        </table>
+              <div id="create-new-buttons">
+                <a href="/" class="nav-button">Cancel</a>
+        <button id="add-another-word-butt" class="main-button" type="button">Add new</button>
+        <button id="save-new-study-set-butt" class="main-button" type="submit">Save</button>
+        </div>
+      </form>
+
+    </div>
+    </div>
+  </body>
+  <script>
+    const addAnotherWordButt = document.getElementById('add-another-word-butt');
+    const table = document.getElementById('new-word-table');
+    const editButt = document.getElementById('edit-study-butt');
+    const createNewSet = document.getElementById('create-new-set');
+
+const addNew = ()=>{
+    const newRow = document.createElement('tr');
+      const newWord = document.createElement('td');
+      const newDef = document.createElement('td');
+      const newDefinition = document.createElement('td');
+      const gomi = document.createElement('td')
+      const kanjiInput = document.createElement('input');
+      const yomikataInput = document.createElement('input');
+      const definitionInput = document.createElement('input');
+      
+const gomibako = document.createElement('input');
+  gomibako.type = 'image';
+  gomibako.class = 'gomibako';
+  gomibako.src = './assets/trash.png';
+  gomibako.alt = 'DELETE';
+  gomibako.style = 'width: 30px; height: 30px;';
+
+      kanjiInput.type = 'text';
+      yomikataInput.type = 'text';
+      definitionInput.type = 'text';
+      kanjiInput.name = 'kanji-input';
+      yomikataInput.name = 'yomikata-input';
+      definitionInput.name = 'definition-input';
+      kanjiInput.id = 'kanji-input';
+      yomikataInput.id = 'yomikata-input';
+      definitionInput.id = 'definition-input';
+      kanjiInput.maxLength = 10;
+      yomikataInput.maxLength = 10;
+      definitionInput.maxLength = 20;
+      kanjiInput.required = true;
+      yomikataInput.required = true;
+      definitionInput.required = false;
+      newWord.appendChild(kanjiInput);
+      newDef.appendChild(yomikataInput);
+      newDefinition.appendChild(definitionInput);
+      gomi.append(gomibako);
+      newRow.appendChild(newWord);
+      newRow.appendChild(newDef);
+      newRow.appendChild(newDefinition);
+      newRow.appendChild(gomi)
+      table.appendChild(newRow);
+      createNewSet.scrollTop = createNewSet.scrollHeight;
+      gomibako.addEventListener('click', (e)=>{
+        e.preventDefault()
+        newRow.remove()
+      })
+}
+addNew()
+    addAnotherWordButt.addEventListener('click', addNew);
+  </script>
+</html>
