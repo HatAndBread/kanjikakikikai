@@ -76,6 +76,37 @@ ul {
   pointer-events: none;
 }
 
+@keyframes video {
+  0% {
+    width: 0px;
+    height: 0px;
+  }
+  100% {
+    width: 248px;
+    height: 248px;
+  }
+}
+
+#video {
+  border-radius: 10px;
+  box-shadow: 3px 6px rgba(100, 100, 100, 0.3);
+  animation-name: video;
+  animation-duration: 1s;
+}
+
+@keyframes closey {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+#video-closer {
+  animation-name: closey;
+  animation-duration: 3s;
+}
+
 @font-face {
   font-family: 'umeboshi';
   src: url(assets/umeboshi_.woff) format('woff'), url(assets/umeboshi.woff2) format('woff2'),

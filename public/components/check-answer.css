@@ -27,10 +27,19 @@
 
 #right-or-wrong {
   width: 100%;
-  margin-top: 10px;
+  margin-top: 34px;
   display: block;
   display: grid;
   grid-template-columns: 1fr 1fr;
+}
+#instructions {
+  position: fixed;
+  left: 0;
+  right: 0;
+  color: #1d3557;
+  font-size: 28px;
+  text-align: center;
+  box-sizing: border-box;
 }
 
 #maru {
@@ -47,6 +56,38 @@
   border-radius: 10px;
   font-size: 42px;
   background-color: #f1faee;
+}
+@media only screen and (max-width: 380px) {
+  #maru {
+    font-size: 34px;
+  }
+  #batsu {
+    font-size: 34px;
+  }
+}
+@media only screen and (max-width: 325px) {
+  #maru {
+    font-size: 28px;
+  }
+  #batsu {
+    font-size: 28px;
+  }
+}
+@media only screen and (max-width: 280px) {
+  #maru {
+    font-size: 22px;
+  }
+  #batsu {
+    font-size: 22px;
+  }
+}
+@media only screen and (max-width: 247px) {
+  #maru {
+    font-size: 8vw;
+  }
+  #batsu {
+    font-size: 8vw;
+  }
 }
 
 #maru:focus {
@@ -110,6 +151,23 @@
   }
 }
 
+@media only screen and (max-height: 280px) {
+  #maru {
+    font-size: 32px;
+  }
+  #batsu {
+    font-size: 32px;
+  }
+}
+@media only screen and (max-height: 250px) {
+  #maru {
+    font-size: 22px;
+  }
+  #batsu {
+    font-size: 22px;
+  }
+}
+
 @media only screen and (max-height: 390px) {
   #check-answer {
     bottom: 0;
@@ -120,6 +178,9 @@
 }
 
 @media only screen and (min-height: 500px) {
+  #instructions {
+    transform: translateY(35px);
+  }
   #right-or-wrong {
     margin-top: 70px;
   }
