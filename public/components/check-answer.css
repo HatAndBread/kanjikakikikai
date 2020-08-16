@@ -49,6 +49,7 @@
   font-size: 42px;
   background-color: #f1faee;
   padding: 0px;
+  cursor: pointer;
 }
 
 #batsu {
@@ -58,6 +59,7 @@
   font-size: 42px;
   background-color: #f1faee;
   padding: 0px;
+  cursor: pointer;
 }
 @media only screen and (max-width: 380px) {
   #maru {
