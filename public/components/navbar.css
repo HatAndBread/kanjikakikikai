@@ -17,12 +17,12 @@
   margin-left: 10px;
 }
 
-@media only screen and (max-width: 600px) and (min-width:400px){
+@media only screen and (max-width: 600px) and (min-width: 400px) {
   #left-stuff {
     width: 40%;
   }
 }
-@media only screen and (max-width: 399px){
+@media only screen and (max-width: 399px) {
   #left-stuff {
     width: 70%;
   }
@@ -31,9 +31,6 @@
 #logo {
   font-size: 38;
 }
-
-
-
 
 #big-mac {
   margin-right: 10px;
@@ -53,7 +50,7 @@
   border-radius: 20%;
 }
 
-@media only screen and (max-width: 1200px) {
+@media only screen and (max-width: 3000px) {
   #big-mac {
     display: block;
   }
