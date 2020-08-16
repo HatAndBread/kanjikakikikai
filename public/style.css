@@ -19,7 +19,6 @@
 @import url(components/example-display.css);
 @import url(components/video.css);
 
-
 :root {
   --nav-color: #e63946; /* define global variable in root */
 }
@@ -78,8 +77,6 @@ ul {
   pointer-events: none;
 }
 
-
-
 @font-face {
   font-family: 'umeboshi';
   src: url(assets/umeboshi_.woff) format('woff'), url(assets/umeboshi.woff2) format('woff2'),
@@ -87,4 +84,9 @@ ul {
   font-weight: normal;
   font-style: normal;
   font-display: swap;
+}
+
+@font-face {
+  font-family: 'stroke';
+  src: url(assets/stroke-font/strokeFont.woff) format('woff'), url(assets/stroke-font/strokeFont.ttf) format('truetype');
 }

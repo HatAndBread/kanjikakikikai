@@ -138,7 +138,7 @@
   justify-content: space-between;
 }
 #kanji_answer {
-  font-family: 'umeboshi', 'Dosis', sans-serif;
+  font-family: 'stroke', 'umeboshi', 'Dosis', sans-serif;
   background-color: #f1faee;
   display: block;
   color: #1d3557;

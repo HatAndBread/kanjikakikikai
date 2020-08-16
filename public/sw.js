@@ -15,6 +15,8 @@ const assets = [
   '/assets/umeboshi_.woff',
   '/assets/umeboshi_.ttf',
   '/assets/umeboshi.woff2',
+  '/assets/stroke-font/strokeFont.woff',
+  '/assets/stroke-font/strokeFont.ttf',
   '/word-sets/jlpt-five.jscsrc',
   '/word-sets/jlpt-four.jscsrc',
   '/word-sets/jlpt-three.jscsrc',
