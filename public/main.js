@@ -383,15 +383,10 @@ const getAnimation = async (ch) => {
       let promise = domEls.video.play();
       promise.then(
         () => {
-          /*
           domEls.playButton.style.display = 'none';
           domEls.exampleDisplay.hidden = false;
           domEls.loader.style.display = 'none';
           domEls.video.play();
-          */
-          domEls.exampleDisplay.hidden = false;
-          domEls.loader.style.display = 'none';
-          domEls.playButton.style.display = 'block';
         },
         (err) => {
           console.log(err);
