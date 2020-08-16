@@ -336,8 +336,11 @@ function isKanji(ch) {
 const centerVideo = () => {
   domEls.exampleDisplay.style.top = `${window.innerHeight / 2 - videoSize.height / 2}px`;
   domEls.exampleDisplay.style.left = `${window.innerWidth / 2 - videoSize.width / 2}px`;
+  domEls.exampleDisplay.style.width = videoSize.width;
+  domEls.exampleDisplay.style.height = videoSize.height;
   console.log(videoSize.height);
   console.log(videoSize.width);
+
   domEls.videoCloser.style.left = `${videoSize.width - 20}px`;
   domEls.videoCloser.style.top = `5px`;
   domEls.playButton.style.top = `${videoSize.height / 2 - 64}px`;
@@ -380,10 +383,15 @@ const getAnimation = async (ch) => {
       let promise = domEls.video.play();
       promise.then(
         () => {
+          /*
           domEls.playButton.style.display = 'none';
           domEls.exampleDisplay.hidden = false;
           domEls.loader.style.display = 'none';
           domEls.video.play();
+          */
+          domEls.exampleDisplay.hidden = false;
+          domEls.loader.style.display = 'none';
+          domEls.playButton.style.display = 'block';
         },
         (err) => {
           console.log(err);
