@@ -85,8 +85,3 @@ ul {
   font-style: normal;
   font-display: swap;
 }
-
-@font-face {
-  font-family: 'stroke';
-  src: url(assets/stroke-font/strokeFont.woff) format('woff'), url(assets/stroke-font/strokeFont.ttf) format('truetype');
-}
