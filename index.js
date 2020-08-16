@@ -1,4 +1,5 @@
 const express = require('express');
+const compression = require('compression');
 const session = require('express-session');
 const NedbStore = require('connect-nedb-session')(session);
 const passport = require('passport');
@@ -25,6 +26,7 @@ const getStrokes = require('./get-strokes');
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/public/views'));
 app.use(express.static('public'));
+app.use(compression());
 app.use(favicon(path.join(__dirname, 'public', 'assets', 'favicon.ico')));
 app.use(express.json({ limit: '1mb' })); // FIX LIMIT!
 app.use(express.urlencoded({ extended: false }));
