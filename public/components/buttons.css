@@ -22,7 +22,7 @@
 
 #start-button {
   position: fixed;
-  font-size: 64px;
+  font-size: 54px;
   width: 200px;
   height: 100px;
   z-index: 100;
@@ -33,22 +33,17 @@
   color: #f1faee;
   border-style: ridge;
   border-color: rgb(70, 123, 157);
-  transition: background-color 0.1s ease-in;
-  animation-name: warble;
-  animation-duration: 1s;
-  animation-iteration-count: infinite;
-  animation-timing-function: linear;
 }
 
 @keyframes warble {
   0% {
-    font-size: 60px;
+    font-size: 54px;
   }
   50% {
-    font-size: 68px;
+    font-size: 62px;
   }
   100% {
-    font-size: 60px;
+    font-size: 54px;
   }
 }
 

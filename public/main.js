@@ -902,3 +902,6 @@ if ('serviceWorker' in navigator) {
 
 let loadScreen = document.getElementById('load-screen');
 loadScreen.remove();
+domEls.startButton.style.animationName = 'warble';
+domEls.startButton.style.animationDuration = '1s';
+domEls.startButton.style.animationIterationCount = 'infinite';
