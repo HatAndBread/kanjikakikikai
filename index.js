@@ -68,6 +68,30 @@ app.get('/logout', (req, res) => {
   req.logout();
   res.redirect('/');
 });
+app.get('*.js', (req, res, next) => {
+  if (req.header('Accept-Encoding').includes('br')) {
+    req.url = req.url + '.br';
+    console.log(req.header('Accept-Encoding'));
+    res.set('Content-Encoding', 'br');
+  }
+  next();
+});
+app.get('*.css', (req, res, next) => {
+  if (req.header('Accept-Encoding').includes('br')) {
+    req.url = req.url + '.br';
+    console.log(req.header('Accept-Encoding'));
+    res.set('Content-Encoding', 'br');
+  }
+  next();
+});
+app.get('*.ejs', (req, res, next) => {
+  if (req.header('Accept-Encoding').includes('br')) {
+    req.url = req.url + '.br';
+    console.log(req.header('Accept-Encoding'));
+    res.set('Content-Encoding', 'br');
+  }
+  next();
+});
 
 app.post('/send-jason', (req, res) => {
   const data = req.body;
