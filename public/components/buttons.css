@@ -20,21 +20,6 @@
   overflow: hidden;
 }
 
-#start-button {
-  position: fixed;
-  font-size: 54px;
-  width: 200px;
-  height: 100px;
-  z-index: 100;
-  top: calc(50% - 50px);
-  left: 50%;
-  margin-left: -100px;
-  background-color: #e63946;
-  color: #f1faee;
-  border-style: ridge;
-  border-color: rgb(70, 123, 157);
-}
-
 @keyframes warble {
   0% {
     font-size: 54px;
