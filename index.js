@@ -26,7 +26,7 @@ const getStrokes = require('./get-strokes');
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/public/views'));
 app.use(express.static('public'));
-app.use(compression());
+app.use(compression({ level: 6 }));
 app.use(favicon(path.join(__dirname, 'public', 'assets', 'favicon.ico')));
 app.use(express.json({ limit: '1mb' })); // FIX LIMIT!
 app.use(express.urlencoded({ extended: false }));
@@ -69,14 +69,4 @@ app.get('/logout', (req, res) => {
   res.redirect('/');
 });
 
-app.post('/send-jason', (req, res) => {
-  const data = req.body;
-  const jason = JSON.stringify(data);
-  fs.writeFile('jason.txt', jason, function (err) {
-    if (err) {
-      console.log(err);
-    }
-  });
-  res.send({ message: 'received' });
-});
 app.listen(PORT);
