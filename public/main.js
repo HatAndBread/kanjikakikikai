@@ -899,3 +899,6 @@ if ('serviceWorker' in navigator) {
       });
   });
 }
+
+let loadScreen = document.getElementById('load-screen');
+loadScreen.remove();

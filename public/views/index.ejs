@@ -69,7 +69,6 @@
     />
     <title>漢字書き機械</title>
     <link rel="manifest" href="manifest.json" />
-    <link rel="stylesheet" href="style.css" />
     <script src="main.js" defer></script>
   </head>
 
@@ -79,6 +78,25 @@
   <%}%>
 
   <body>
+    <div
+      style="
+        background-color: #e63946;
+        color: #f1faee;
+        font-size: xx-large;
+        left: -20px;
+        right: -20px;
+        top: -10px;
+        bottom: -20px;
+        position: fixed;
+        z-index: 100000000000000000;
+        font-family: sans-serif;
+        text-align: center;
+      "
+      id="load-screen"
+    >
+      <br /><br />
+      ❤️❤️❤️LOADING❤️❤️❤️
+    </div>
     <nav id="nav-bar">
       <div id="left-stuff">
         <div>
@@ -201,5 +219,7 @@
     </div>
   </body>
 </html>
+
 <link href="https://fonts.googleapis.com/css2?family=Dosis&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
 <script src="p5.min.js"></script>
