@@ -11,6 +11,22 @@ const methodOverride = require('method-override'); //Lets you use HTTP verbs suc
 const app = express();
 const checkAuthenticated = require('./checkAuthenticated');
 
+const brotli = require('brotli');
+const fs = require('fs');
+const brotliSettings = {
+  extension: 'br',
+  skipLarger: true,
+  mode: 1, // 0 = generic, 1 = text, 2 = font (WOFF2)
+  quality: 9, // 0 - 11,
+  lgwin: 12 // default
+};
+fs.readdirSync('public/').forEach((file) => {
+  if (file.endsWith('.js')) {
+    const result = brotli.compress(fs.readFileSync('public/' + file), brotliSettings);
+    fs.writeFileSync('public/' + file + '.br', result);
+  }
+});
+
 let PORT = process.env.PORT || 3000;
 const login = require('./login');
 const signup = require('./signup');
@@ -72,6 +88,16 @@ app.get('/p5', (req, res) => {
     res.sendFile(path.join(__dirname, '/public', 'p5.min.js.gz'));
   } else {
     res.sendFile(path.join(__dirname, '/public', 'p5.min.js'));
+  }
+});
+
+app.get('/mainjs', (req, res) => {
+  if (req.header('Accept-Encoding').includes('br')) {
+    res.set('Content-Encoding', 'br');
+    res.sendFile(path.join(__dirname, '/public', 'main.min.js.br'));
+    console.log('brotz');
+  } else {
+    res.sendFile(path.join(__dirname, '/public', 'main.min.js'));
   }
 });
 
