@@ -11,8 +11,6 @@ const methodOverride = require('method-override'); //Lets you use HTTP verbs suc
 const app = express();
 const checkAuthenticated = require('./checkAuthenticated');
 
-const fs = require('fs'); // delete me!
-
 let PORT = process.env.PORT || 3000;
 const login = require('./login');
 const signup = require('./signup');
@@ -62,6 +60,19 @@ app.get('/', checkAuthenticated, (req, res) => {
   delete userInfo.password;
 
   res.render('index', { userInfo: userInfo });
+});
+
+app.get('/p5', (req, res) => {
+  if (req.header('Accept-Encoding').includes('br')) {
+    res.set('Content-Encoding', 'br');
+    res.sendFile(path.join(__dirname, '/public', 'p5.min.js.br'));
+    console.log('brotz');
+  } else if (req.header('Accept-Encoding').includes('gzip')) {
+    res.set('Content-Encoding', 'gzip');
+    res.sendFile(path.join(__dirname, '/public', 'p5.min.js.gz'));
+  } else {
+    res.sendFile(path.join(__dirname, '/public', 'p5.min.js'));
+  }
 });
 
 app.get('/logout', (req, res) => {
