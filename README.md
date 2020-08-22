@@ -4,6 +4,8 @@
 Kanjikakikikai is a simple flash-card style application designed to help intermediate learners of Japanese learn how to write kanji characters.
 Kanjikakikikai assumes an intermediate knowledge of Japanese vocabulary and an ability to read and write hiragana.
 <h1><a href="https://kanjikakikikai.glitch.me">TRY IT OUT HERE</a></h1>
+or try it out on 
+<h1><a href="https://hat-and-beard.itch.io/kanji-machine">itch.io</a></h1>
 
 
 # How to play 🤔
