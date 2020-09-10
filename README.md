@@ -32,5 +32,3 @@ No personal data (including email address) is necessary to sign up❣️
 
 Kanjikakikikai is a progressive web app (PWA), meaning it is a web application that is possible to save on your mobile device's (or desktop computer's) homescreen. For the best user experience we highly recommend homescreen installation. Directions for how to install on iOS and Android can be found <a href="https://mobilesyrup.com/2020/05/24/how-install-progressive-web-app-pwa-android-ios-pc-mac/#:~:text=Installing%20a%20PWA%20on%20iOS&text=Navigate%20to%20the%20website%20you,like%20a%20native%20iOS%20app.">here.</a>  
 Kanjikakikikai is best used on a mobile touch screen device with a stylus, although mouse use is also supported. 
-
-Kanjikakikikai is written in vanilla JavaScript with a Node backend. If you would like to contribute or have a suggestion feel free to make a pull request. 
